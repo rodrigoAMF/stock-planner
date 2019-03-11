@@ -1,7 +1,9 @@
 <?php
 
+include("config.php");
+
 function incluiCabecalho($titulo_pagina, $arquivo_css_pagina=NULL){
-    $codigo_header = file_get_contents('inc/header.php');
+    $codigo_header = file_get_contents(HEADER_TEMPLATE);
 
     if($arquivo_css_pagina != NULL){
         $arquivo_css_pagina = 'css/' . $arquivo_css_pagina . '.css';
