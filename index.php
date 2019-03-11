@@ -3,10 +3,10 @@
 
     incluiCabecalho("Stock Planner - Home");
 ?>
-<body>
-    <div class="container">
-        <!-- Criar as linhas e colunas de acordo com necessidade -->
-    </div>
+
+<div class="container">
+    <!-- Criar as linhas e colunas de acordo com necessidade -->
+</div>
 
 <?php
     require_once(FOOTER_TEMPLATE);
