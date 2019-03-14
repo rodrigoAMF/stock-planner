@@ -43,12 +43,16 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $localizacao . "', " . $estoqueIdeal . ",
 			" . $quantidade . ")";
 
-	echo $query;
 
 	$resultado = $conexao->query($query);
 
-    //$dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
     close_database($conexao);
+
+	// query retorna false caso query falhe
+	if(!resultado){
+		return false;
+	}else{
+		return true;
+	}
 
 }
