@@ -33,5 +33,5 @@ function getProdutoPorId($id){
 
     close_database($conexao);
 
-    return $dados;
+    return $dados[0];
 }
