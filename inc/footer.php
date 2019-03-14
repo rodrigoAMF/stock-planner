@@ -8,6 +8,8 @@
     <!-- Bootstrap -->
     <script src="js/bootstrap.min.js"></script>
 
+    <script src='js/cadastro-produto.js'></script>
+
     <div id="rodape">
     	<br>
 	</div>
