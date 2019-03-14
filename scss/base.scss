@@ -15,3 +15,18 @@ input[type=text]:focus, textarea:focus {
   	box-shadow: none !important;
   	border-bottom: 1px solid lighten(#696969, 30%);
 }
+
+#cabecalho {
+	background: #2a3f54;
+	height: 150px;
+	text-align: left center;
+}
+
+#rodape {
+	background: #2a3f54;
+	height: 90px;
+}
+
+#logo {
+	padding: 10px;
+}
