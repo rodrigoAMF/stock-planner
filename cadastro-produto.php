@@ -111,7 +111,7 @@
 	    		
 	    	</div>
 	    	<div class="col-xl-1">
-	    		<button class="btn btn-primary" type="submit">Salvar</button>
+	    		<button type="button" class="btn btn-secondary">Salvar</button>
 	    	</div>
 	    	<div class="col-xl-1">
 	    		
