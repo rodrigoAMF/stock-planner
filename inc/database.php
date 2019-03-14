@@ -35,3 +35,24 @@ function getProdutoPorId($id){
 
     return $dados[0];
 }
+
+function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $localizacao, $categoria, $descricao){
+	$conexao = open_database();
+
+	$query = "INSERT INTO produtos(nome, descricao, identificacao, catmat, categoria, posicao, estoque_ideal, quantidade) values('"
+	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $localizacao . "', " . $estoqueIdeal . ",
+			" . $quantidade . ")";
+
+
+	$resultado = $conexao->query($query);
+
+    close_database($conexao);
+
+	// query retorna false caso query falhe
+	if(!resultado){
+		return false;
+	}else{
+		return true;
+	}
+
+}
