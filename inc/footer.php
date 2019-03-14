@@ -7,5 +7,9 @@
 
     <!-- Bootstrap -->
     <script src="js/bootstrap.min.js"></script>
+
+    <div id="rodape">
+    	<br>
+	</div>
 </body>
 </html>

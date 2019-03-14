@@ -19,3 +19,9 @@
 </head>
 
 <body>
+
+    <div id="cabecalho">
+        <div id="logo">
+            <img src="img/logo1.png" width="300px" height="130px">
+        </div>
+    </div>

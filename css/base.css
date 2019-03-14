@@ -1,2 +1,2 @@
-*{text-family:"Roboto condensed","Roboto"}textarea,input[type=text]{background:#dcdcdc;border:none;border-bottom:1px solid #696969;outline:none;border-radius:0%}input[type=text]:focus,textarea:focus{box-shadow:none !important;border-bottom:1px solid #b6b6b6}
+*{text-family:"Roboto condensed","Roboto"}textarea,input[type=text]{background:#dcdcdc;border:none;border-bottom:1px solid #696969;outline:none;border-radius:0%}input[type=text]:focus,textarea:focus{outline:none;box-shadow:none !important;border-bottom:1px solid #b6b6b6}
 /*# sourceMappingURL=base.css.map */
