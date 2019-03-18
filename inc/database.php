@@ -56,3 +56,17 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 	}
 
 }
+
+function getTodosProdutos(){
+	$conexao = open_database();
+
+    $query = "SELECT * FROM produtos";
+
+    $resultado = $conexao->query($query);
+
+    $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    close_database($conexao);
+
+    return $dados;
+}
