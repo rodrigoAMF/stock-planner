@@ -15,16 +15,13 @@
             		<input type="text" class="form-control" name="nome" id="formGroupExampleInput" placeholder="">
         		</div>
 
-        		<div class="form-group col-md-1">
+        		<div class="form-group col-md-1"></div>
 
-        		</div>
-
-        		<!--<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Palavra-chave:</label>
-            		<input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
-        		</div>-->
-        		</div>
-
+                <div class="form-group col-md-5">
+                    <label for="formGroupExampleInput">CATMAT:</label>
+                    <input type="text" class="form-control" name="catmat" id="formGroupExampleInput" placeholder="">
+                </div>
+        	</div>
 
         	<div class="row">
         		<br>
@@ -36,15 +33,14 @@
             		<input type="text" class="form-control" name="identificacao" id="formGroupExampleInput" placeholder="">
         		</div>
 
-        		<div class="form-group col-md-1">
+        		<div class="form-group col-md-1"></div>
 
-        		</div>
-
-        		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">CATMAT:</label>
-            		<input type="text" class="form-control" name="catmat" id="formGroupExampleInput" placeholder="">
-        		</div>
-        		</div>
+                <div class="form-group col-md-5">
+                    <label for="formGroupExampleInput">Estoque ideal:</label>
+                    <input type="text" class="form-control" name="estoqueIdeal" id="formGroupExampleInput" placeholder="">
+                </div>
+        		
+        	</div>
 
 
         	<div class="row">
@@ -57,15 +53,13 @@
             		<input type="text" class="form-control" name="quantidade" id="formGroupExampleInput" placeholder="">
         		</div>
 
-        		<div class="form-group col-md-1">
-
-        		</div>
+        		<div class="form-group col-md-1"></div>
 
         		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Estoque ideal:</label>
-            		<input type="text" class="form-control" name="estoqueIdeal" id="formGroupExampleInput" placeholder="">
-        		</div>
-        		</div>
+                    <label for="formGroupExampleInput">Categoria:</label>
+                    <input type="text" class="form-control" name="categoria" id="formGroupExampleInput" placeholder="">
+                </div>
+        	</div>
 
 
         	<div class="row">
@@ -82,10 +76,7 @@
 
         		</div>
 
-        		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Categoria:</label>
-            		<input type="text" class="form-control" name="categoria" id="formGroupExampleInput" placeholder="">
-        		</div>
+        		
         		</div>
 
         	<div class="row">
@@ -110,7 +101,7 @@
         		<div class="col-xl-10">
 
             	</div>
-            	<div class="col-xl-1">
+            	<div class="col-xl-1" id="cor-botao">
             		<input class="btn btn-primary" type="submit" value="Salvar">
             	</div>
             	<div class="col-xl-1">
