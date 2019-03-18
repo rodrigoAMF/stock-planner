@@ -60,7 +60,7 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 function getTodosProdutos(){
 	$conexao = open_database();
 
-    $query = "SELECT * FROM produtos";
+    $query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id";
 
     $resultado = $conexao->query($query);
 

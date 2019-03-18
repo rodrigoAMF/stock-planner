@@ -16,9 +16,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th></th>
                 <th>Nome</th>
-                <th>Descrição</th>
                 <th>Identificação</th>
                 <th>CATMAT</th>
                 <th>Categoria</th>
@@ -53,10 +52,10 @@
         }
 
         foreach ($produtos as $produto) {
+            $rgb = pickColor($produto['porcentagem']);
             echo "<tr>";
-            echo "<td>" . $produto['id'] . "</td>";
+            echo "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
             echo "<td>" . $produto['nome'] . "</td>";
-            echo "<td>" . $produto['descricao'] . "</td>";
             echo "<td>" . $produto['identificacao'] . "</td>";
             echo "<td>" . $produto['catmat'] . "</td>";
             echo "<td>" . $produto['categoria'] . "</td>";
