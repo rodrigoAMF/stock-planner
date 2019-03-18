@@ -27,6 +27,8 @@ input[type=text]:focus, textarea:focus {
 	height: 90px;
 }
 
-#logo {
-	padding: 10px;
+#area-menu nav{
+	background: #2a3f54 !important;
+	z-index: 2000;//ordem de prioridade
+	
 }
