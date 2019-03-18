@@ -1,0 +1,37 @@
+body {
+	background: #dcdcdc;
+}
+
+#principal {
+	background: #dcdcdc;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+button {
+	background-color: #2a3f54 !important;
+}
+
+#area-menu {
+	position: absolute;
+	top: 50px;
+	text-align: left;
+	padding: 10px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+#area-menu a:link, #area-menu a:visited {
+	color: #FFF;
+	padding: 8px 12px;
+}
+
+#area-menu a:hover {
+	color: white;
+	background-color: #3b5977;
+	text-decoration: none;
+
+}
