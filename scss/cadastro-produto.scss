@@ -1,9 +1,9 @@
 body {
-	background: #dcdcdc;
+	//background: #dcdcdc;
 }
 
 #principal {
-	background: #dcdcdc;
+	//background: #dcdcdc;
 	margin: 0 auto;
 	padding: 15px;
 }
@@ -11,27 +11,4 @@ body {
 #cor-botao input {
 	background-color: #2a3f54 !important;
 	border: #2a3f54;
-}
-
-#area-menu {
-	position: absolute;
-	text-align: left;
-	padding: 10px; 
-}
-
-a {
-	text-decoration: none;
-	font-size: 1.2em;
-}
-
-#area-menu a:link, #area-menu a:visited {
-	color: #FFF;
-	padding: 8px 12px;
-}
-
-#area-menu a:hover {
-	color: white;
-	background-color: #3b5977;
-	text-decoration: none;
-
 }
