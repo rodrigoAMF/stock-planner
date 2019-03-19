@@ -24,7 +24,7 @@
           </a>
 				</div>
         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="editar-produto.php">
+          <a href="#">
             <button>
     					<img src="img/editar.png">
     					<br>
@@ -35,7 +35,7 @@
           </a>
 				</div>
         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="">
+          <a href="lista-produtos.php">
             <button>
     					<img src="img/listar.png">
     					<br>
@@ -46,7 +46,7 @@
           </a>
 				</div>
         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="">
+          <a href="#">
             <button>
     					<img src="img/excluir.png">
     					<br>
@@ -62,6 +62,7 @@
 
 		<br>
 
+        <!--
 		<div>
 		<nav class="navbar navbar-expand-lg">
 			<div class="fonte-barra">
@@ -117,7 +118,7 @@
 			</div>
 
 		</div>
-	</div>
+	</div>-->
 </div>
 </div>
 
