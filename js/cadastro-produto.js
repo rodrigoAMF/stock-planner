@@ -24,7 +24,10 @@ frm.submit(function (e) {
 
     e.preventDefault();
 
+    let erros = false;
+
     if(identificacao.val() == ""){
+        erros = true;
         identificacao.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-identificacao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-identificacao').text('Digite uma identificação');
@@ -36,6 +39,7 @@ frm.submit(function (e) {
     }
 
     if(localizacao.val() == ""){
+        erros = true;
         localizacao.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-localizacao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-localizacao').text('Digite uma localização');
@@ -47,6 +51,7 @@ frm.submit(function (e) {
     }
 
     if(descricao.val() == ""){
+        erros = true;
         descricao.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-descricao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-descricao').text('Digite uma descrição');
@@ -58,6 +63,7 @@ frm.submit(function (e) {
     }
 
     if(nome.val() == ""){
+        erros = true;
         nome.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-nome').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-nome').text('Digite um nome');
@@ -69,6 +75,7 @@ frm.submit(function (e) {
     }
 
     if(catmat.val() == "" || !ehNumerico(catmat)){
+        erros = true;
         catmat.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-catmat').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-catmat').text('Digite um número');
@@ -76,10 +83,11 @@ frm.submit(function (e) {
     else{
         catmat.removeClass("is-invalid").addClass("is-valid");
         $('#feedback-catmat').removeClass('feedback invalid-feedback').addClass('valid-feedback');
-        $('#feedback-catmat').text('Okay!'); 
-    } 
+        $('#feedback-catmat').text('Okay!');
+    }
 
     if(estoque_ideal.val() == "" || !ehNumerico(estoque_ideal)){
+        erros = true;
         estoque_ideal.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-estoque_ideal').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-estoque_ideal').text('Digite um número');
@@ -87,10 +95,11 @@ frm.submit(function (e) {
     else{
         estoque_ideal.removeClass("is-invalid").addClass("is-valid");
         $('#feedback-estoque_ideal').removeClass('feedback invalid-feedback').addClass('valid-feedback');
-        $('#feedback-estoque_ideal').text('Okay!'); 
-    } 
+        $('#feedback-estoque_ideal').text('Okay!');
+    }
 
     if(quantidade.val() == "" || !ehNumerico(quantidade)){
+        erros = true;
         quantidade.removeClass("is-valid").addClass("is-invalid");
         $('#feedback-quantidade').removeClass('feedback valid-feedback').addClass('invalid-feedback');
         $('#feedback-quantidade').text('Digite um número');
@@ -98,23 +107,25 @@ frm.submit(function (e) {
     else{
         quantidade.removeClass("is-invalid").addClass("is-valid");
         $('#feedback-quantidade').removeClass('feedback invalid-feedback').addClass('valid-feedback');
-        $('#feedback-quantidade').text('Okay!'); 
-    } 
+        $('#feedback-quantidade').text('Okay!');
+    }
+    if(!erros){
+        var request = $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            dataType: "html"
+        });
 
-    var request = $.ajax({
-        type: frm.attr('method'),
-        url: frm.attr('action'),
-        data: frm.serialize(),
-        dataType: "html"
-    });
+        request.done(function(msg) {
+            alert("Produto cadastrado com Sucesso!");
+            frm.trigger("reset");
+        });
 
-    request.done(function(msg) {
-        alert("Produto cadastrado com Sucesso!");
-        frm.trigger("reset");
-    });
+        request.fail(function(jqXHR, textStatus) {
+            alert("Falha ao cadastrar produto: " + textStatus);
+        });
+    }
 
-    request.fail(function(jqXHR, textStatus) {
-        alert("Falha ao cadastrar produto: " + textStatus);
-    });
 
 });
