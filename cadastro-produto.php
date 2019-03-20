@@ -1,5 +1,6 @@
 <?php
     require_once("funcoes.php");
+    require_once(DBAPI);
 
     incluiCabecalho("Stock Planner - Cadastro de produtos", "cadastro-produto");
 ?>
@@ -11,15 +12,21 @@
         <form class="formulario-produto" method="post" action="processa-produto.php">
         	<div class="form-row">
         		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Nome:</label>
-            		<input type="text" class="form-control" name="nome" id="formGroupExampleInput" placeholder="">
+          			<label for="nome">Nome:</label>
+            		<input type="text" class="form-control" name="nome" id="nome" placeholder="">
+                    <div class="feedback" id="feedback-nome">
+                        
+                    </div>
         		</div>
 
         		<div class="form-group col-md-1"></div>
 
                 <div class="form-group col-md-5">
-                    <label for="formGroupExampleInput">CATMAT:</label>
-                    <input type="text" class="form-control" name="catmat" id="formGroupExampleInput" placeholder="">
+                    <label for="catmat">CATMAT:</label>
+                    <input type="text" class="form-control" name="catmat" id="catmat" placeholder="">
+                    <div class="feedback" id="feedback-catmat">
+                        
+                    </div>
                 </div>
         	</div>
 
@@ -29,15 +36,21 @@
 
         	<div class="form-row">
         		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Identificação:</label>
-            		<input type="text" class="form-control" name="identificacao" id="formGroupExampleInput" placeholder="">
+          			<label for="identificacao">Identificação:</label>
+            		<input type="text" class="form-control" name="identificacao" id="identificacao" placeholder="">
+                    <div class="feedback" id="feedback-identificacao">
+                        
+                    </div>
         		</div>
 
         		<div class="form-group col-md-1"></div>
 
                 <div class="form-group col-md-5">
-                    <label for="formGroupExampleInput">Estoque ideal:</label>
-                    <input type="text" class="form-control" name="estoqueIdeal" id="formGroupExampleInput" placeholder="">
+                    <label for="estoque_ideal">Estoque ideal:</label>
+                    <input type="text" class="form-control" name="estoqueIdeal" id="estoque_ideal" placeholder="">
+                    <div class="feedback" id="feedback-estoque_ideal">
+                        
+                    </div>
                 </div>
         		
         	</div>
@@ -49,15 +62,28 @@
 
         	<div class="form-row">
         		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Quantidade:</label>
-            		<input type="text" class="form-control" name="quantidade" id="formGroupExampleInput" placeholder="">
+          			<label for="quantidade">Quantidade:</label>
+            		<input type="text" class="form-control" name="quantidade" id="quantidade" placeholder="">
+                    <div class="feedback" id="feedback-quantidade">
+                        
+                    </div>
         		</div>
 
         		<div class="form-group col-md-1"></div>
 
         		<div class="form-group col-md-5">
-                    <label for="formGroupExampleInput">Categoria:</label>
-                    <input type="text" class="form-control" name="categoria" id="formGroupExampleInput" placeholder="">
+                   <label for="categoria">Categoria:</label>
+                   <select name="categoria" class="custom-select custom-select-sm" id="categoria">
+                    <?php
+                        $categorias = getCategorias();
+                        foreach ($categorias as $categoria) {
+                            echo "<option value = '" . $categoria['id']."'>" . $categoria['nome']. "</option>";
+                        }
+                    ?>
+                    </select>
+                    <div class="feedback">
+                        okay!
+                    </div>
                 </div>
         	</div>
 
@@ -68,8 +94,11 @@
 
         	<div class="form-row">
         		<div class="form-group col-md-5">
-          			<label for="formGroupExampleInput">Localização:</label>
-            		<input type="text" class="form-control" name="localizacao" id="formGroupExampleInput" placeholder="">
+          			<label for="localizacao">Localização:</label>
+            		<input type="text" class="form-control" name="localizacao" id="localizacao" placeholder="">
+                    <div class="feedback" id="feedback-localizacao">
+                        
+                    </div>
         		</div>
 
         		<div class="form-group col-md-1">
@@ -85,8 +114,11 @@
 
         	<div class="row">
             	<div class="col-xl-11">
-            		<label for="validationTextarea">Descrição:</label>
-        			<textarea class="form-control" name="descricao" id="validationTextarea" placeholder="" required></textarea>
+            		<label for="descricao">Descrição:</label>
+        			<textarea class="form-control" name="descricao" id="descricao" placeholder="" ></textarea>
+                    <div class="feedback" id="feedback-descricao">
+                        okay!
+                    </div>
             	</div>
             	<div class="col-xl-1">
 

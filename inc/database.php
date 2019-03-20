@@ -70,3 +70,17 @@ function getTodosProdutos(){
 
     return $dados;
 }
+
+function getCategorias(){
+	$conexao = open_database();
+
+    $query = "SELECT * FROM categoria";
+
+    $resultado = $conexao->query($query);
+
+    $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    close_database($conexao);
+
+    return $dados;
+}
