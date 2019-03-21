@@ -7,7 +7,10 @@
     <title>TITULO_PAGINA</title>
     <!-- Ícone do site -->
     <link rel="icon" href="img/favicon.png">
-
+    <!-- Alertify -->
+    <link rel="stylesheet" href="css/alertify.min.css" >
+    <!-- Default theme for alertify -->
+    <link rel="stylesheet" href="css/default-theme-alertify.min.css" >
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css" >
     <!-- Ícones do material design -->
