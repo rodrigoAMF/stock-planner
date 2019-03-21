@@ -8,8 +8,18 @@
     <!-- Bootstrap -->
     <script src="js/bootstrap.min.js"></script>
 
-    <script src='js/cadastro-produto.js'></script>
-    <script src='js/edita-produto.js'></script>
+    <!-- Bootstrap -->
+    <script src="js/alertify.min.js"></script>
+    <?php
+        $pagina = basename($_SERVER['PHP_SELF'], '.php');
+
+        if($pagina == 'lista-produtos'){
+            echo "<script src='js/lista-produtos.js'></script>";
+        }else if($pagina == 'cadastro-produto'){
+            echo "<script src='js/cadastro-produto.js'></script>";
+        }
+    ?>
+
 
     <div id="rodape">
     	<br>

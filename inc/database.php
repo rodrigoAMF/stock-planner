@@ -140,3 +140,15 @@ function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdea
 				return true;
 			}
 }
+
+function excluirProduto($id){
+	$conexao = open_database();
+
+    $query = "DELETE FROM produtos WHERE id = " . $id;
+
+    $resultado = $conexao->query($query);
+
+    close_database($conexao);
+
+    return $resultado;
+}

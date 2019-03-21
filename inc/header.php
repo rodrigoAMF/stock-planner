@@ -7,13 +7,17 @@
     <title>TITULO_PAGINA</title>
     <!-- Ícone do site -->
     <link rel="icon" href="img/favicon.png">
-
+    
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css" >
     <!-- Ícones do material design -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- CSS Base para todas as páginas -->
     <link rel="stylesheet" href="css/base.css">
+    <!-- Alertify -->
+    <link rel="stylesheet" href="css/alertify.min.css" >
+    <!-- Default theme for alertify -->
+    <link rel="stylesheet" href="css/default-theme-alertify.min.css" >
     <!-- CSS da página -->
     ARQUIVO_CSS_PAGINA
 </head>

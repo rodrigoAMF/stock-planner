@@ -83,7 +83,7 @@
                 echo "<td>" . $produto['posicao'] . "</td>";
                 echo "<td>" . $produto['estoque_ideal'] . "</td>";
                 echo "<td>" . $produto['quantidade'] . "</td>";
-                echo "<td><a href='excluir-produto.php?id=" . $produto['id'] . "'><i class='material-icons' id='delete-" . $produto['id'] . "'>delete_outline</i></a></td>";
+                echo "<td><a class='delete-icon' href='excluir-produto.php?id=" . $produto['id'] . "'><i class='material-icons' id='delete-" . $produto['id'] . "'>delete_outline</i></a></td>";
                 echo "<td><a href='editar-produto.php?id=" . $produto['id'] . "'>
                 <i class='material-icons'>edit</i></a></td>";
                 echo "</tr>";
