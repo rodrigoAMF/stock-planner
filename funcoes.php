@@ -21,17 +21,17 @@ function incluiCabecalho($titulo_pagina, $arquivo_css_pagina=NULL){
 }
 
 function pickColor($percent){
-    if ($percent >= 1) {
+    if ($percent > 1.27) {
         $rgb[0] = 0;
         $rgb[1] = 200;
         $rgb[2] = 0;
-    }elseif ($percent >0.5) {
-        $rgb[0] = (-5.1*$percent)+510;
+    }elseif ($percent >1) {
+        $rgb[0] = (-875*$percent)+1129;
         $rgb[1] = 200;
         $rgb[2] = 0;
-    }elseif ($percent >0.2) {
+    }elseif ($percent >0.77) {
         $rgb[0] = 255;
-        $rgb[1] = (6.67*$percent)-133;
+        $rgb[1] = (850*$percent)-649;
         $rgb[2] = 0;
     }else {
         $rgb[0] = 255;
