@@ -84,3 +84,15 @@ function getCategorias(){
 
     return $dados;
 }
+
+function excluirProduto($id){
+	$conexao = open_database();
+
+    $query = "DELETE FROM produtos WHERE id = " . $id;
+
+    $resultado = $conexao->query($query);
+
+    close_database($conexao);
+
+    return $resultado;
+}
