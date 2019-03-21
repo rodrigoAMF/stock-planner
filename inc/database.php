@@ -71,6 +71,42 @@ function getTodosProdutos(){
     return $dados;
 }
 
+function getProdutosFiltrados($busca, $filtro){
+	$conexao = open_database();
+
+	switch($filtro){
+		case 1:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.nome LIKE $busca ";
+		break;
+		case 2:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.identificacao LIKE $busca ";
+		break;
+		case 3:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.catmat LIKE $busca ";
+		break;
+		case 4:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.categoria LIKE $busca ";
+		break;
+		case 5:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.posicao LIKE $busca ";
+		break;
+		case 6:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.estoque_ideal LIKE $busca ";
+		break;
+		case 7:
+			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.quantidade LIKE $busca ";
+		break;
+	}
+
+    $resultado = $conexao->query($query);
+
+    $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    close_database($conexao);
+
+    return $dados;
+}
+
 function getCategorias(){
 	$conexao = open_database();
 
