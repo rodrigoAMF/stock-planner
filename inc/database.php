@@ -84,3 +84,23 @@ function getCategorias(){
 
     return $dados;
 }
+
+function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $localizacao, $categoria, $descricao, $id){
+	$conexao = open_database();
+
+	$query = "UPDATE 'produtos' SET 'nome' = '" . $nome . "', 'indentificacao'  = '" . $identificacao . "', 'catmat'= '" . $catmat . "', 'quantidade'= '" . $quantidade . "',
+				'estoque_ideal'= '" . $estoqueIdeal . "', 'localizacao'= '" . $localizacao . "', 'categoria'= '" . $categoria . "', 'descricao'= '" . $descricao . "' WHERE
+					'produtos'.'id'= " . $id . "";
+
+
+			$resultado = $conexao->query($query);
+
+		    close_database($conexao);
+
+			// query retorna false caso query falhe
+			if(!resultado){
+				return false;
+			}else{
+				return true;
+			}
+}

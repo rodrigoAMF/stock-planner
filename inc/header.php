@@ -10,8 +10,8 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css" >
-    <!-- Ícones do font awesome 5.7.2 -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Ícones do material design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- CSS Base para todas as páginas -->
     <link rel="stylesheet" href="css/base.css">
     <!-- CSS da página -->

@@ -24,6 +24,8 @@
                     <th>Posição</th>
                     <th>Estoque Ideal</th>
                     <th>Quantidade</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +64,9 @@
                 echo "<td>" . $produto['posicao'] . "</td>";
                 echo "<td>" . $produto['estoque_ideal'] . "</td>";
                 echo "<td>" . $produto['quantidade'] . "</td>";
+                echo "<td><a href='excluir-produto.php?id=" . $produto['id'] . "'><i class='material-icons' id='delete-" . $produto['id'] . "'>delete_outline</i></a></td>";
+                echo "<td><a href='editar-produto.php?id=" . $produto['id'] . "'>
+                <i class='material-icons'>edit</i></a></td>";
                 echo "</tr>";
             }
         ?>
