@@ -34,9 +34,10 @@ input[type=text]:focus, textarea:focus {
 	height:120px;
 }
 
+
 #area-menu nav{
 	background: #2a3f54 !important;
-	z-index: 2000;//ordem de prioridade
+	z-index: 1500;//ordem de prioridade
 }
 
 #area-menu ul a:link, #area-menu ul a:visited {

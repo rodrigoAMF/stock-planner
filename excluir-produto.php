@@ -1,4 +1,4 @@
-<?php/*
+<?php
     include("config.php");
     include(DBAPI);
     print_r($_GET);
@@ -6,7 +6,7 @@
     $id = $_GET['id'];
 
 
-    $resultadoQuery = excluirProduto($id);*/
+    $resultadoQuery = excluirProduto($id);
 
     //header('Location: lista-produtos.php');
 
