@@ -9,6 +9,7 @@
     <script src="js/bootstrap.min.js"></script>
 
     <script src='js/cadastro-produto.js'></script>
+    <script src='js/edita-produto.js'></script>
 
     <div id="rodape">
     	<br>
