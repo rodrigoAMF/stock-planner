@@ -21,6 +21,130 @@ function close_database($conn) {
 	}
 }
 
+function sortLista($produtos, $parametro){
+
+	if($parametro == null) $parametro = 8;
+	/*
+	1- nome
+	2- ident
+	3- catmat
+	4- categoria
+	5- posicao
+	6- estoque ideal
+	7- quantidade
+	8, default- crit
+	*/
+	if(abs($parametro) == 1){
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($parametro > 0){
+				if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
+					$aux = $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}else{
+				if(strtoupper($produtos[$j]['nome']) < strtoupper($produtos[$j+1]['nome'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}
+		}
+	}
+	if(abs($parametro) == 2){
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($parametro > 0){
+				if(strtoupper($produtos[$j]['identificacao']) > strtoupper($produtos[$j+1]['identificacao'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}else{
+				if(strtoupper($produtos[$j]['identificacao']) < strtoupper($produtos[$j+1]['identificacao'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}
+		}
+	}
+	if(abs($parametro) == 3){
+		$parametro /= 3;
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($produtos[$j]['catmat']*$parametro > $produtos[$j+1]['catmat']*$parametro){
+				$aux =  $produtos[$j];
+                $produtos[$j] = $produtos[$j+1];
+                $produtos[$j+1] = $aux;
+			}
+		}
+	}
+	if(abs($parametro) == 4){
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($parametro > 0){
+				if(strtoupper($produtos[$j]['categoria']) > strtoupper($produtos[$j+1]['categoria'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}else{
+				if(strtoupper($produtos[$j]['categoria']) < strtoupper($produtos[$j+1]['categoria'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}
+		}
+	}
+	if(abs($parametro) == 5){
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($parametro > 0){
+				if(strtoupper($produtos[$j]['posicao']) > strtoupper($produtos[$j+1]['posicao'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}else{
+				if(strtoupper($produtos[$j]['posicao']) < strtoupper($produtos[$j+1]['posicao'])){
+					$aux =  $produtos[$j];
+	                $produtos[$j] = $produtos[$j+1];
+	                $produtos[$j+1] = $aux;
+				}
+			}
+		}
+	}
+	if(abs($parametro) == 6){
+		$parametro /= 6;
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($produtos[$j]['estoque_ideal']*$parametro > $produtos[$j+1]['estoque_ideal']*$parametro){
+				$aux =  $produtos[$j];
+                $produtos[$j] = $produtos[$j+1];
+                $produtos[$j+1] = $aux;
+			}
+		}
+	}
+	if(abs($parametro) == 7){
+		$parametro /= 7;
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($produtos[$j]['quantidade']*$parametro > $produtos[$j+1]['quantidade']*$parametro){
+				$aux =  $produtos[$j];
+                $produtos[$j] = $produtos[$j+1];
+                $produtos[$j+1] = $aux;
+			}
+		}
+	}
+	if(abs($parametro) == 8){
+		$parametro /= 8;
+		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+			if($produtos[$j]['porcentagem']*$parametro > $produtos[$j+1]['porcentagem']*$parametro){
+				$aux =  $produtos[$j];
+	            $produtos[$j] = $produtos[$j+1];
+	            $produtos[$j+1] = $aux;
+			}
+		}
+	}
+	return $produtos;
+}
+
 // Retorna 1 produto do banco de dados a partir do seu ID
 function getProdutoPorId($id){
     $conexao = open_database();
@@ -73,6 +197,8 @@ function getTodosProdutos(){
 
 function getProdutosFiltrados($busca, $filtro){
 	$conexao = open_database();
+
+	if ($busca == null) return getTodosProdutos();
 
 	switch($filtro){
 		case 1:
