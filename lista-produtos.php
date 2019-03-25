@@ -50,14 +50,16 @@
             <tbody>
 
         <?php
-            $produtos = getTodosProdutos();
-
+            //$produtos = getTodosProdutos();
+            $produtos = getProdutosFiltrados("","3" );
+            
             for ($i=0; $i < sizeof($produtos); $i++) {
                 $produtos[$i]['porcentagem'] = floatval($produtos[$i]['quantidade']/$produtos[$i]['estoque_ideal']);
             }
 
+            $produtos = sortLista($produtos, 3);
 
-
+            /* SORT
             for($i = 0; $i < sizeof($produtos); $i++)
             {
                 $menorPorcentagem = 100000;
@@ -70,7 +72,7 @@
                 $aux =  $produtos[$posicao_menor_porcentagem];
                 $produtos[$posicao_menor_porcentagem] = $produtos[$i];
                 $produtos[$i] = $aux;
-            }
+            }*/
 
             foreach ($produtos as $produto) {
                 $rgb = pickColor($produto['porcentagem']);
