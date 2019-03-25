@@ -11,8 +11,10 @@
     $posicao = $_POST['posicao'];
     $categoria = $_POST['categoria'];
     $descricao = $_POST['descricao'];
+    $id = $_GET['id'];
 
-    $resultadoQuery = cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao);
+    $resultadoQuery = editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao, $id);
+
 
     if($resultadoQuery){
         http_response_code(200);

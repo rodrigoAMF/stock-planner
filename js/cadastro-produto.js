@@ -5,7 +5,7 @@ var identificacao = $('#identificacao');
 var estoque_ideal = $('#estoque_ideal');
 var quantidade = $('#quantidade');
 var categoria = $('#categoria');
-var localizacao = $('#localizacao');
+var posicao = $('#posicao');
 var descricao = $('#descricao');
 
 function ehNumerico(campo){
@@ -38,16 +38,16 @@ frm.submit(function (e) {
         $('#feedback-identificacao').text('Okay!');
     }
 
-    if(localizacao.val() == ""){
+    if(posicao.val() == ""){
         erros = true;
-        localizacao.removeClass("is-valid").addClass("is-invalid");
-        $('#feedback-localizacao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
-        $('#feedback-localizacao').text('Digite uma localização');
+        posicao.removeClass("is-valid").addClass("is-invalid");
+        $('#feedback-posicao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+        $('#feedback-posicao').text('Digite uma posição');
     }
     else{
-        localizacao.removeClass("is-invalid").addClass("is-valid");
-        $('#feedback-localizacao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
-        $('#feedback-localizacao').text('Okay!');
+        posicao.removeClass("is-invalid").addClass("is-valid");
+        $('#feedback-posicao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+        $('#feedback-posicao').text('Okay!');
     }
 
     if(descricao.val() == ""){

@@ -25,7 +25,7 @@ function close_database($conn) {
 function getProdutoPorId($id){
     $conexao = open_database();
 
-    $query = "SELECT * FROM produtos where id = " . $id;
+    $query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.id = " . $id;
 
     $resultado = $conexao->query($query);
 
@@ -36,11 +36,11 @@ function getProdutoPorId($id){
     return $dados[0];
 }
 
-function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $localizacao, $categoria, $descricao){
+function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao){
 	$conexao = open_database();
 
 	$query = "INSERT INTO produtos(nome, descricao, identificacao, catmat, categoria, posicao, estoque_ideal, quantidade) values('"
-	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $localizacao . "', " . $estoqueIdeal . ",
+	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $posicao . "', " . $estoqueIdeal . ",
 			" . $quantidade . ")";
 
 
@@ -121,24 +121,23 @@ function getCategorias(){
     return $dados;
 }
 
-function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $localizacao, $categoria, $descricao, $id){
+function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao, $id){
 	$conexao = open_database();
 
-	$query = "UPDATE 'produtos' SET 'nome' = '" . $nome . "', 'indentificacao'  = '" . $identificacao . "', 'catmat'= '" . $catmat . "', 'quantidade'= '" . $quantidade . "',
-				'estoque_ideal'= '" . $estoqueIdeal . "', 'localizacao'= '" . $localizacao . "', 'categoria'= '" . $categoria . "', 'descricao'= '" . $descricao . "' WHERE
-					'produtos'.'id'= " . $id . "";
+	$query = "UPDATE produtos SET nome = '" . $nome . "', identificacao  = '" . $identificacao . "', catmat= '" . $catmat . "', quantidade= '" . $quantidade . "',
+				estoque_ideal= '" . $estoqueIdeal . "', posicao= '" . $posicao . "', categoria= '" . $categoria . "', descricao= '" . $descricao . "' WHERE
+					id= " . $id . "";
 
+	$resultado = $conexao->query($query);
 
-			$resultado = $conexao->query($query);
+    close_database($conexao);
 
-		    close_database($conexao);
-
-			// query retorna false caso query falhe
-			if(!resultado){
-				return false;
-			}else{
-				return true;
-			}
+	// query retorna false caso query falhe
+	if(!$resultado){
+		return false;
+	}else{
+		return true;
+	}
 }
 
 function excluirProduto($id){
@@ -151,4 +150,18 @@ function excluirProduto($id){
     close_database($conexao);
 
     return $resultado;
+}
+
+function getIDCategoriaPorNome($nome){
+	$conexao = open_database();
+
+    $query = "SELECT id FROM categoria WHERE nome = '" . $nome . "'";
+
+    $resultado = $conexao->query($query);
+
+    $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    close_database($conexao);
+
+    return $dados[0]['id'];
 }
