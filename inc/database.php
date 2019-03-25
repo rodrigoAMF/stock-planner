@@ -57,6 +57,25 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 
 }
 
+function cadastraCategoria($nome){
+	$conexao = open_database();
+
+	$query = "INSERT INTO categoria(nome) values('". $nome . "')";
+
+
+	$resultado = $conexao->query($query);
+
+    close_database($conexao);
+
+	// query retorna false caso query falhe
+	if(!resultado){
+		return false;
+	}else{
+		return true;
+	}
+
+}
+
 function getTodosProdutos(){
 	$conexao = open_database();
 

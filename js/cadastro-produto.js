@@ -18,7 +18,35 @@ function ehNumerico(campo){
             }
         }
         return true;
-    }
+}
+
+$('#formato-botao-mais').on('click',function(){
+    alertify.prompt( 'Cadastrar nova categoria', 'Nome', '', function(evt, value) {
+          let url = "processa-categoria.php?nome=" + value;
+
+          alertify.success('Cadastrado com sucesso')
+
+          var request = $.ajax({
+    	            url: url,
+    	            cache: false
+    	     });
+
+           request.done(function(msg) {
+               $('#categoria').add("<option> " +value+ "</option>").appendTo($('#categoria'));
+           });
+
+           request.fail(function(jqXHR, textStatus) {
+               alert("Falha ao cadastrar categoria");
+           });
+
+
+
+    }, function() {
+          alertify.error('Cancelado')
+    });
+
+
+})
 
 frm.submit(function (e) {
 
