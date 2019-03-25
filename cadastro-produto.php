@@ -42,10 +42,10 @@
         		<div class="form-group col-md-1"></div>
 
                 <div class="form-group col-md-5">
-                    <label for="localizacao">Localização:</label>
-                    <input type="text" class="form-control" name="localizacao" id="localizacao" placeholder="">
-                    <div class="feedback" id="feedback-localizacao">
-
+                    <label for="posicao">Localização:</label>
+                    <input type="text" class="form-control" name="posicao" id="posicao" placeholder="">
+                    <div class="feedback" id="feedback-posicao">
+                        
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                     <div class="feedback" id="feedback-descricao">
                         okay!
                     </div>
-          			
+
         		</div>
 
         		<div class="form-group col-md-1"></div>
@@ -73,7 +73,7 @@
         	</div>
 
 
-    
+
 
         	<div class="form-row">
         		<div class="form-group col-md-4">
