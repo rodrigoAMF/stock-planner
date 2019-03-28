@@ -1,3 +1,8 @@
+body {
+	background-color: #dcdcdc;
+}
+
+
 $corCabecalhoTabela: #526ba0;
 
 table thead tr{
@@ -7,6 +12,7 @@ table thead tr{
 
 table tr{
     text-align: center;
+    background-color: white;
 }
 
 .ordenavel:hover

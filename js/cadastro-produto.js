@@ -22,6 +22,7 @@ function ehNumerico(campo){
 
 $('#formato-botao-mais').on('click',function(){
     alertify.prompt( 'Cadastrar nova categoria', 'Nome', '', function(evt, value) {
+
           let url = "processa-categoria.php?nome=" + value;
 
           alertify.success('Cadastrado com sucesso')
@@ -32,14 +33,13 @@ $('#formato-botao-mais').on('click',function(){
     	     });
 
            request.done(function(msg) {
-               $('#categoria').add("<option> " +value+ "</option>").appendTo($('#categoria'));
+               $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
+               $("#categoria").val( $('option:contains('+value+')').val() );
            });
 
            request.fail(function(jqXHR, textStatus) {
                alert("Falha ao cadastrar categoria");
            });
-
-
 
     }, function() {
           alertify.error('Cancelado')
