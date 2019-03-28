@@ -1,11 +1,33 @@
+$(".ordenavel").on("click", function(event)
+{
+	let nomeCampo = $(this).text();
+
+	if (nomeCampo != "")
+	{
+		nomeCampo = nomeCampo.toUpperCase();
+	}
+
+	if(nomeCampo == "NOME"){
+
+	}
+	if(nomeCampo == "QUANTIDADE"){
+
+	}
+	if(nomeCampo == "")
+	{
+
+	}
+
+});
+
 $(".delete-icon").on('click', function(event){
 	event.preventDefault();
 
 	let btn = $(this);
 	let url = $(this).attr('href');
 
-	
-	alertify.confirm('Deseja realmente excluir','Excluir este item?', 
+
+	alertify.confirm('Deseja realmente excluir','Excluir este item?',
 		function(){
 
 			var request = $.ajax({
@@ -23,11 +45,11 @@ $(".delete-icon").on('click', function(event){
 	            alert("Falha ao cadastrar produto: " + textStatus);
 	        });
 
-			
+
 		},
 		function(){
 			alertify.notify('Cancelado');
 		}).setting({'labels':{ok:'Sim',cancel:'Não'},
 					'transition':'zoom'
-		});	
+		});
 });
