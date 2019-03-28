@@ -255,7 +255,7 @@ function getProdutosFiltrados($busca, $filtro){
 function getCategorias(){
 	$conexao = open_database();
 
-    $query = "SELECT * FROM categoria";
+    $query = "SELECT * FROM categoria ORDER BY nome";
 
     $resultado = $conexao->query($query);
 

@@ -1,3 +1,8 @@
+body {
+	background-color: #dcdcdc;
+}
+
+
 table thead tr{
     background: #526ba0;
     color:#fff;
@@ -5,6 +10,7 @@ table thead tr{
 
 table tr{
     text-align: center;
+    background-color: white;
 }
 
 table tbody tr:hover{
