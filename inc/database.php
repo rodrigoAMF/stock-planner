@@ -200,47 +200,38 @@ function cadastraCategoria($nome){
 
 }
 
-function getTodosProdutos(){
+
+function getProdutos($busca, $filtro, $parametroOrdenacao){
 	$conexao = open_database();
 
-    $query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id";
-
-    $resultado = $conexao->query($query);
-
-    $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-    close_database($conexao);
-
-    return $dados;
-}
-
-function getProdutosFiltrados($busca, $filtro){
-	$conexao = open_database();
-
-	if ($busca == null) return getTodosProdutos();
-
-	switch($filtro){
-		case 1:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.nome LIKE $busca ";
-		break;
-		case 2:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.identificacao LIKE $busca ";
-		break;
-		case 3:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.catmat LIKE $busca ";
-		break;
-		case 4:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.categoria LIKE $busca ";
-		break;
-		case 5:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.posicao LIKE $busca ";
-		break;
-		case 6:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.estoque_ideal LIKE $busca ";
-		break;
-		case 7:
-			$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.quantidade LIKE $busca ";
-		break;
+	if ($busca == null) {
+		$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id";
+	}
+	else
+	{
+		switch($filtro){
+			case 1:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.nome LIKE $busca ";
+			break;
+			case 2:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.identificacao LIKE $busca ";
+			break;
+			case 3:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.catmat LIKE $busca ";
+			break;
+			case 4:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.categoria LIKE $busca ";
+			break;
+			case 5:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.posicao LIKE $busca ";
+			break;
+			case 6:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.estoque_ideal LIKE $busca ";
+			break;
+			case 7:
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.quantidade LIKE $busca ";
+			break;
+		}
 	}
 
     $resultado = $conexao->query($query);
@@ -249,13 +240,38 @@ function getProdutosFiltrados($busca, $filtro){
 
     close_database($conexao);
 
-    return $dados;
+	for ($i=0; $i < sizeof($dados); $i++) {
+		$dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
+	}
+
+	$dados = sortLista($dados, $parametroOrdenacao);
+
+	$produtos = "";
+
+	foreach ($dados as $dados) {
+		$rgb = pickColor($dados['porcentagem']);
+		$produtos .= "<tr>";
+		$produtos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
+		$produtos .= "<td>" . $dados['nome'] . "</td>";
+		$produtos .= "<td>" . $dados['identificacao'] . "</td>";
+		$produtos .= "<td>" . $dados['catmat'] . "</td>";
+		$produtos .= "<td>" . $dados['categoria'] . "</td>";
+		$produtos .= "<td>" . $dados['posicao'] . "</td>";
+		$produtos .= "<td>" . $dados['estoque_ideal'] . "</td>";
+		$produtos .= "<td>" . $dados['quantidade'] . "</td>";
+		$produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
+		$produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
+		<i class='material-icons'>edit</i></a></td>";
+		$produtos .= "</tr>";
+	}
+
+    return $produtos;
 }
 
 function getCategorias(){
 	$conexao = open_database();
 
-    $query = "SELECT * FROM categoria";
+    $query = "SELECT * FROM categoria ORDER BY nome";
 
     $resultado = $conexao->query($query);
 

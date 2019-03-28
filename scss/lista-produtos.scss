@@ -1,10 +1,24 @@
+body {
+	background-color: #dcdcdc;
+}
+
+
+$corCabecalhoTabela: #526ba0;
+
 table thead tr{
-    background: #526ba0;
+    background: $corCabecalhoTabela;
     color:#fff;
 }
 
 table tr{
     text-align: center;
+    background-color: white;
+}
+
+.ordenavel:hover
+{
+    background: darken($corCabecalhoTabela, 5%);
+    cursor:pointer;
 }
 
 table tbody tr:hover{
