@@ -2,6 +2,34 @@ let clickNome = false;
 let clickQuantidade = false;
 let clickEstadoCritico = false;
 
+$("#busca").on("keyup", function(event) {
+	let val = $(this).val();
+	let filtro = $("#parametroFiltro").val().toUpperCase();
+
+	if(val != ""){
+		val = val.toUpperCase();
+	}
+
+	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&parametroOrdenacao=";
+
+	var request = $.ajax({
+		url: url,
+		cache: false
+	});
+
+	request.done(function(msg) {
+		$('table tbody').remove();
+		$('table').append("<tbody>");
+		$('table tbody').append(msg);
+		$('table').append("</tbody>");
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		alertify.error('Falha ao buscar produtos');
+	});
+
+});
+
 $(".ordenavel").on("click", function(event)
 {
 	let nomeCampo = $(this).text();

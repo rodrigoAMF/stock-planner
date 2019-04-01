@@ -23,8 +23,8 @@
     ?>
 
 
-    <div id="rodape">
+    <!--<div id="rodape">
     	<br>
-	</div>
+	</div>-->
 </body>
 </html>

@@ -211,25 +211,25 @@ function getProdutos($busca, $filtro, $parametroOrdenacao){
 	{
 		switch($filtro){
 			case 1:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.nome LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.nome LIKE '%" . $busca . "%'";
 			break;
 			case 2:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.identificacao LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.identificacao LIKE '%" . $busca . "%'";
 			break;
 			case 3:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.catmat LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.catmat LIKE '%" . $busca . "%'";
 			break;
 			case 4:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.categoria LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND c.nome LIKE '%" . $busca . "%'";
 			break;
 			case 5:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.posicao LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.posicao LIKE '%" . $busca . "%'";
 			break;
 			case 6:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.estoque_ideal LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
 			break;
 			case 7:
-				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id, p.quantidade LIKE $busca ";
+				$query = "SELECT p.nome, p.catmat, p.id, p.descricao,p.identificacao, p.posicao,p.estoque_ideal,p.quantidade, c.nome as categoria FROM produtos p, categoria c WHERE p.categoria = c.id AND p.quantidade LIKE '%" . $busca . "%'";
 			break;
 		}
 	}
@@ -243,8 +243,10 @@ function getProdutos($busca, $filtro, $parametroOrdenacao){
 	for ($i=0; $i < sizeof($dados); $i++) {
 		$dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
 	}
+	if($busca == null && $filtro == null){
+		$dados = sortLista($dados, $parametroOrdenacao);
+	}
 
-	$dados = sortLista($dados, $parametroOrdenacao);
 
 	$produtos = "";
 

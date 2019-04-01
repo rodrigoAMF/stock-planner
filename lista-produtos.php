@@ -14,8 +14,8 @@
     <button type="button" class="btn btn-secondary" id="confirma_porcentagem">Confirmar</button>-->
 
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Filtro</label>
-        <select class="form-control" id="exampleFormControlSelect1" name="filtro">
+        <label for="parametroFiltro">Filtro</label>
+        <select class="form-control" id="parametroFiltro" name="filtro">
               <option value="1">Nome</option>
               <option value="2">Identificação</option>
               <option value="3">CATMAT</option>

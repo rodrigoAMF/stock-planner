@@ -9,6 +9,7 @@
 
     $busca = ($busca == "") ? null: $busca;
     $filtro = ($filtro == "") ? null: $filtro;
+    $parametroOrdenacao = ($parametroOrdenacao == "") ? null: $parametroOrdenacao;
 
     $produtos = getProdutos($busca, $filtro, $parametroOrdenacao);
 
