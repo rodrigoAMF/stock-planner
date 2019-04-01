@@ -21,7 +21,9 @@ function ehNumerico(campo){
 }
 
 $('#formato-botao-mais').on('click',function(){
+    alertify.prompt().set('resizable',true).resizeTo(500,250);
     alertify.prompt( 'Cadastrar nova categoria', 'Nome', '', function(evt, value) {
+          
 
           let url = "processa-categoria.php?nome=" + value;
 
@@ -41,14 +43,18 @@ $('#formato-botao-mais').on('click',function(){
                alert("Falha ao cadastrar categoria");
            });
 
+
     }, function() {
           alertify.error('Cancelado')
-    });
-
+    }).setting({'labels':{ok:'Sim',cancel:'Não'},
+                    'transition':'zoom'
+        });
 
 })
 
 frm.submit(function (e) {
+
+
 
     e.preventDefault();
 
@@ -88,13 +94,13 @@ frm.submit(function (e) {
             estoque_ideal.removeClass('is-valid is-invalid');
             $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
-            alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom'});
+            alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });
 
         request.fail(function(jqXHR, textStatus) {
             let mensagem = "Falha ao salvar produto: " + textStatus;
-            alertify.alert('Mensagem de sistema', mensagem).setting({'transition':'zoom'});
+            alertify.alert('Mensagem de sistema', mensagem).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });
     }else{

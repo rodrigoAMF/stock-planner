@@ -127,8 +127,8 @@ $(".delete-icon").on('click', function(event){
 	let btn = $(this);
 	let url = $(this).attr('href');
 
-
-	alertify.confirm('Deseja realmente excluir','Excluir este item?',
+	alertify.confirm().set('resizable',true).resizeTo(500,250); 
+	alertify.confirm('Confirmar','Deseja realmente excluir este item?',
 		function(){
 
 			var request = $.ajax({
