@@ -288,7 +288,7 @@ function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdea
 	$conexao = open_database();
 
 	$query = "UPDATE produtos SET nome = '" . $nome . "', identificacao  = '" . $identificacao . "', catmat= '" . $catmat . "', quantidade= '" . $quantidade . "',
-				estoque_ideal= '" . $estoqueIdeal . "', posicao= '" . $posicao . "', categoria= '" . $categoria . "', descricao= '" . $descricao . "' WHERE
+				estoque_ideal= '" . $estoqueIdeal . "', posicao = '" . $posicao . "', categoria= '" . $categoria . "', descricao= '" . $descricao . "' WHERE
 					id= " . $id . "";
 
 	$resultado = $conexao->query($query);

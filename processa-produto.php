@@ -1,6 +1,6 @@
 <?php
     include("config.php");
-    include(DBAPI);*/
+    include(DBAPI);
 
     $nome = $_POST['nome'];
     $identificacao = $_POST['identificacao'];

@@ -46,9 +46,9 @@
                 <div class="form-group col-md-1"></div>
 
                 <div class="form-group col-md-5">
-                    <label for="posicao">Posição:</label>
-                    <input type="text" class="form-control" name="posicao" id="posicao" value="<?= $produto['posicao']; ?>" placeholder="">
-                    <div class="feedback" id="feedback-posicao">
+                    <label for="localizacao">Localização:</label>
+                    <input type="text" class="form-control" name="localizacao" id="localizacao" value="<?= $produto['posicao']; ?>" placeholder="">
+                    <div class="feedback" id="feedback-localizacao">
 
                     </div>
                 </div>
