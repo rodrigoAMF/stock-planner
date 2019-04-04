@@ -1,18 +1,20 @@
 <?php
 
+include("../model/Database.php");
+
 class DatabaseController{
     private $databaseModel;
     private $conexao;
 
     public function __construct(){
-        $databaseModel = new Database();
+        $this->databaseModel = new Database();
     }
 
     function open_database() {
     	try {
-    		$conexao = new mysqli($databaseModel::DB_HOST, $databaseModel::DB_USER, $databaseModel::DB_PASSWORD, $databaseModel::DB_NAME);
-    		mysqli_set_charset($conexao,"utf8");
-    		return $conexao;
+    		$this->conexao = new mysqli($this->databaseModel::DB_HOST, $this->databaseModel::DB_USER, $this->databaseModel::DB_PASSWORD, $this->databaseModel::DB_NAME);
+    		mysqli_set_charset($this->conexao,"utf8");
+    		return $this->conexao;
     	} catch (Exception $e) {
     		echo $e->getMessage();
     		return null;
@@ -21,7 +23,7 @@ class DatabaseController{
 
     function close_database() {
     	try {
-    		mysqli_close($conexao);
+    		mysqli_close($this->conexao);
     	} catch (Exception $e) {
     		echo $e->getMessage();
     	}
