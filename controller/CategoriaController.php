@@ -1,6 +1,5 @@
 <?php
 //mysqli_report(MYSQLI_REPORT_STRICT);
-//include("../model/Categoria.php");
 require_once("DatabaseController.php");
 
 // Singleton
@@ -29,7 +28,8 @@ class CategoriaController{
 
         if($resultado == false)
         {
-            return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
         }
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
@@ -52,7 +52,8 @@ class CategoriaController{
 
         if($resultado == false)
         {
-            return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
         }
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
@@ -66,16 +67,17 @@ class CategoriaController{
         }
     }
 
-    function cadastraCategoria($nome){
+    function cadastraCategoria(Categoria $categoria){
     	$conexao = $this->databaseController->open_database();
 
-    	$query = "INSERT INTO categoria(nome) values('". $nome . "')";
+    	$query = "INSERT INTO categoria(nome) values('". $categoria->getNome() . "')";
 
     	$resultado = $conexao->query($query);
 
         if($resultado == false)
         {
-            return false;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
         }
 
         $this->databaseController->close_database();
@@ -93,7 +95,8 @@ class CategoriaController{
 
         if($resultado == false)
         {
-            return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
         }
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);

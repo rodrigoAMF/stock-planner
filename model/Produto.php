@@ -1,5 +1,5 @@
 <?php
-require_once("../controller/CategoriaController.php");
+require_once("controller/CategoriaController.php");
 
 class Produto{
     private $nome, $identificacao, $posicao, $descricao; // string

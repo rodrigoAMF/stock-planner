@@ -1,8 +1,9 @@
 <?php
-    require_once("funcoes.php");
-    require_once("inc/database.php");
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    $pagina = new Pagina();
 
-    incluiCabecalho("Stock Planner - Editar Produtos", "cadastro-produto");
+    $pagina->incluiCabecalho("Stock Planner - Editar Produtos", "cadastro-produto");
 
     $id = $_GET['id'];
 
@@ -145,5 +146,5 @@
 </div>
 
 <?php
-    require_once(FOOTER_TEMPLATE);
+    require_once(Config::FOOTER_TEMPLATE);
 ?>

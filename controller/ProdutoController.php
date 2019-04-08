@@ -149,7 +149,8 @@ class ProdutoController{
 
     	if($resultado == false)
     	{
-    		return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
@@ -175,7 +176,8 @@ class ProdutoController{
 
     	if($resultado == false)
     	{
-    		return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
         $this->databaseController->close_database();
@@ -221,7 +223,8 @@ class ProdutoController{
 
     	if($resultado == false)
     	{
-    		return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
@@ -274,7 +277,8 @@ class ProdutoController{
 
     	if($resultado == false)
     	{
-    		return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
         $this->databaseController->close_database();
@@ -296,7 +300,8 @@ class ProdutoController{
 
     	if($resultado == false)
     	{
-    		return -2;
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
         $this->databaseController->close_database();

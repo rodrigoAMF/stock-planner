@@ -1,8 +1,12 @@
 <?php
-    require_once("funcoes.php");
-    require_once(DBAPI);
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    require_once("controller/CategoriaController.php");
 
-    incluiCabecalho("Stock Planner - Cadastro de produtos", "cadastro-produto");
+    $pagina = new Pagina();
+    $categoriaController = new CategoriaController();
+
+    $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "cadastro-produto");
 ?>
 
 <div class="container">
@@ -76,7 +80,7 @@
                    <label for="categoria">Categoria:</label>
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
                     <?php
-                        $categorias = getCategorias();
+                        $categorias = $categoriaController->getCategorias();
                         foreach ($categorias as $categoria) {
                             echo "<option value = '" . $categoria['id']."'>" . $categoria['nome']. "</option>";
                         }
@@ -134,5 +138,5 @@
 </div>
 
 <?php
-    require_once(FOOTER_TEMPLATE);
+    require_once(Config::FOOTER_TEMPLATE);
 ?>

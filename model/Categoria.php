@@ -1,5 +1,5 @@
 <?php
-require_once("../controller/CategoriaController.php");
+require_once("controller/CategoriaController.php");
 
 class Categoria{
     private $id;
@@ -15,6 +15,10 @@ class Categoria{
 
     public function setAtributos(int $id, string $nome) {
         $this->id = $idCategoria;
+        $this->nome = $nome;
+    }
+
+    public function setNomeNovo(string $nome){
         $this->nome = $nome;
     }
 

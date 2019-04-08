@@ -23,7 +23,6 @@ function ehNumerico(campo){
 $('#formato-botao-mais').on('click',function(){
     alertify.prompt().set('resizable',true).resizeTo(500,250);
     alertify.prompt( 'Cadastrar nova categoria', 'Nome', '', function(evt, value) {
-          
 
           let url = "processa-categoria.php?nome=" + value;
 
@@ -35,6 +34,7 @@ $('#formato-botao-mais').on('click',function(){
     	     });
 
            request.done(function(msg) {
+               alert(msg);
                $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
                $("#categoria").val( $('option:contains('+value+')').val() );
            });
@@ -103,7 +103,7 @@ frm.submit(function (e) {
             estoque_ideal.val(' ');
             alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
-           
+
 
         });
 
@@ -194,5 +194,3 @@ frm.submit(function (e) {
 
 
 });
-
-
