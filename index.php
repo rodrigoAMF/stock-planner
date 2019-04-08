@@ -35,6 +35,18 @@
             </button>
           </a>
 				</div>
+
+         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
+          <a href="importar-produtos.php">
+            <button>
+              <img src="img/importar.png">
+              <br>
+              <div class="textosBotao">
+                Importar
+              </div>
+            </button>
+          </a>
+        </div>
 			</div>
 		</div>
 </div>

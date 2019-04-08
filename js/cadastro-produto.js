@@ -94,7 +94,16 @@ frm.submit(function (e) {
             estoque_ideal.removeClass('is-valid is-invalid');
             $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
+            nome.val(' ');
+            quantidade.val(' ');
+            identificacao.val(' ');
+            descricao.val(' ');
+            catmat.val(' ');
+            posicao.val(' ');
+            estoque_ideal.val(' ');
             alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+
+           
 
         });
 
@@ -180,7 +189,10 @@ frm.submit(function (e) {
             $('#feedback-quantidade').removeClass('feedback invalid-feedback').addClass('valid-feedback');
             $('#feedback-quantidade').text('Okay!');
         }
+
     }
 
 
 });
+
+
