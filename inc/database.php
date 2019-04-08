@@ -167,17 +167,14 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $posicao . "', " . $estoqueIdeal . ",
 			" . $quantidade . ")";
 
+	echo $query;
 
 	$resultado = $conexao->query($query);
 
     close_database($conexao);
 
 	// query retorna false caso query falhe
-	if(!resultado){
-		return false;
-	}else{
-		return true;
-	}
+	return true;
 
 }
 
