@@ -33,25 +33,43 @@
                             <div class="navbar-brand" id="logo" >
                                 <a href="index.php"><img src="img/logo1.png" alt="Logo Stock Planner" class="img-responsive logo-stock-planner"></a>
                             </div>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-
-                            <div class="collapse navbar-collapse" id="navbarResponsive">
-                                  <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                      <a class="nav-link" href="index.php">Home
-                                            <span class="sr-only"></span>
-                                          </a>
+                            <nav class="nav">
+                               <ul class="menu">
+                                 <li class="menu-item">
+                                  <a href="index.php">Home</a>
+                                 </li>
+                                 <li class="menu-item has-children">
+                                   <a href="">Produtos
+                                        <span class="dropdown-icon"></span>
+                                   </a>
+                                   <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="cadastro-produto.php">Cadastro</a>
                                     </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="cadastro-produto.php">Cadastrar</a>
+                                    <li class="menu-item">
+                                        <a href="lista-produtos.php">Listar</a>
                                     </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="lista-produtos.php">Listar</a>
+                                    <li class="menu-item">
+                                        <a href="importar-produtos.php">Importar</a>
                                     </li>
-                                  </ul>
-                            </div>
+                                   </ul>
+                                 </li>
+                                 <li class="menu-item has-children">
+                                   <a href="">Sites
+                                     <span class="dropdown-icon"></span>
+                                   </a>
+                                   <ul class="sub-menu">
+                                     <li class="menu-item">
+                                       <a href="">3</a>
+                                     </li>
+                                     <li class="menu-item">
+                                       <a href="">4</a>
+                                     </li>
+                                   </ul>
+                                 </li>
+                                 
+                               </ul>
+                            </nav>
                         </div>
                     </nav>
                 </div>
