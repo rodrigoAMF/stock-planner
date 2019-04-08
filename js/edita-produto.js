@@ -62,13 +62,13 @@ frm.submit(function (e) {
             estoque_ideal.removeClass('is-valid is-invalid');
             $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
-            alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!').setting({'transition':'zoom'});
+            alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });
 
         request.fail(function(jqXHR, textStatus) {
             let mensagem = "Falha ao editar produto: " + textStatus;
-            alertify.alert('Mensagem de sistema', mensagem).setting({'transition':'zoom'});
+            alertify.alert('Mensagem de sistema', mensagem).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });
     }else{
