@@ -1,12 +1,12 @@
 <?php
-    include("config.php");
-    include(DBAPI);
-    print_r($_GET);
+    require_once("controller/CategoriaController.php");
+    require_once("model/Categoria.php");
 
-    $nome = $_GET['nome'];
+    $categoria = new Categoria();
+    $categoria->setNomeNovo($_GET['nome']);
 
+    $categoriaController = CategoriaController::getInstance();
 
-    $resultadoQuery = cadastraCategoria($nome);
+    $resultadoQuery = $categoriaController->cadastraCategoria($categoria);
 
-
-?>
+    echo $resultadoQuery;
