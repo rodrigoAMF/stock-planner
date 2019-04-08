@@ -11,6 +11,12 @@
     $categoria = $_POST['categoria'];
     $descricao = $_POST['descricao'];
 
+    $produto = new Produto();
+    $produto->setNome();
+
+    $produtoController;
+    ProdutoController::cadastraProduto($produto);
+
     $resultadoQuery = cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao);
 
 

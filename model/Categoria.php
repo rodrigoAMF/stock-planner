@@ -1,4 +1,5 @@
 <?php
+require_once("../controller/CategoriaController.php");
 
 class Categoria{
     private $id;
@@ -17,11 +18,16 @@ class Categoria{
         $this->nome = $nome;
     }
 
-    public function setId(int $id){
-        $this->id = $id;
-    }
-
     public function setNome(string $nome){
-        $this->nome = $nome;
+        $categoriaController = CategoriaController::getInstance();
+        $this->id = $categoriaController->getIDPeloNome($nome);
+        if($this->id >= 0)
+        {
+            $this->nome = $nome;
+        }else{
+            throw new Exception('Essa categoria não existe!');
+        }
+
+
     }
 }

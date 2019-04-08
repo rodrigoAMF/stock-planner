@@ -1,4 +1,5 @@
 <?php
+require_once("../controller/CategoriaController.php");
 
 class Produto{
     private $nome, $identificacao, $posicao, $descricao; // string
@@ -67,5 +68,36 @@ class Produto{
 
     public function setEstoqueIdeal(int $estoqueIdeal){
         $this->estoqueIdeal = $estoqueIdeal;
+    }
+
+    public function setCategoria(Categoria $categoria){
+        $categoriaController = CategoriaController::getInstance();
+        if($categoriaController->getIDPeloNome($categoria->getNome())> 0)
+        {
+            $this->categoria = $categoria;
+        }else{
+            throw new Exception('Essa categoria não existe!');
+        }
+    }
+
+    function pickColor($percent){
+        if ($percent > 1.27) {
+            $rgb[0] = 0;
+            $rgb[1] = 200;
+            $rgb[2] = 0;
+        }elseif ($percent >1) {
+            $rgb[0] = (-875*$percent)+1129;
+            $rgb[1] = 200;
+            $rgb[2] = 0;
+        }elseif ($percent >0.77) {
+            $rgb[0] = 255;
+            $rgb[1] = (850*$percent)-649;
+            $rgb[2] = 0;
+        }else {
+            $rgb[0] = 255;
+            $rgb[1] = 0;
+            $rgb[2] = 0;
+        }
+        return $rgb;
     }
 }
