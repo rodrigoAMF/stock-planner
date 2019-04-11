@@ -37,14 +37,14 @@
         <table class="table table-borderless">
             <thead>
                 <tr >
-                    <th class="ordenavel sticky"></th>
-                    <th class="ordenavel sticky">Nome</th>
+                    <th class="ordenavel sticky"><img src="img/setaBaixo.png" id="setaVazio" ></th>
+                    <th class="ordenavel sticky">Nome <img src="img/setaBaixo.png" id="setaNome" ></th>
                     <th class="sticky">Identificação</th>
                     <th class="sticky">CATMAT</th>
                     <th class="sticky">Categoria</th>
                     <th class="sticky">Posição</th>
                     <th class="sticky">Estoque Ideal</th>
-                    <th class="ordenavel sticky">Quantidade</th>
+                    <th class="ordenavel sticky">Quantidade <img src="img/setaBaixo.png" id="setaQuantidade" ></th>
                     <th class="sticky"></th>
                     <th class="sticky"></th>
                 </tr>

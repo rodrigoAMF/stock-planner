@@ -43,8 +43,10 @@ $(".ordenavel").on("click", function(event)
 		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickNome == false){
 			url += 1;
+			//$("#setaNome").attr("src","img/setaCima.png");
 		}else{
 			url += -1;
+			//$("#setaNome").attr("src","img/setaBaixo.png");
 		}
 
 		clickNome = !clickNome;
