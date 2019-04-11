@@ -167,7 +167,7 @@ function cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueId
 	. $nome . "', '" . $descricao . "', '" . $identificacao . "', " . $catmat . ", " . $categoria . ", '" . $posicao . "', " . $estoqueIdeal . ",
 			" . $quantidade . ")";
 
-	echo $query;
+
 
 	$resultado = $conexao->query($query);
 
