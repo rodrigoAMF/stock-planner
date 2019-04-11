@@ -43,10 +43,10 @@ $(".ordenavel").on("click", function(event)
 		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickNome == false){
 			url += 1;
-			//$("#setaNome").attr("src","img/setaCima.png");
+			$("#setaNome").attr("src","img/setaCima.png");
 		}else{
 			url += -1;
-			//$("#setaNome").attr("src","img/setaBaixo.png");
+			$("#setaNome").attr("src","img/setaBaixo.png");
 		}
 
 		clickNome = !clickNome;
@@ -71,8 +71,10 @@ $(".ordenavel").on("click", function(event)
 		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickQuantidade == false){
 			url += 7;
+			$("#setaQuantidade").attr("src","img/setaCima.png");
 		}else{
 			url += -7;
+			$("#setaQuantidade").attr("src","img/setaBaixo.png");
 		}
 
 		clickQuantidade = !clickQuantidade;
@@ -98,8 +100,10 @@ $(".ordenavel").on("click", function(event)
 		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickEstadoCritico == true){
 			url += 8;
+			$("#setaVazio").attr("src","img/setaCima.png");
 		}else{
 			url += -8;
+			$("#setaVazio").attr("src","img/setaBaixo.png");
 		}
 
 		clickEstadoCritico = !clickEstadoCritico;
