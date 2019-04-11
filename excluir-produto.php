@@ -1,12 +1,11 @@
 <?php
-    include("config.php");
-    include(DBAPI);
-    print_r($_GET);
+    require_once("controller/ProdutoController.php");
 
     $id = $_GET['id'];
 
+    $produtoController = ProdutoController::getInstance();
 
-    $resultadoQuery = excluirProduto($id);
+    $resultadoQuery = $produtoController->excluirProduto($id);
 
     //header('Location: lista-produtos.php');
 
