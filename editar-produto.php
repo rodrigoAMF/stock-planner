@@ -88,12 +88,12 @@
                 <div class="form-group col-md-4">
                    <label for="categoria">Categoria:</label>
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
-                       <option value="<?= $categoriaController->getIDPeloNome($produto['categoria']); ?>"><?= $produto['categoria']; ?></option>
+                       <option value="<?= $produto['categoria']; ?>"><?= $produto['categoria']; ?></option>
                     <?php
                         $categorias = $categoriaController->getCategorias();
                         foreach ($categorias as $categoria) {
                             if($categoria['nome'] != $produto['categoria'])
-                                echo "<option value = '" . $categoria['id']."'>" . $categoria['nome']. "</option>";
+                                echo "<option value = '" . $categoria['nome']."'>" . $categoria['nome']. "</option>";
                         }
                     ?>
                     </select>

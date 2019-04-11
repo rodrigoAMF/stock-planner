@@ -267,11 +267,11 @@ class ProdutoController{
 
     }
 
-    function editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao, $id){
+    function editarProduto($produto, $id){
     	$conexao = $this->databaseController->open_database();
 
-    	$query = "UPDATE produtos SET nome = '" . $nome . "', identificacao  = '" . $identificacao . "', catmat= '" . $catmat . "', quantidade= '" . $quantidade . "',
-    				estoque_ideal= '" . $estoqueIdeal . "', posicao= '" . $posicao . "', categoria= '" . $categoria . "', descricao= '" . $descricao . "' WHERE
+    	$query = "UPDATE produtos SET nome = '" . $produto->getNome() . "', identificacao  = '" . $produto->getIdentificacao() . "', catmat= '" . $produto->getCatmat() . "', quantidade= '" . $produto->getQuantidade() . "',
+    				estoque_ideal= '" . $produto->getEstoqueIdeal() . "', posicao= '" . $produto->getPosicao() . "', categoria= '" . $produto->getCategoria()->getId() . "', descricao= '" . $produto->getDescricao() . "' WHERE
     					id= " . $id . "";
 
     	$resultado = $conexao->query($query);
