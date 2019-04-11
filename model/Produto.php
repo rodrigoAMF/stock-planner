@@ -1,5 +1,6 @@
 <?php
 require_once("controller/CategoriaController.php");
+require_once("Categoria.php");
 
 class Produto{
     private $nome, $identificacao, $posicao, $descricao; // string
@@ -70,14 +71,8 @@ class Produto{
         $this->estoqueIdeal = $estoqueIdeal;
     }
 
-    public function setCategoria(Categoria $categoria){
-        $categoriaController = CategoriaController::getInstance();
-        if($categoriaController->getIDPeloNome($categoria->getNome())> 0)
-        {
-            $this->categoria = $categoria;
-        }else{
-            throw new Exception('Essa categoria não existe!');
-        }
+    public function setCategoria($categoria){
+        $this->categoria = $categoria;
     }
 
     function pickColor($percent){

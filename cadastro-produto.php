@@ -82,7 +82,7 @@
                     <?php
                         $categorias = $categoriaController->getCategorias();
                         foreach ($categorias as $categoria) {
-                            echo "<option value = '" . $categoria['id']."'>" . $categoria['nome']. "</option>";
+                            echo "<option value = '" . $categoria['nome']."'>" . $categoria['nome']. "</option>";
                         }
                     ?>
                     </select>
