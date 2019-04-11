@@ -74,25 +74,4 @@ class Produto{
     public function setCategoria($categoria){
         $this->categoria = $categoria;
     }
-
-    function pickColor($percent){
-        if ($percent > 1.27) {
-            $rgb[0] = 0;
-            $rgb[1] = 200;
-            $rgb[2] = 0;
-        }elseif ($percent >1) {
-            $rgb[0] = (-875*$percent)+1129;
-            $rgb[1] = 200;
-            $rgb[2] = 0;
-        }elseif ($percent >0.77) {
-            $rgb[0] = 255;
-            $rgb[1] = (850*$percent)-649;
-            $rgb[2] = 0;
-        }else {
-            $rgb[0] = 255;
-            $rgb[1] = 0;
-            $rgb[2] = 0;
-        }
-        return $rgb;
-    }
 }

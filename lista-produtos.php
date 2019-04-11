@@ -1,6 +1,7 @@
 <?php
     require_once("model/Config.php");
     require_once("model/Pagina.php");
+    require_once("controller/ProdutoController.php");
     $pagina = new Pagina();
 
     $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
@@ -51,10 +52,10 @@
             <tbody>
 
         <?php
-            $produtos = getProdutos(null,"", 8);
+            $produtoController = ProdutoController::getInstance();
+            $produtos = $produtoController->getProdutos(null,null, 8);
 
             echo $produtos;
-
         ?>
 
             </tbody>

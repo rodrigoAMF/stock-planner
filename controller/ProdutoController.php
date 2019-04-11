@@ -1,5 +1,6 @@
 <?php
-//mysqli_report(MYSQLI_REPORT_STRICT);
+require_once("DatabaseController.php");
+
 class ProdutoController{
 
     private $databaseController;
@@ -130,7 +131,7 @@ class ProdutoController{
     	if(abs($parametro) == 8){
     		$parametro /= 8;
     		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($produtos[$j]['porcentagem']*$parametro > $produtos[$j+1]['porcentagem']*$parametro){
+    			if($produtos[$j]['porcentagem']*$parametro < $produtos[$j+1]['porcentagem']*$parametro){
     				$aux =  $produtos[$j];
     	            $produtos[$j] = $produtos[$j+1];
     	            $produtos[$j+1] = $aux;
@@ -235,14 +236,14 @@ class ProdutoController{
     		$dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
     	}
     	if($busca == null && $filtro == null){
-    		$dados = sortLista($dados, $parametroOrdenacao);
+    		$dados = $this->sortLista($dados, $parametroOrdenacao);
     	}
 
 
     	$produtos = "";
 
     	foreach ($dados as $dados) {
-    		$rgb = pickColor($dados['porcentagem']);
+    		$rgb = $this->pickColor($dados['porcentagem']);
     		$produtos .= "<tr>";
     		$produtos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
     		$produtos .= "<td>" . $dados['nome'] . "</td>";
@@ -258,7 +259,7 @@ class ProdutoController{
     		$produtos .= "</tr>";
     	}
 
-    	if(isset($produtos[0]['id'])){
+    	if($produtos != ""){
     		return $produtos;
     	}else{
     		return "Não existem produtos!";
@@ -307,5 +308,26 @@ class ProdutoController{
         $this->databaseController->close_database();
 
         return $resultado;
+    }
+
+    function pickColor($percent){
+        if ($percent > 1.27) {
+            $rgb[0] = 0;
+            $rgb[1] = 200;
+            $rgb[2] = 0;
+        }elseif ($percent >1) {
+            $rgb[0] = (-875*$percent)+1129;
+            $rgb[1] = 200;
+            $rgb[2] = 0;
+        }elseif ($percent >0.77) {
+            $rgb[0] = 255;
+            $rgb[1] = (850*$percent)-649;
+            $rgb[2] = 0;
+        }else {
+            $rgb[0] = 255;
+            $rgb[1] = 0;
+            $rgb[2] = 0;
+        }
+        return $rgb;
     }
 }
