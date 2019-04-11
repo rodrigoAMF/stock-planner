@@ -1,8 +1,46 @@
+//
+// Variable definitions
+//
+// 1. Background-color for the top-level menu
+// 2. Color for the top-level menu
+// 3. Border-color settings for the top-level menu and items
+// 4. Background-color for the sub-menus
+// 5. Color for the sub-menus
+// 6. Border-color settings for the sub-menus and items
+// 7. Spacing/sizing for the items across the menu
+// 8. Background header
 
+// 1 //
+$menu-bg: #2a3f54; //fundo do menu
+$menu-bg-hover: #3b5977;
+
+// 2 //
+$menu-co: #ddd; //cor das letras do menu
+$menu-co-hover: #fff;
+
+// 3 //
+$menu-bo: rgba(white, .1);
+
+// 4 //
+$sub-menu-bg: #eee; //fundo submenu
+$sub-menu-bg-hover: white;
+
+// 5 //
+$sub-menu-co: #222; //letras submenu
+$sub-menu-co-hover: black;
+
+// 6 //
+$sub-menu-bo: rgba(black, .1);
+
+// 7 //
+$menu-link-padding: 1em;
+
+// 8 //
+$header-bg: #2a3f54;
 
 *{
 	text-family: "Roboto condensed","Roboto";
-//	overflow-x: hidden;
+	overflow-x: visible;
 }
 
 textarea, input[type=text] {
@@ -19,7 +57,7 @@ input[type=text]:focus, textarea:focus {
 }
 
 #cabecalho {
-	background: #2a3f54;
+	background: $header-bg;
 	height: 150px;
 	text-align: left;
 	margin-bottom:30px;
@@ -27,7 +65,7 @@ input[type=text]:focus, textarea:focus {
 
 #rodape {
 	margin-top:30px;
-	background: #2a3f54;
+	background: $header-bg;
 	height: 100px;
 }
 
@@ -37,59 +75,21 @@ input[type=text]:focus, textarea:focus {
 
 //MODIFICAR AS CORES PARA DEPENDER DE VARIAVEIS
 #area-menu nav{
-	background: #2a3f54 !important;
+	background: $header-bg !important;
 	z-index: 1500;//ordem de prioridade
 }
 
 #area-menu ul a:link, #area-menu ul a:visited 
 {
-	color: #FFF;
 	padding: 8px 12px;
 	font-size: 1.2em;
 }
 
 #area-menu ul a:hover {
-	color: white;
-	background-color: #3b5977;
-	text-decoration: none;
+	width: 100%;
+	text-decoration: none; //faz o texto em hover nao ficar sublinhado
 }
 
-//
-// Variable definitions
-//
-// 1. Background-color for the top-level menu
-// 2. Color for the top-level menu
-// 3. Border-color settings for the top-level menu and items
-// 4. Background-color for the sub-menus
-// 5. Color for the sub-menus
-// 6. Border-color settings for the sub-menus and items
-// 7. Spacing/sizing for the items across the menu
-//
-
-// 1 //
-$menu-bg: black;
-$menu-bg-hover: #07c;
-
-// 2 //
-$menu-co: #ddd;
-$menu-co-hover: #fff;
-
-// 3 //
-$menu-bo: rgba(white, .1);
-
-// 4 //
-$sub-menu-bg: #eee;
-$sub-menu-bg-hover: white;
-
-// 5 //
-$sub-menu-co: #222;
-$sub-menu-co-hover: black;
-
-// 6 //
-$sub-menu-bo: rgba(black, .1);
-
-// 7 //
-$menu-link-padding: 1em;
 
 //
 // The Navigation Menu
@@ -331,7 +331,7 @@ $menu-link-padding: 1em;
 
           // 4 //
           > .sub-menu {
-            width: 225px;
+            width: 180px;
           }
         }
       }

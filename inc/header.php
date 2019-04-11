@@ -30,9 +30,11 @@
                 <div id="area-menu">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
                         <div class="container">
-                            <div class="navbar-brand" id="logo" >
-                                <a href="index.php"><img src="img/logo1.png" alt="Logo Stock Planner" class="img-responsive logo-stock-planner"></a>
-                            </div>
+                            
+                                <div class="navbar-brand" id="logo" >
+                                    <a href="index.php"><img src="img/logo1.png" alt="Logo Stock Planner" class="img-responsive logo-stock-planner"></a>
+                                </div>
+                            
                             <nav class="nav">
                                <ul class="menu">
                                  <li class="menu-item">
