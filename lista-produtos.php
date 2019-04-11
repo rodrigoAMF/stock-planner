@@ -31,20 +31,20 @@
         <input name="busca" type="text" class="form-control" id="busca" aria-describedby="emailHelp" placeholder="Busca">
     </div>
 
-    <div class="table-responsive-md">
+    <div class="">
         <table class="table table-borderless">
             <thead>
-                <tr>
-                    <th class="ordenavel"></th>
-                    <th class="ordenavel">Nome</th>
-                    <th>Identificação</th>
-                    <th>CATMAT</th>
-                    <th>Categoria</th>
-                    <th>Posição</th>
-                    <th>Estoque Ideal</th>
-                    <th class="ordenavel">Quantidade</th>
-                    <th></th>
-                    <th></th>
+                <tr >
+                    <th class="ordenavel sticky"></th>
+                    <th class="ordenavel sticky">Nome</th>
+                    <th class="sticky">Identificação</th>
+                    <th class="sticky">CATMAT</th>
+                    <th class="sticky">Categoria</th>
+                    <th class="sticky">Posição</th>
+                    <th class="sticky">Estoque Ideal</th>
+                    <th class="ordenavel sticky">Quantidade</th>
+                    <th class="sticky"></th>
+                    <th class="sticky"></th>
                 </tr>
             </thead>
             <tbody>
