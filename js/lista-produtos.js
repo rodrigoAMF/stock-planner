@@ -94,7 +94,7 @@ $(".ordenavel").on("click", function(event)
 	if(nomeCampo == "")
 	{
 		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
-		if(clickEstadoCritico == false){
+		if(clickEstadoCritico == true){
 			url += 8;
 		}else{
 			url += -8;
@@ -127,7 +127,7 @@ $(".delete-icon").on('click', function(event){
 	let btn = $(this);
 	let url = $(this).attr('href');
 
-	alertify.confirm().set('resizable',true).resizeTo(500,250); 
+	alertify.confirm().set('resizable',true).resizeTo(500,250);
 	alertify.confirm('Confirmar','Deseja realmente excluir este item?',
 		function(){
 

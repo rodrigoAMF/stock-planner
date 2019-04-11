@@ -1,12 +1,17 @@
 <?php
-    require_once("funcoes.php");
-    require_once("inc/database.php");
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    require_once("controller/ProdutoController.php");
+    require_once("controller/CategoriaController.php");
+    $pagina = new Pagina();
+    $produtoController = ProdutoController::getInstance();
+    $categoriaController = CategoriaController::getInstance();
 
-    incluiCabecalho("Stock Planner - Editar Produtos", "cadastro-produto");
+    $pagina->incluiCabecalho("Stock Planner - Editar Produtos", "cadastro-produto");
 
     $id = $_GET['id'];
 
-    $produto = getProdutoPorId($id);
+    $produto = $produtoController->getProdutoPorId($id);
 ?>
 
 <div class="container">
@@ -83,12 +88,12 @@
                 <div class="form-group col-md-4">
                    <label for="categoria">Categoria:</label>
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
-                       <option value="<?= getIDCategoriaPorNome($produto['categoria']); ?>"><?= $produto['categoria']; ?></option>
+                       <option value="<?= $produto['categoria']; ?>"><?= $produto['categoria']; ?></option>
                     <?php
-                        $categorias = getCategorias();
+                        $categorias = $categoriaController->getCategorias();
                         foreach ($categorias as $categoria) {
                             if($categoria['nome'] != $produto['categoria'])
-                                echo "<option value = '" . $categoria['id']."'>" . $categoria['nome']. "</option>";
+                                echo "<option value = '" . $categoria['nome']."'>" . $categoria['nome']. "</option>";
                         }
                     ?>
                     </select>
@@ -145,5 +150,5 @@
 </div>
 
 <?php
-    require_once(FOOTER_TEMPLATE);
+    require_once(Config::FOOTER_TEMPLATE);
 ?>

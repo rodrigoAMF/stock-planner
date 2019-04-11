@@ -1,7 +1,9 @@
 <?php
-    require_once("funcoes.php");
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    $pagina = new Pagina();
 
-    incluiCabecalho("Stock Planner - Home", "pagina-inicial");
+    $pagina->incluiCabecalho("Stock Planner - Home", "pagina-inicial");
 ?>
 <div class="container conteudo-principal">
 	<div>
@@ -53,5 +55,5 @@
 </div>
 
 <?php
-    require_once(FOOTER_TEMPLATE);
+    require_once(Config::FOOTER_TEMPLATE);
 ?>

@@ -1,26 +1,23 @@
 <?php
-    include("config.php");
-    include(DBAPI);
-    print_r($_POST);
+    require_once("model/Produto.php");
+    require_once("controller/ProdutoController.php");
 
-    $nome = $_POST['nome'];
-    $identificacao = $_POST['identificacao'];
-    $catmat = $_POST['catmat'];
-    $quantidade = $_POST['quantidade'];
-    $estoqueIdeal = $_POST['estoqueIdeal'];
-    $posicao = $_POST['posicao'];
-    $categoria = $_POST['categoria'];
-    $descricao = $_POST['descricao'];
+    $produto = new Produto();
+
+    $produto->setNome($_POST['nome']);
+    $produto->setIdentificacao($_POST['identificacao']);
+    $produto->setCatmat($_POST['catmat']);
+    $produto->setQuantidade($_POST['quantidade']);
+    $produto->setEstoqueIdeal($_POST['estoqueIdeal']);
+    $produto->setPosicao($_POST['posicao']);
+    $produto->getCategoria()->setNome($_POST['categoria']);
+    $produto->setDescricao($_POST['descricao']);
+
     $id = $_GET['id'];
 
-    $resultadoQuery = editarProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao, $id);
+    $produtoController = ProdutoController::getInstance();
 
+    $resultadoQuery = $produtoController->editarProduto($produto, $id);
 
-    if($resultadoQuery){
-        http_response_code(200);
-        echo '200 (Okay)';
-    }else{
-        http_response_code(500);
-        echo '500 (Internal Server Error)';
-    }
+    echo $resultadoQuery;
 ?>

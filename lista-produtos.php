@@ -1,8 +1,10 @@
 <?php
-    require_once("funcoes.php");
-    require_once(DBAPI);
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    require_once("controller/ProdutoController.php");
+    $pagina = new Pagina();
 
-    incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
+    $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
 ?>
 
 <div class="container">
@@ -50,10 +52,10 @@
             <tbody>
 
         <?php
-            $produtos = getProdutos(null,"", 8);
+            $produtoController = ProdutoController::getInstance();
+            $produtos = $produtoController->getProdutos(null,null, 8);
 
             echo $produtos;
-
         ?>
 
             </tbody>
@@ -62,5 +64,5 @@
 </div>
 
 <?php
-    require_once(FOOTER_TEMPLATE);
+    require_once(Config::FOOTER_TEMPLATE);
 ?>
