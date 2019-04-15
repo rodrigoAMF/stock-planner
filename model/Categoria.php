@@ -14,7 +14,7 @@ class Categoria{
     }
 
     public function setAtributos(int $id, string $nome) {
-        $this->id = $idCategoria;
+        $this->id = $id;
         $this->nome = $nome;
     }
 
@@ -31,7 +31,5 @@ class Categoria{
         }else{
             throw new Exception('Essa categoria não existe!');
         }
-
-
     }
 }
