@@ -1,5 +1,5 @@
 <?php
-    //session_start();
+    session_start();
     require_once("model/Config.php");
     require_once("model/Pagina.php");
     $pagina = new Pagina();
@@ -23,13 +23,13 @@
         </div>
       </div>
     </form>
-    <!-- <?php
+    <?php
     if (isset($_SESSION['msg'])) {
       echo $_SESSION['msg'];
       unset($_SESSION['msg']);
     }
 
-    ?> -->
+    ?>
   </div>
 </div>
 
