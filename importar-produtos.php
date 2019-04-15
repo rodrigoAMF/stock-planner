@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    //session_start();
     require_once("funcoes.php");
     require_once(DBAPI);
 
@@ -22,13 +22,13 @@
         </div>
       </div>
     </form>
-    <?php
+    <!-- <?php
     if (isset($_SESSION['msg'])) {
       echo $_SESSION['msg'];
       unset($_SESSION['msg']);
     }
 
-    ?>
+    ?> -->
   </div>
 </div>
 

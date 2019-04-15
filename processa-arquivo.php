@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  //session_start();
   include("config.php");
   include(DBAPI);
 
@@ -15,7 +15,8 @@
     $linha = trim($linha);
     $produtos= explode("\t", $linha);
 
-    if ($produtos <8) {
+    if (sizeof($produtos)<8) {
+      echo "entrou aqui";
       $mensagemErro = "Algum campo não preenchido na linha " . $cont;
       $erro = true;
       break;
@@ -80,13 +81,13 @@
     }
   }
 
-  if ($erro) {
-    // significa que tem erro
-    $_SESSION['msg'] = "<p>" .$mensagemErro. "</p>";
-  } else{
-    $_SESSION['msg'] = "<p> Todos os produtos foram cadastrados com suceeso</p>";
-  }
-  header("Location: importar-produtos.php");
+  // if ($erro) {
+  //   // significa que tem erro
+  //   $_SESSION['msg'] = "<p>" .$mensagemErro. "</p>";
+  // } else{
+  //   $_SESSION['msg'] = "<p> Todos os produtos foram cadastrados com suceeso</p>";
+  // }
+  // header("Location: importar-produtos.php");
 
   function ehNumerico($campo): bool{
     for ($i=0; $i < strlen($campo); $i++) {
