@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="StockPlanner" default="phpunit" basedir="." description="Sistema de Controle de Estoque Inteligente">
+	<property name="message" value="Bem vindo a ferramenta de automatizacao de tarefas PHPING!"/>
+	
+	<target name="tarefas">
+		<phingcall target="mensagem" />
+		<phingcall target="phpunit" />
+	</target>
+	
+	<target name="test">
+        <phpunit pharlocation=".\vendor\bin\phpunit.bat" bootstrap=".\vendor\autoload.php" haltonfailure="true" printsummary="true">
+            <batchtest>
+                <fileset dir="testesPHP">
+                    <include name="**/*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+	
+	<target name="phpunit" description="Run tests">
+		
+		<exec executable=".\vendor\bin\phpunit.bat" passthru="true">
+			<arg value="--bootstrap"/>
+			<arg value=".\vendor\autoload.php"/>
+			<arg value="testesPHP"/>
+		</exec>
+	</target>
+	<target name="mensagem">
+		<echo msg="${message}"/>
+	</target>
+</project>

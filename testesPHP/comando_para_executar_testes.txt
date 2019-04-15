@@ -1,0 +1,7 @@
+Estar na pasta raiz do stock-planner
+
+Instalar composer antes! https://getcomposer.org/
+
+.\vendor\phing\phing\bin\phing
+
+.\vendor\bin\phpcs model/

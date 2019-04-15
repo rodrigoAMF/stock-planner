@@ -19,6 +19,8 @@
             echo "<script src='js/cadastro-produto.js'></script>";
         }else if($pagina == 'editar-produto'){
             echo "<script src='js/edita-produto.js'></script>";
+        }else if($pagina == 'importar-produtos'){
+            echo "<script src='js/importar-produtos.js'></script>";
         }
     ?>
 
