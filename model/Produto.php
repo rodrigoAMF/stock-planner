@@ -2,7 +2,8 @@
 require_once("controller/CategoriaController.php");
 require_once("Categoria.php");
 
-class Produto{
+class Produto
+{
     private $nome, $identificacao, $posicao, $descricao; // string
     private $catmat, $quantidade, $estoqueIdeal; // int
     private $categoria; // Categoria
