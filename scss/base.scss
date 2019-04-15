@@ -59,18 +59,27 @@ input[type=text]:focus, textarea:focus {
 #cabecalho {
 	background: $header-bg;
 	height: 150px;
+	width: 100%;
 	text-align: left;
 	margin-bottom:30px;
 }
 
 #rodape {
-	margin-top:30px;
+  bottom:0;
+  width:100%;
+	margin-top: 90px;
 	background: $header-bg;
-	height: 100px;
+	height: 150px;
+	position:  static;
+	bottom: 0;
+
 }
 
 .logo-stock-planner{
 	height:120px;
+}
+.row{
+	width: 100%;
 }
 
 //MODIFICAR AS CORES PARA DEPENDER DE VARIAVEIS
@@ -78,15 +87,13 @@ input[type=text]:focus, textarea:focus {
 	background: $header-bg !important;
 	z-index: 1500;//ordem de prioridade
 }
-
-#area-menu ul a:link, #area-menu ul a:visited 
+#area-menu ul a:link, #area-menu ul a:visited
 {
 	padding: 8px 12px;
 	font-size: 1.2em;
 }
 
 #area-menu ul a:hover {
-	width: 100%;
 	text-decoration: none; //faz o texto em hover nao ficar sublinhado
 }
 
@@ -94,9 +101,9 @@ input[type=text]:focus, textarea:focus {
 //
 // The Navigation Menu
 //
-// Below defined are all the ins and outs for our navigation menu, 
-// referred to as `.nav`. You may wrap the below settings inside 
-// `.nav` or any other suitable class too, to make it more strict 
+// Below defined are all the ins and outs for our navigation menu,
+// referred to as `.nav`. You may wrap the below settings inside
+// `.nav` or any other suitable class too, to make it more strict
 // in terms of location.
 //
 // Example:
@@ -144,35 +151,35 @@ input[type=text]:focus, textarea:focus {
   border: 0 solid;
 }
 
-// 
+//
 // The Menu-list
 //
 // Below goes the set-up for our menu-list, carrying several menu-items
 // (`.menu-items) as well as sub-menus (`.sub-menu`).
 //
 // 1. Make the menu-item take all available space
-// 2. Make the menu-items handle the fly-outs smoothly by not allowing 
+// 2. Make the menu-items handle the fly-outs smoothly by not allowing
 //    break the flow
 // 3. Add a separation border except for the last menu-item
-// 4. Size-up, align, and make the hyperlinks acquire all the 
+// 4. Size-up, align, and make the hyperlinks acquire all the
 //    available space
 // 5. Add a seperating border to the sub-menu
 // 6. Make the sub-menu hidden
 // 7. Give a transition (fade-in/fade-out effect) to the fly-outs
-// 8. Hide the menu-items inside a hidden sub-menu to avoid 
+// 8. Hide the menu-items inside a hidden sub-menu to avoid
 //    border-flickering
 // 9. Make the sub-menu visible on hovering, selecting, or focusing the
 //    parent menu-item
-//10. Make the menu-items inside a hidden sub-menu visible and 
+//10. Make the menu-items inside a hidden sub-menu visible and
 //    available when its parent menu-item is hovered, selected, or
 //    focused.
-//11. Add some rotation to the dropdown icon when the parent menu item 
+//11. Add some rotation to the dropdown icon when the parent menu item
 //    gets hovered, selected, or focused
-//12. Make the dropdown icon size-up equally as the containing 
+//12. Make the dropdown icon size-up equally as the containing
 //    menu-item, and then fit it properly inside the menu-item
-//13. Populate the dropdown-icon element with the help of CSS 
+//13. Populate the dropdown-icon element with the help of CSS
 //    pseudo-elements
-//14. Adjust the direction and dropdown-icon positioning for the 
+//14. Adjust the direction and dropdown-icon positioning for the
 //    right-to-left menu
 //
 .menu {
@@ -182,7 +189,7 @@ input[type=text]:focus, textarea:focus {
     display: block;
 
     // 2 //
-    &.has-children { 
+    &.has-children {
       &, .menu-item {
         position: relative;
       }
@@ -204,22 +211,22 @@ input[type=text]:focus, textarea:focus {
   // 5 //
   .sub-menu {
     border-width: 1px 0 0;
-    
+
     // 6 //
     visibility: hidden;
     opacity: 0;
     height: 0;
     width: 0;
-    
+
     // 7 //
     transition: visibility .25s, opacity .25s ease-in-out;
-    
+
     // 8 //
     .menu-item {
       visibility: hidden;
     }
   }
-  
+
   // 9 //
   .menu-item {
     &:hover,
@@ -229,7 +236,7 @@ input[type=text]:focus, textarea:focus {
         opacity: 1;
         height: auto;
         width: auto;
-        
+
         // 10 //
         &,
         .menu-item {
@@ -237,7 +244,7 @@ input[type=text]:focus, textarea:focus {
         }
       }
     }
-    
+
     // 11 //
     > a {
       &:hover,
@@ -251,14 +258,14 @@ input[type=text]:focus, textarea:focus {
       }
     }
   }
-  
+
   .dropdown-icon {
 
     // 12 //
     padding: $menu-link-padding $menu-link-padding * 1.25;
     margin: -1em -1em -1em .5em;
     border-width: 0 0 0 1px;
-    
+
     // 13 //
     &:after {
       content: "+";
@@ -272,7 +279,7 @@ input[type=text]:focus, textarea:focus {
 .nav--rtl {
   direction: rtl;
   unicode-bidi: bidi-override;
-  
+
   .menu {
     .dropdown-icon {
       margin: -1em .5em -1em -1em;
@@ -289,33 +296,33 @@ input[type=text]:focus, textarea:focus {
 //
 // 1. Make the top-level menu look horizontal on bigger screens
 // 2. Adjust the seperating border for the top-level horizontal menu
-// 3. Remove the left padding from the dropdown-icon in the top-level menu 
+// 3. Remove the left padding from the dropdown-icon in the top-level menu
 //    to maintain the proper whitespace.
-// 4. Give fly-outs (sub-menus) a width on hovering, selecting, focusing 
+// 4. Give fly-outs (sub-menus) a width on hovering, selecting, focusing
 //    of parent menu-item
 // 5. Throw the sub-menus out of the flow to make them appear as fly-outs
 // 6. Make the sub-menu start just from below the parent element
 // 7. Zero-down the border-width as we don't really need separation here
-// 8. This makes the second sub-menu fly-out on the top-right side of their 
+// 8. This makes the second sub-menu fly-out on the top-right side of their
 //    parent sub-menu
 // 9. Zero-down the border-width of the dropdown-icon
-//10. Adjust the padding and spacing for the dropdown-icon in right-to-left 
+//10. Adjust the padding and spacing for the dropdown-icon in right-to-left
 //    navigation menu
-//11. Align the sub-menu fly-outs from right to left instead of left to 
+//11. Align the sub-menu fly-outs from right to left instead of left to
 //    right
 //12. Align the top-level menu to the center for bigger screens
-// 
+//
 @media only screen and (min-width: 1024px) {
   .nav {
     // 1 //
     .menu {
       display: flex;
       flex-flow: row wrap;
-      
+
       // 2 //
       > .menu-item {
         border-width: 0 1px 0 0;
-        
+
         // 3 //
         > a {
           .dropdown-icon {
@@ -353,7 +360,7 @@ input[type=text]:focus, textarea:focus {
           left: 100%;
         }
       }
-      
+
       // 9 //
       .dropdown-icon {
         border-width: 0;
@@ -361,7 +368,7 @@ input[type=text]:focus, textarea:focus {
       }
     }
   }
-  
+
   .nav--rtl {
     .menu {
       > .menu-item {
@@ -389,7 +396,7 @@ input[type=text]:focus, textarea:focus {
       }
     }
   }
-  
+
   // 12 //
   .nav--cen {
     .menu {
@@ -428,7 +435,7 @@ input[type=text]:focus, textarea:focus {
       & > a {
         color: $menu-co;
       }
-      
+
       // 4 //
 
       & > a {
@@ -454,14 +461,14 @@ input[type=text]:focus, textarea:focus {
         border-color: $sub-menu-bo;
       }
     }
-    
+
     .menu-item {
       // 7 //
       &,
       a {
         color: black;
       }
-      
+
       // 8 //
       a {
         &:hover,
@@ -474,4 +481,3 @@ input[type=text]:focus, textarea:focus {
     }
   }
 }
-

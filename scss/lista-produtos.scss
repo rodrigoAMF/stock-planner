@@ -27,7 +27,7 @@ table tbody tr:hover{
 }
 
 .sticky{
-    position: sticky;
-    top: 0;
-    background:#526ba0;
+    position: sticky !important;
+    top: 0 !important;
+    background:#526ba0 !important;
 }

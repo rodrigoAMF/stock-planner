@@ -32,35 +32,35 @@
         <label for="busca">Busca</label>
         <input name="busca" type="text" class="form-control" id="busca" aria-describedby="emailHelp" placeholder="Busca">
     </div>
+        <!--<div class="col-md-8 col-xl-12 col-sm-2 col-2 col-lg-12">-->
+        <div class="col-sm-12">
+          <table class="table table-borderless table-responsive-md">
+              <thead>
+                  <tr>
+                      <th class="ordenavel sticky"><img src="img/setaBaixo.png" id="setaVazio" ></th>
+                      <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome" ></th>
+                      <th class="sticky">Identificação</th>
+                      <th class="sticky">CATMAT</th>
+                      <th class="sticky">Categoria</th>
+                      <th class="sticky">Posição</th>
+                      <th class="sticky">Estoque Ideal</th>
+                      <th class="ordenavel sticky">Quantidade<img src="img/setaBaixo.png" id="setaQuantidade" ></th>
+                      <th class="sticky"></th>
+                      <th class="sticky"></th>
+                  </tr>
+              </thead>
+              <tbody>
 
-    <div class="">
-        <table class="table table-borderless">
-            <thead>
-                <tr >
-                    <th class="ordenavel sticky"><img src="img/setaBaixo.png" id="setaVazio" ></th>
-                    <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome" ></th>
-                    <th class="sticky">Identificação</th>
-                    <th class="sticky">CATMAT</th>
-                    <th class="sticky">Categoria</th>
-                    <th class="sticky">Posição</th>
-                    <th class="sticky">Estoque Ideal</th>
-                    <th class="ordenavel sticky">Quantidade<img src="img/setaBaixo.png" id="setaQuantidade" ></th>
-                    <th class="sticky"></th>
-                    <th class="sticky"></th>
-                </tr>
-            </thead>
-            <tbody>
+              <?php
+                  $produtoController = ProdutoController::getInstance();
+                  $produtos = $produtoController->getProdutos(null,null, 8);
 
-        <?php
-            $produtoController = ProdutoController::getInstance();
-            $produtos = $produtoController->getProdutos(null,null, 8);
+                  echo $produtos;
+              ?>
 
-            echo $produtos;
-        ?>
-
-            </tbody>
-        </table>
-    </div>
+                  </tbody>
+              </table>
+        </div>
 </div>
 
 <?php
