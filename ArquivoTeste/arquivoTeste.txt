@@ -1,0 +1,2 @@
+caneta	123	456	2	2	96	1	mouse vermelho
+livro	123	456	2	2	96	1	livro preto
