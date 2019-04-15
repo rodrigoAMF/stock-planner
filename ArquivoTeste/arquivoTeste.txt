@@ -1,2 +1,2 @@
-caneta	123	456	2	2	96	1	mouse vermelho
-livro	123	456	2	2	96	1	livro preto
+caneta	123	456	2	2	96	Resistor	mouse vermelho
+livro	123	456	2	2	96	Teste	livro preto

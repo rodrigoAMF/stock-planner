@@ -1,9 +1,7 @@
 <?php
   //session_start();
-  include("config.php");
-  include(DBAPI);
-
-
+  require_once("model/Produto.php");
+  require_once("controller/ProdutoController.php");
 
   $arquivo_temp = $_FILES['arquivo']['tmp_name'];
   $dadosLidos = file($arquivo_temp);
@@ -11,73 +9,62 @@
   $erro = false;
 
   foreach ($dadosLidos as $linha) {
-    $cont++;
     $linha = trim($linha);
-    $produtos= explode("\t", $linha);
+    $camposProduto = explode("\t", $linha);
 
-    if (sizeof($produtos)<8) {
+    if (sizeof($camposProduto)<8) {
       echo "entrou aqui";
-      $mensagemErro = "Algum campo não preenchido na linha " . $cont;
+      $mensagemErro = "Algum campo não preenchido na linha " . $cont+1;
       $erro = true;
       break;
     }
 
-    $nome = $produtos[0];
-    $identificacao = $produtos[1];
-    $catmat = $produtos[2];
-    $quantidade = $produtos[3];
-    $estoqueIdeal = $produtos[4];
-    $posicao = $produtos[5];
-    $categoria = $produtos[6];
-    $descricao = $produtos[7];
+    $produtos[$cont] = new Produto();
+    $produtos[$cont]->setNome($camposProduto[0]);
+    $produtos[$cont]->setIdentificacao($camposProduto[1]);
+    $produtos[$cont]->setCatmat($camposProduto[2]);
+    $produtos[$cont]->setQuantidade($camposProduto[3]);
+    $produtos[$cont]->setEstoqueIdeal($camposProduto[4]);
+    $produtos[$cont]->setPosicao($camposProduto[5]);
+    // Verificar se existe categoria com esse nome antes de setar nome
+    // Se não exister criar nova categoria.
+    $produtos[$cont]->getCategoria()->setNome($camposProduto[6]);
+    $produtos[$cont]->setDescricao($camposProduto[7]);
 
-
-    if (!ehNumerico($catmat)) {
-      $mensagemErro = "O campo catmat no produto " . $cont . " deve ser numérico";
+    if (!ehNumerico($produtos[$cont]->getCatmat())) {
+      $mensagemErro = "O campo catmat no produto " . $cont+1 . " deve ser numérico";
       $erro = true;
       break;
     }
 
-    if (!ehNumerico($estoqueIdeal)) {
-      $mensagemErro = "O campo estoque ideal no produto " . $cont . " deve ser numérico";
+    if (!ehNumerico($produtos[$cont]->getEstoqueIdeal())) {
+      $mensagemErro = "O campo estoque ideal no produto " . $cont+1 . " deve ser numérico";
       $erro = true;
       break;
     }
 
-    if (!ehNumerico($quantidade)) {
-      $mensagemErro = "O campo quantidade no produto " . $cont . " deve ser numérico";
+    if (!ehNumerico($produtos[$cont]->getQuantidade())) {
+      $mensagemErro = "O campo quantidade no produto " . $cont+1 . " deve ser numérico";
       $erro = true;
       break;
     }
 
-    if (strlen($posicao) > 3) {
-      $mensagemErro = "O campo posição no produto " . $cont . " suporta apenas 3 caracteres";
+    if (strlen($produtos[$cont]->getPosicao()) > 3) {
+      $mensagemErro = "O campo posição no produto " . $cont+1 . " suporta apenas 3 caracteres";
       $erro = true;
       break;
     }
+    $cont++;
 
   }
 
   if (!$erro) {
-    foreach ($dadosLidos as $linha) {
-      $linha = trim($linha);
-      $produtos= explode("\t", $linha);
+    foreach ($produtos as $produto) {
 
-      $nome = $produtos[0];
-      $identificacao = $produtos[1];
-      $catmat = $produtos[2];
-      $quantidade = $produtos[3];
-      $estoqueIdeal = $produtos[4];
-      $posicao = $produtos[5];
-      $categoria = $produtos[6];
-      $descricao = $produtos[7];
+        $produtoController = ProdutoController::getInstance();
+        $resultadoCadastro = $produtoController->cadastraProduto($produto);
 
-      $resultadoQuery = cadastraProduto($nome, $identificacao, $catmat, $quantidade, $estoqueIdeal, $posicao, $categoria, $descricao);
-
-
-      if(!$resultadoQuery){
-          throw new Exception("500 (Internal Server Error)");
-      }
+        echo $resultadoCadastro;
     }
   }
 

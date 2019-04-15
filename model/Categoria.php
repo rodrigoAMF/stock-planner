@@ -6,7 +6,19 @@ class Categoria{
     private $nome;
 
     public function getId():int{
-        return $this->id;
+        if($this->id == null){
+            $categoriaController = CategoriaController::getInstance();
+            $this->id = $categoriaController->getIDPeloNome($nome);
+            if($this->id >= 0)
+            {
+                $this->nome = $nome;
+            }else{
+                throw new Exception('Essa categoria não existe!');
+            }
+        }else{
+            return $this->id;
+        }
+
     }
 
     public function getNome():string{

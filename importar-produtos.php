@@ -1,9 +1,10 @@
 <?php
     //session_start();
-    require_once("funcoes.php");
-    require_once(DBAPI);
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    $pagina = new Pagina();
 
-    incluiCabecalho("Stock Planner - Cadastro de produtos", "importar-produtos");
+    $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "importar-produtos");
 ?>
 
 <div class="container">
