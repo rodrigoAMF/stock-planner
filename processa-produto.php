@@ -14,7 +14,7 @@
     $produto->setDescricao($_POST['descricao']);
 
     $produtoController = ProdutoController::getInstance();
-    $resultadoCadastro = $produtoController->cadastraProduto($produto);
+    $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
 
     echo $resultadoCadastro;
 ?>
