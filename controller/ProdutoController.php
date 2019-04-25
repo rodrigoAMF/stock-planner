@@ -141,6 +141,27 @@ class ProdutoController{
     	return $produtos;
     }
 
+    function verificaSeProdutoExiste($nome){
+        $conexao = $this->databaseController->open_database();
+
+        $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        if($resultado->fetch_row() > 0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     function getProdutoPorId($id){
         $conexao = $this->databaseController->open_database();
 
@@ -163,27 +184,34 @@ class ProdutoController{
     	}else{
     		return "Não existe um produto com esse id!";
     	}
-
     }
 
     function cadastraProduto($produto){
     	$conexao = $this->databaseController->open_database();
 
-    	$query = "INSERT INTO produtos(nome, descricao, identificacao, catmat, categoria, posicao, estoque_ideal, quantidade) values('"
-    	. $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCatmat() . ", " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ",
+    	$duplicado = $this->verificaSeProdutoExiste($produto->getNome());
+
+    	if(!$duplicado)
+        {
+            $query = "INSERT INTO produtos(nome, descricao, identificacao, catmat, categoria, posicao, estoque_ideal, quantidade) values('"
+                . $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCatmat() . ", " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ",
     			" . $produto->getQuantidade() . ")";
 
-    	$resultado = $conexao->query($query);
+            $resultado = $conexao->query($query);
 
-    	if($resultado == false)
-    	{
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-    	}
+            if($resultado == false)
+            {
+                $erro = 'Falha ao realizar a Query: ' . $query;
+                throw new Exception($erro);
+            }
 
-        $this->databaseController->close_database();
+            $this->databaseController->close_database();
 
-        return 1;
+            return 1;
+        }else{
+    	    return -1;
+        }
+
 
     }
 
