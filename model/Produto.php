@@ -12,6 +12,7 @@ class Produto
         $this->categoria = new Categoria();
     }
 
+
     public function getCategoria(): Categoria{
         return $this->categoria;
     }
@@ -45,34 +46,130 @@ class Produto
     }
 
     public function setNome(string $nome){
-        $this->nome = $nome;
+        if($nome != null){
+            if(strlen ($nome) <= 100){
+                $this->nome = $nome;
+                return 1;
+            }else{
+              
+                return -2;
+            }
+        }else{
+            return -3;
+        }
+        
     }
 
     public function setIdentificacao(string $identificacao){
-        $this->identificacao = $identificacao;
+        if($identificacao != null){
+            if(strlen ($identificacao) <= 50){
+                $this->identificacao = $identificacao;
+                return 1;
+            }else{
+                return -2;
+            }
+        }else{
+            return -3;
+        }
+       
     }
 
     public function setPosicao(string $posicao){
-         $this->posicao = $posicao;
+        if($posicao != null){
+            if(strlen ($posicao) <= 3){
+                $this->posicao = $posicao;
+                return 1;
+            }else{
+                return -2;
+            }
+        }else{
+            return -3;
+        }
     }
 
     public function setDescricao(string $descricao){
-        $this->descricao = $descricao;
+        if($descricao != null){
+            $this->descricao = $descricao;
+            return 1;
+        }else{
+            return -3;
+        }
     }
 
     public function setCatmat(int $catmat){
-        $this->catmat = $catmat;
+        $catmatString = (string) $catmat;
+        if($catmat != null){
+            if(ehNumerico($catmat)){
+                if(strlen ($catmatString) <= 6){
+                    $this->catmat = $catmat;
+                    return 1;
+                }else{
+
+                    return -2;
+                }
+            }else{
+                return -4;
+            }
+        }else{
+            return -3;
+        }
+        
     }
 
     public function setQuantidade(int $quantidade){
-        $this->quantidade = $quantidade;
+        $quantidadeString = (string) $quantidade;
+        if($quantidade != null){
+            if(ehNumerico($quantidade)){
+                if(strlen ($quantidadeString) <= 6){
+                    $this->quantidade = $quantidade;
+                    return 1;
+                }else{
+                    return -2;
+                }
+            }else{
+                return -4;
+            }
+        }else{
+            return -3;
+        }
     }
 
     public function setEstoqueIdeal(int $estoqueIdeal){
-        $this->estoqueIdeal = $estoqueIdeal;
+        $estoqueIdealString = (string) $estoqueIdeal;
+        if($estoqueIdeal != null){
+            if(ehNumerico($estoqueIdeal)){
+                if(strlen ($estoqueIdealString) <= 6){
+                    $this->estoqueIdeal = $estoqueIdeal;
+                    $mensagemEstoqueIdeal = "";
+                    return 1;
+                }else{
+                    return -2;
+                }
+            }else{
+                return -4;
+            }
+        }else{
+            return -3;
+        }
     }
 
     public function setCategoria($categoria){
         $this->categoria = $categoria;
+    }
+
+    private function ehNumerico($campo): bool{
+        for ($i=0; $i < strlen($campo); $i++) {
+          if (!(toNumber($campo[$i]) >= 0 && toNumber($campo[$i]) <= 9)) {
+            return false;
+          }
+        }
+        return true;
+      }
+    
+    private  function toNumber($dest){
+            if ($dest)
+                return ord(strtolower($dest)) - 96;
+            else
+                return 0;
     }
 }

@@ -57,7 +57,6 @@ session_start();
     if (!ehNumerico($camposProduto[3])) {
 
       $mensagemErro = "O campo quantidade no produto " . strval($cont+1) . " deve ser numérico";
-      echo "cheguei";
       $erro = true;
       continue;
     }
@@ -78,8 +77,6 @@ session_start();
     }
 
     $cont++;
-
-
   }
 
 

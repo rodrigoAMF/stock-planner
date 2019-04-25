@@ -10,7 +10,7 @@ class ProductTest extends TestCase{
 
         $produto->setNome("Teste");
 
-        $this->assertEquals("Teste", $produto->getNome());
+        $this->assertEquals("Teste", $produto->setNome("Teste"););
     }
 
     public function testSetIdentificacao(){

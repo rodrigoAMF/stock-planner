@@ -73,6 +73,14 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
+            json = javascript.decode(msg);
+
+            if(json['status'] == 0){
+
+            }else{
+                $('#feedback-identificacao').text(json['mensagem']);
+            }
+
             quantidade.removeClass('is-valid is-invalid');
             $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
 
