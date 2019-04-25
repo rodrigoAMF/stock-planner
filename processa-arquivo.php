@@ -10,16 +10,20 @@ session_start();
   $cont = 0;
   $erro = false;
 
-  foreach ($dadosLidos as $linha) {
-    $produtos[$cont] = new Produto();
-    $existeCategoria = false;
-    $linha = trim($linha);
-    $camposProduto = explode("\t", $linha);
+  for($i = 0; $i < sizeof($dadosLidos); $i++)
+  {
+      $mensagemErro = " ";
+      $produtos[$i] = new Produto();
+      $existeCategoria = false;
+      $dadosLidos[$i] = trim($dadosLidos[$i]);
+      $camposProduto = explode("\t", $dadosLidos[$i]);
+      
 
+  
     if (sizeof($camposProduto)<8) {
-      $mensagemErro = "Algum campo não preenchido na linha " . strval($cont+1);
+      $mensagemErro = "Algum campo não preenchido na linha " . ($i+1);
       $erro = true;
-      break;
+      $i=sizeof($dadosLidos);
     }
 
     $categoriaController = CategoriaController::getInstance();
@@ -28,7 +32,6 @@ session_start();
     for ($i=0; $i < sizeof($categorias); $i++) {
 
       if ($categorias[$i]['nome'] == $camposProduto[6]) {
-          $produtos[$cont]->getCategoria()->setNome($camposProduto[6]);
           $existeCategoria = true;
           break;
       }
@@ -37,49 +40,46 @@ session_start();
       $categoria = new Categoria();
       $categoria->setNomeNovo($camposProduto[6]);
       $categoriaController->cadastraCategoria($categoria);
-      $produtos[$cont]->getCategoria()->setNome($camposProduto[6]);
+      
     }
 
-    $produtos[$cont]->setDescricao($camposProduto[7]);
+    
 
     if (!ehNumerico($camposProduto[2])) {
-      echo $camposProduto[3];
-      $mensagemErro = "O campo catmat no produto " . strval($cont+1) . " deve ser numérico";
+      $mensagemErro = "O campo catmat no produto " . strval($i) . " deve ser numérico A";
       $erro = true;
-      continue;
+      $i=sizeof($dadosLidos);
     }
 
     if (!ehNumerico($camposProduto[4])) {
-      $mensagemErro = "O campo estoque ideal no produto " . strval($cont+1) . " deve ser numérico";
+      $mensagemErro = "O campo estoque ideal no produto " . strval($i) . " deve ser numérico B";
       $erro = true;
-      continue;
+      $i=sizeof($dadosLidos);
     }
-    if (!ehNumerico($camposProduto[3])) {
 
-      $mensagemErro = "O campo quantidade no produto " . strval($cont+1) . " deve ser numérico";
-      echo "cheguei";
+    if (!ehNumerico($camposProduto[3])){
+      $mensagemErro = "O campo quantidade no produto " . strval($i) . " deve ser numérico C";
       $erro = true;
-      continue;
+      $i=sizeof($dadosLidos);
     }
 
     if (strlen($camposProduto[5]) > 3) {
-      $mensagemErro = "O campo posição no produto " . strval($cont+1) . " suporta apenas 3 caracteres";
+      $mensagemErro = "O campo posição no produto " . strval($i) . " suporta apenas 3 caracteres";
       $erro = true;
-      continue;
+      $i=sizeof($dadosLidos);
     }
 
     if(!$erro){
-      $produtos[$cont]->setNome($camposProduto[0]);
-      $produtos[$cont]->setIdentificacao($camposProduto[1]);
-      $produtos[$cont]->setCatmat($camposProduto[2]);
-      $produtos[$cont]->setQuantidade($camposProduto[3]);
-      $produtos[$cont]->setEstoqueIdeal($camposProduto[4]);
-      $produtos[$cont]->setPosicao($camposProduto[5]);
+      $produtos[$i]->setNome($camposProduto[0]);
+      $produtos[$i]->setIdentificacao($camposProduto[1]);
+      $produtos[$i]->setCatmat($camposProduto[2]);
+      $produtos[$i]->setQuantidade($camposProduto[3]);
+      $produtos[$i]->setEstoqueIdeal($camposProduto[4]);
+      $produtos[$i]->setPosicao($camposProduto[5]);
+      $produtos[$i]->getCategoria()->setNome($camposProduto[6]);
+      $produtos[$i]->setDescricao($camposProduto[7]);
     }
-
-    $cont++;
-
-
+    
   }
 
 
@@ -96,27 +96,14 @@ session_start();
     // significa que tem erro
     $_SESSION['msg'] = "<p>" .$mensagemErro . "</p>";
   } else{
+    echo "cadastrado";
     $_SESSION['msg'] = "<p> Todos os produtos foram cadastrados com sucesso</p>";
   }
-  header("Location: importar-produtos.php");
+  //header("Location: importar-produtos.php");
 
   function ehNumerico($campo): bool{
-    for ($i=0; $i < strlen($campo); $i++) {
-      if (!(toNumber($campo[$i]) >= 0 && toNumber($campo[$i]) <= 9)) {
-        return false;
-      }
-    }
-    return true;
+
+    return is_numeric($campo);
   }
-
-  function toNumber($dest)
-    {
-        if ($dest)
-            return ord(strtolower($dest)) - 96;
-        else
-            return 0;
-    }
-
-
 
 ?>
