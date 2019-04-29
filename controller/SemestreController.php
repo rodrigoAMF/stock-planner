@@ -37,7 +37,24 @@ class SemestreController{
         return $dados;
     }
 
-    
+    function getSemestreAtual() {
+        $conexao = $this->databaseController->open_database();
+        $query = "SELECT MAX(id) FROM semestre";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $IDSemestre = $dados[0]["MAX(id)"];
+
+        return $IDSemestre;
+    }
 
 }
 

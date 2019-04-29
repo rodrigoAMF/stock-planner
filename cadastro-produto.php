@@ -2,9 +2,11 @@
     require_once("model/Config.php");
     require_once("model/Pagina.php");
     require_once("controller/CategoriaController.php");
+    require_once("controller/SemestreController.php");
 
     $pagina = new Pagina();
     $categoriaController = new CategoriaController();
+    $semestreController = new SemestreController();
 
     $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "cadastro-produto");
 ?>
@@ -14,6 +16,16 @@
 
     <div id="principal">
         <form class="formulario-produto" method="post" action="processa-produto.php">
+            <div class="form-row">
+                <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
+                    <label for="semestre">Semestre:</label>
+                    <?php 
+                        $semestre = $semestreController->getSemestreAtual();
+                        echo $semestre;
+                     ?>
+                </div>
+            </div>
+            
         	<div class="form-row">
         		<div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
           			<label for="nome">Nome:</label>
@@ -101,14 +113,7 @@
                 </div>
         		</div>
 
-        	<div class="form-row">
-            	<div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
-                    <label for="semestre">Semestre:</label>
-                    <div>
-                        <input type="text" class="form-control" name="semestre" id="semestre" placeholder="" disabled="disabled"﻿>
-                    </div>
-                </div>
-        	</div>
+
 
         	<div class="row">
         		<br>
