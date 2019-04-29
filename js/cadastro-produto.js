@@ -97,6 +97,7 @@ frm.submit(function (e) {
                 estoque_ideal.removeClass('is-valid is-invalid');
                 $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
+
                 nome.val(' ');
                 quantidade.val(' ');
                 identificacao.val(' ');
