@@ -2,6 +2,7 @@
     require_once("model/Config.php");
     require_once("model/Pagina.php");
     require_once("controller/ProdutoController.php");
+    require_once("controller/SemestreController.php");
     $pagina = new Pagina();
 
     $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
@@ -16,17 +17,30 @@
     <button type="button" class="btn btn-secondary" id="confirma_porcentagem">Confirmar</button>-->
 
     <div class="form-group">
-        <label for="parametroFiltro">Filtro</label>
-        <select class="form-control" id="parametroFiltro" name="filtro">
-              <option value="1">Nome</option>
-              <option value="2">Identificação</option>
-              <option value="3">CATMAT</option>
-              <option value="4">Categoria</option>
-              <option value="5">Posição</option>
-              <option value="6">Estoque Ideal</option>
-              <option value="7">Quantidade</option>
+        <label for="parametroSemestre">Semestre</label>
+        <select class="form-control" id="parametroSemestre" name="semestre">
+          <?php
+              $semestreController = SemestreController::getInstance();
+              $semestres = $semestreController->getSemestres();
+              foreach ($semestres as $semestre) {
+                  echo "<option value = '" . $semestre['id']."'>" . $semestre['id']. "</option>";
+              }
+          ?>
         </select>
    </div>
+
+   <div class="form-group">
+       <label for="parametroFiltro">Filtro</label>
+       <select class="form-control" id="parametroFiltro" name="filtro">
+             <option value="1">Nome</option>
+             <option value="2">Identificação</option>
+             <option value="3">CATMAT</option>
+             <option value="4">Categoria</option>
+             <option value="5">Posição</option>
+             <option value="6">Estoque Ideal</option>
+             <option value="7">Quantidade</option>
+       </select>
+  </div>
 
     <div class="form-group">
         <label for="busca">Busca</label>
