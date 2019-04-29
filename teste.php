@@ -13,20 +13,26 @@
 
     $produto = new Produto();
 
+    $erro = false;
+
     $produto->setNome('nomeTESTE');
     $produto->setIdentificacao(15);
     $produto->setCatmat(58);
     $produto->setQuantidade(86);
     $produto->setEstoqueIdeal(86);
-    $produto->setPosicao(999999999999999);
+    $retorno = $produto->setPosicao(999999999999999);
+    if($retorno != 1) 
+        $erro = true;
     $produto->getCategoria()->setNome('Resistor');
     $produto->setDescricao('oi');
 
-    $id = $_GET['id'];
-
     $produtoController = ProdutoController::getInstance();
 
-    $resultadoQuery = $produtoController->cadastraProduto($produto,"1S2019");
+    if(!$erro){
+        $resultadoQuery = $produtoController->cadastraProduto($produto,"1S2019");
+    }else{
+        $resultadoQuery = "Ocorreu um erro";
+    }
 
     echo $resultadoQuery;
 ?>

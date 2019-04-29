@@ -7,6 +7,8 @@
     $status = 1; //okay = 1; nookay = -1;
     $produto = new Produto();
 
+    $existemErros = false;
+
     $nome = $produto->setNome($_POST['nome']);
     if($nome == -2){
         $erro[$cont]['nome_do_campo'] = "nome";       
@@ -93,11 +95,13 @@
         $erro[$cont]['mensagem'] = "A posição excedeu o tamanho máximo";
         $cont++;
         $status = -1;
+        $existemErros = true;
     }else if($posicao == -3){
         $erro[$cont]['nome_do_campo'] = "posicao";       
         $erro[$cont]['mensagem'] = "O campo posição está vazio";
         $cont++;
         $status = -1;
+        $existemErros = true;
     }
 
     $categoria = $produto->getCategoria()->setNome($_POST['categoria']);
@@ -111,8 +115,17 @@
     }
 
     $produtoController = ProdutoController::getInstance();
-    $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
 
+    $resultadoCadastro = 1;
+
+    if(!$existemErros){
+        $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
+    }
+
+    // Produto duplicado
+    if($resultadoCadastro == -1){
+        $status = -2;
+    }
 
     $verificaErro = array('status' => $status, 'erros' => $erro);
 

@@ -73,7 +73,7 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            //console.log(msg);
+            console.log(msg);
             //console.log(typeof(msg));
             //alertify.alert(msg);
             var obj = jQuery.parseJSON(msg);
@@ -111,11 +111,11 @@ frm.submit(function (e) {
                 alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
             else if(obj.status === -1){
-                for(let i = 0; i < obj.erro.length; i++){
-                    if(obj.erro[i]['nome_do_campo'] == 'posicao'){
+                for(let i = 0; i < obj.erros.length; i++){
+                    if(obj.erros[i]['nome_do_campo'] == 'posicao'){
                         posicao.removeClass("is-valid").addClass("is-invalid");
                         $('#feedback-posicao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
-                        $('#feedback-posicao').text(obj.erro[i]['mensagem']);
+                        $('#feedback-posicao').text(obj.erros[i]['mensagem']);
                     }
                 }
             }
