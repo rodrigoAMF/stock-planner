@@ -124,7 +124,6 @@ $(".ordenavel").on("click", function(event)
 			alertify.error('Falha ao ordenar produtos');
 		});
 	}
-
 });
 
 $(".delete-icon").on('click', function(event){

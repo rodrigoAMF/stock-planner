@@ -7,6 +7,8 @@
 
     $resultadoQuery = $produtoController->excluirProduto($id);
 
+    echo $resultadoQuery;
+
     //header('Location: lista-produtos.php');
 
     /*if($resultadoQuery){
