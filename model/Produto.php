@@ -99,7 +99,7 @@ class Produto
     public function setCatmat(int $catmat){
         $catmatString = (string) $catmat;
         if($catmat != null){
-            if(ehNumerico($catmat)){
+            if(isNumeric($catmat)){
                 if(strlen ($catmatString) <= 6){
                     $this->catmat = $catmat;
                     return 1;
@@ -119,7 +119,7 @@ class Produto
     public function setQuantidade(int $quantidade){
         $quantidadeString = (string) $quantidade;
         if($quantidade != null){
-            if(ehNumerico($quantidade)){
+            if(isNumeric($quantidade)){
                 if(strlen ($quantidadeString) <= 6){
                     $this->quantidade = $quantidade;
                     return 1;
@@ -137,7 +137,7 @@ class Produto
     public function setEstoqueIdeal(int $estoqueIdeal){
         $estoqueIdealString = (string) $estoqueIdeal;
         if($estoqueIdeal != null){
-            if(ehNumerico($estoqueIdeal)){
+            if(isNumeric($estoqueIdeal)){
                 if(strlen ($estoqueIdealString) <= 6){
                     $this->estoqueIdeal = $estoqueIdeal;
                     $mensagemEstoqueIdeal = "";
@@ -157,19 +157,4 @@ class Produto
         $this->categoria = $categoria;
     }
 
-    private function ehNumerico($campo): bool{
-        for ($i=0; $i < strlen($campo); $i++) {
-          if (!(toNumber($campo[$i]) >= 0 && toNumber($campo[$i]) <= 9)) {
-            return false;
-          }
-        }
-        return true;
-      }
-    
-    private  function toNumber($dest){
-            if ($dest)
-                return ord(strtolower($dest)) - 96;
-            else
-                return 0;
-    }
 }
