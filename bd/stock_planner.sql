@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
+-- Generation Time: 29-Abr-2019 às 18:24
+=======
 -- Generation Time: 29-Abr-2019 às 18:34
+>>>>>>> master
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -127,8 +131,12 @@ ALTER TABLE `produtos`
 -- Indexes for table `produtos_semestre`
 --
 ALTER TABLE `produtos_semestre`
+<<<<<<< HEAD
+  ADD PRIMARY KEY (`id_semestre`,`id_produto`);
+=======
   ADD PRIMARY KEY (`id_semestre`,`id_produto`),
   ADD KEY `excluir_produto` (`id_produto`);
+>>>>>>> master
 
 --
 -- Indexes for table `semestre`
@@ -151,6 +159,8 @@ ALTER TABLE `categoria`
 --
 ALTER TABLE `produtos`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+<<<<<<< HEAD
+=======
 
 --
 -- Constraints for dumped tables
@@ -162,6 +172,7 @@ ALTER TABLE `produtos`
 ALTER TABLE `produtos_semestre`
   ADD CONSTRAINT `excluir_produto` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `excluir_semestre` FOREIGN KEY (`id_semestre`) REFERENCES `semestre` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+>>>>>>> master
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
