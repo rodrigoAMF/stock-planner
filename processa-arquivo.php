@@ -14,6 +14,8 @@ $produtos = Array();
 
 for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 {
+    // ignora a primeira linha (Cabeçalho)
+    if($i == 0) continue;
     $mensagemErro = "";
     $produtos[$i] = new Produto();
 
@@ -23,7 +25,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 
     foreach($camposProduto as $campo){
         if($campo == ""){
-            $mensagemErro = "Campo com valor vazio na linha " . strval($i+1);
+            $mensagemErro = "Campo com valor vazio na linha " . strval($i);
             $erro = true;
         }
     }
@@ -31,7 +33,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     // Verifica se usuário informou os 8 campos obrigatórios
     echo sizeof($camposProduto) . "<br>";
     if (sizeof($camposProduto)<8) {
-        $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i+1);
+        $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i);
         $erro = true;
     }
 
@@ -54,38 +56,38 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     }
 
     if (strlen($camposProduto[0]) > 100) {
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Nome' suporta no máximo 100 caracteres";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Nome' suporta no máximo 100 caracteres";
         $erro = true;
     }
 
     // Verifica se os campos são numéricos
     if (!is_numeric($camposProduto[2])) {
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Catmat' deve ser numérico";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ser numérico";
         $erro = true;
     }
 
     if(strlen($camposProduto[2]) > 6){
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Catmat' deve ter no máximo 6 digitos";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
     if (!is_numeric($camposProduto[3])){
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Quantidade' deve ser numérico";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ser numérico";
         $erro = true;
     }
 
     if(strlen($camposProduto[3]) > 6){
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Quantidade' deve ter no máximo 6 digitos";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
     if (!is_numeric($camposProduto[4])){
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo 'Estoque Ideal' deve ser numérico";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Estoque Ideal' deve ser numérico";
         $erro = true;
     }
 
     if (strlen($camposProduto[5]) > 3) {
-        $mensagemErro = "Erro na linha " . strval($i+1) . ". O campo posição suporta apenas 3 caracteres";
+        $mensagemErro = "Erro na linha " . strval($i) . ". O campo posição suporta apenas 3 caracteres";
         $erro = true;
     }
 

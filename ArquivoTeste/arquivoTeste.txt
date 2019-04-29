@@ -1,2 +1,3 @@
+Nome	Identificação	Catmat	Quantidade	EstoqueIdeal	Posição	Categoria	Descrição
 lapis	123	456	2	2	96	Resistor	mouse vermelho
 livro	123	456	2	2	96	Resistor	mouse vermelho
