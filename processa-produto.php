@@ -2,60 +2,19 @@
     require_once("model/Produto.php");
     require_once("controller/ProdutoController.php");
 
-
+    //$cont = 0;
     $produto = new Produto();
 
-    $erro = array(
-        array(
-            "campo" => "nome",
-            "mensagem" => "",
-            ),
-        
-        array(
-            "campo" => "identificacao",
-            "mensagem" => "",
-        ),
-        
-        array(
-            "campo" => "posicao",
-            "mensagem" => "",
-        ),
-        
-        array(
-            "campo" => "descricao",
-            "mensagem" => "",
-        )
-        array(
-            "campo" => "catmat",
-            "mensagem" => "",
-            ),
-        
-        array(
-            "campo" => "quantidade",
-            "mensagem" => "",
-        ),
-        
-        array(
-            "campo" => "estoqueIdeal",
-            "mensagem" => "",
-        ),
-        
-        array(
-            "campo" => "categoria",
-            "mensagem" => "",
-        )
-        );
 
-        $obj = json_encode($erro);
-    
 
     $nome = $produto->setNome($_POST['nome']);
-    if($nome == -2){
-        $erro[]
+    /*if($nome == -2){
+        $erro[$cont]['nome_do_campo'] = nome;       
+        $erro[$cont]['nome_do_campo'] = nome;
         echo "O nome excedeu o tamanho máximo";
     }else if($nome == -3){
         echo "O campo nome está vazio";
-    }
+    }*/
 
     $identificacao = $produto->setIdentificacao($_POST['identificacao']);
     $catmat = $produto->setCatmat($_POST['catmat']);
@@ -69,8 +28,6 @@
 
     $produtoController = ProdutoController::getInstance();
     $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
-
-    echo "{status: 0, mensagem = " . $mensagemNome . "}";
 
     echo $resultadoCadastro;
 ?>
