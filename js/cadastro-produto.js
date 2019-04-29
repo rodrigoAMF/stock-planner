@@ -73,9 +73,13 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            console.log(msg);
-            console.log(typeof(msg));
-            if (msg === "1") {
+            //console.log(msg);
+            //console.log(typeof(msg));
+            //alertify.alert(msg);
+            var obj = jQuery.parseJSON(msg);
+            
+
+            if (obj.status === 1) {
                 quantidade.removeClass('is-valid is-invalid');
                 $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
 
@@ -107,9 +111,53 @@ frm.submit(function (e) {
                 estoque_ideal.val(' ');
                 alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
+            else if(obj.status === -1){
+                for(let i = 0; i < obj.erro.length; i++){
+                    if(obj.erro[i]['nome_do_campo'] == 'posicao'){
+                        posicao.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-posicao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-posicao').text(obj.erro[i]['mensagem']);
+                    }
+                }
+            }
             else {
                 alertify.alert("Produto Duplicado");
             }
+
+            /*if (msg === "1") {
+                quantidade.removeClass('is-valid is-invalid');
+                $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
+
+                nome.removeClass('is-valid is-invalid');
+                $('#feedback-nome').remove('valid-feedback invalid-feedback').add('feedback');
+
+                identificacao.removeClass('is-valid is-invalid');
+                $('#feedback-identificacao').remove('valid-feedback invalid-feedback').add('feedback');
+
+                descricao.removeClass('is-valid is-invalid');
+                $('#feedback-descricao').remove('valid-feedback invalid-feedback').add('feedback');
+
+                catmat.removeClass('is-valid is-invalid');
+                $('#feedback-catmat').remove('valid-feedback invalid-feedback').add('feedback');
+
+                posicao.removeClass('is-valid is-invalid');
+                $('#feedback-posicao').remove('valid-feedback invalid-feedback').add('feedback');
+
+                estoque_ideal.removeClass('is-valid is-invalid');
+                $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
+
+                nome.val(' ');
+                quantidade.val(' ');
+                identificacao.val(' ');
+                descricao.val(' ');
+                catmat.val(' ');
+                posicao.val(' ');
+                estoque_ideal.val(' ');
+                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+            }
+            else {
+                alertify.alert("Produto Duplicado");
+            }*/
 
 
         });

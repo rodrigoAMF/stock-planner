@@ -244,7 +244,7 @@ class ProdutoController{
 
     }
 
-    function getProdutos($busca, $filtro, $parametroOrdenacao){
+    function getProdutos($busca, $filtro, $parametroOrdenacao, $semestre){
     	$conexao = $this->databaseController->open_database();
 
     	if ($busca == null) {
@@ -310,9 +310,11 @@ class ProdutoController{
     		$produtos .= "<td>" . $dados['posicao'] . "</td>";
     		$produtos .= "<td>" . $dados['estoque_ideal'] . "</td>";
     		$produtos .= "<td>" . $dados['quantidade'] . "</td>";
-    		$produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
-    		$produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
-    		<i class='material-icons'>edit</i></a></td>";
+    		if(true){
+            $produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
+    		    $produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
+    		    <i class='material-icons'>edit</i></a></td>";
+        }
     		$produtos .= "</tr>";
     	}
 
@@ -348,7 +350,7 @@ class ProdutoController{
             $erro = 'Falha ao realizar a Query: ' . $query;
             throw new Exception($erro);
         }
-        
+
         $this->databaseController->close_database();
 
     	// query retorna false caso query falhe

@@ -2,15 +2,45 @@ let clickNome = false;
 let clickQuantidade = false;
 let clickEstadoCritico = false;
 
-$("#busca").on("keyup", function(event) {
-	let val = $(this).val();
+$("#parametroSemestre").on("change", function(){
+	let semestre = $(this).val();
 	let filtro = $("#parametroFiltro").val().toUpperCase();
+	let val = $("#busca").val();
 
 	if(val != ""){
 		val = val.toUpperCase();
 	}
 
-	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&parametroOrdenacao=";
+	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&semestre=" + semestre + "&parametroOrdenacao=";
+
+	var request = $.ajax({
+		url: url,
+		cache: false
+	});
+
+	request.done(function(msg) {
+		$('table tbody').remove();
+		$('table').append("<tbody>");
+		$('table tbody').append(msg);
+		$('table').append("</tbody>");
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		alertify.error('Falha ao buscar produtos');
+	});
+
+});
+
+$("#busca").on("keyup", function(event) {
+	let val = $(this).val();
+	let filtro = $("#parametroFiltro").val().toUpperCase();
+	let semestre = $("#parametroSemestre").val();
+
+	if(val != ""){
+		val = val.toUpperCase();
+	}
+
+	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&semestre=" + semestre + "&parametroOrdenacao=";
 
 	var request = $.ajax({
 		url: url,

@@ -4,6 +4,8 @@
     $busca = $_GET['busca'];
     $filtro = $_GET['filtro'];
     $parametroOrdenacao = $_GET['parametroOrdenacao'];
+    if(isset($_GET['semestre'])){$semestre = $_GET['semestre'];
+    }else{$semestre = null;}
 
     $busca = ($busca == "") ? null: $busca;
     $filtro = ($filtro == "") ? null: $filtro;
@@ -11,7 +13,7 @@
 
     $produtoController = ProdutoController::getInstance();
 
-    $produtos = $produtoController->getProdutos($busca, $filtro, $parametroOrdenacao);
+    $produtos = $produtoController->getProdutos($busca, $filtro, $parametroOrdenacao, $semestre);
 
     echo $produtos;
 ?>
