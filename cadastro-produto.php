@@ -101,12 +101,13 @@
                 </div>
         		</div>
 
-        	<div class="row">
-            	<div class="col-xl-11">
-            	</div>
-            	<div class="col-xl-1">
-
-            	</div>
+        	<div class="form-row">
+            	<div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
+                    <label for="semestre">Semestre:</label>
+                    <div>
+                        <input type="text" class="form-control" name="semestre" id="semestre" placeholder="" disabled="disabled"﻿>
+                    </div>
+                </div>
         	</div>
 
         	<div class="row">

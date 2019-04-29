@@ -32,7 +32,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="catmat">CATMAT:</label>
-                    <input type="text" class="form-control" name="catmat" id="catmat" value="<?= $produto['catmat']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="catmat" id="catmat" value="<?= $produto['catmat']; ?>" placeholder="" >
                     <div class="feedback" id="feedback-catmat">
 
                     </div>
@@ -115,7 +115,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                 <label for="quantidade">Quantidade:</label>
-                    <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?= $produto['quantidade']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?= $produto['quantidade']; ?>" placeholder="" >
                     <div class="feedback" id="feedback-quantidade">
 
                     </div>
