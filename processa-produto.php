@@ -29,7 +29,5 @@
     $produtoController = ProdutoController::getInstance();
     $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
 
-    echo "{status: 0, mensagem = " . $mensagemNome . "}";
-
     echo $resultadoCadastro;
 ?>
