@@ -67,7 +67,7 @@
 
               <?php
                   $produtoController = ProdutoController::getInstance();
-                  $produtos = $produtoController->getProdutos(null,null, 8);
+                  $produtos = $produtoController->getProdutos(null,null, 8, "2S2019");
 
                   echo $produtos;
               ?>

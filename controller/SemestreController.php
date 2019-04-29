@@ -37,6 +37,8 @@ class SemestreController{
         return $dados;
     }
 
+    
+
 }
 
  ?>
