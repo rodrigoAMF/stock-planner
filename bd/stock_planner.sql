@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 14-Mar-2019 às 21:08
+-- Generation Time: 29-Abr-2019 às 18:24
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -39,7 +39,8 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`id`, `nome`) VALUES
 (1, 'Resistor'),
-(2, 'teste');
+(2, 'teste'),
+(3, 'profit');
 
 -- --------------------------------------------------------
 
@@ -51,11 +52,9 @@ CREATE TABLE `produtos` (
   `nome` varchar(100) NOT NULL,
   `descricao` text,
   `identificacao` varchar(50) NOT NULL,
-  `catmat` int(6) NOT NULL,
   `categoria` int(6) DEFAULT NULL,
   `posicao` varchar(3) NOT NULL,
   `estoque_ideal` int(6) NOT NULL,
-  `quantidade` int(6) NOT NULL,
   `id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -63,16 +62,50 @@ CREATE TABLE `produtos` (
 -- Extraindo dados da tabela `produtos`
 --
 
-INSERT INTO `produtos` (`nome`, `descricao`, `identificacao`, `catmat`, `categoria`, `posicao`, `estoque_ideal`, `quantidade`, `id`) VALUES
-('Resistor 330ohm', 'Um resistor legal', '87822', 111111, 1, '1A', 100, 2, 1),
-('Resistor 2', 'adasd', 'dasdasds', 111, 1, '1A', 200, 10, 2),
-('TEste', 'ASDASAS', 'dasdsa', 55, 1, '1A', 55, 55, 3),
-('TEste', 'ASDASAS', 'dasdsa', 55, 1, '1A', 55, 55, 4),
-('TEste', 'ASDASAS', 'dasdsa', 55, 1, '1A', 55, 55, 5),
-('Natasha', 'asdasdas', '1a', 555, 1, '1a', 55, 55, 6),
-('sdc', '534535', '354534', 35, 45345, '345', 3454, 345, 7),
-('Rodrigo', 'dasdas', '12', 1212, 2122, '221', 2121, 1212, 8),
-('Rodrigo2', 'sAasASa', 'asdsa', 564564, 65465465, '654', 4564, 6546, 9);
+INSERT INTO `produtos` (`nome`, `descricao`, `identificacao`, `categoria`, `posicao`, `estoque_ideal`, `id`) VALUES
+('Rodrigo5', '77', '55', 3, '55', 55, 1),
+('gabi', '55', '55', 3, '55', 55, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produtos_semestre`
+--
+
+CREATE TABLE `produtos_semestre` (
+  `id_semestre` varchar(6) NOT NULL,
+  `id_produto` int(6) NOT NULL,
+  `quantidade` int(6) NOT NULL,
+  `catmat` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `produtos_semestre`
+--
+
+INSERT INTO `produtos_semestre` (`id_semestre`, `id_produto`, `quantidade`, `catmat`) VALUES
+('1S2019', 1, 77, 55),
+('1S2019', 2, 55, 55);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `semestre`
+--
+
+CREATE TABLE `semestre` (
+  `id` varchar(6) NOT NULL,
+  `ano` int(4) NOT NULL,
+  `numero` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `semestre`
+--
+
+INSERT INTO `semestre` (`id`, `ano`, `numero`) VALUES
+('1S2019', 2019, 1),
+('2S2019', 2019, 2);
 
 --
 -- Indexes for dumped tables
@@ -91,6 +124,18 @@ ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `produtos_semestre`
+--
+ALTER TABLE `produtos_semestre`
+  ADD PRIMARY KEY (`id_semestre`,`id_produto`);
+
+--
+-- Indexes for table `semestre`
+--
+ALTER TABLE `semestre`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -98,13 +143,13 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
