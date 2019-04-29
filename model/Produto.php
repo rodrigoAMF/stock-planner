@@ -99,7 +99,7 @@ class Produto
     public function setCatmat(int $catmat){
         $catmatString = (string) $catmat;
         if($catmat != null){
-            if(isNumeric($catmat)){
+            if(is_numeric($catmat)){
                 if(strlen ($catmatString) <= 6){
                     $this->catmat = $catmat;
                     return 1;
@@ -119,7 +119,7 @@ class Produto
     public function setQuantidade(int $quantidade){
         $quantidadeString = (string) $quantidade;
         if($quantidade != null){
-            if(isNumeric($quantidade)){
+            if(is_numeric($quantidade)){
                 if(strlen ($quantidadeString) <= 6){
                     $this->quantidade = $quantidade;
                     return 1;
@@ -137,7 +137,7 @@ class Produto
     public function setEstoqueIdeal(int $estoqueIdeal){
         $estoqueIdealString = (string) $estoqueIdeal;
         if($estoqueIdeal != null){
-            if(isNumeric($estoqueIdeal)){
+            if(is_numeric($estoqueIdeal)){
                 if(strlen ($estoqueIdealString) <= 6){
                     $this->estoqueIdeal = $estoqueIdeal;
                     $mensagemEstoqueIdeal = "";
