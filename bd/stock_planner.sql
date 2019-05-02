@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: 29-Abr-2019 às 18:24
-=======
--- Generation Time: 29-Abr-2019 às 18:34
->>>>>>> master
+-- Generation Time: 02-Maio-2019 às 20:37
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -44,7 +40,9 @@ CREATE TABLE `categoria` (
 INSERT INTO `categoria` (`id`, `nome`) VALUES
 (1, 'Resistor'),
 (2, 'teste'),
-(3, 'profit');
+(3, 'profit'),
+(5, 'mouse vermelho'),
+(6, '');
 
 -- --------------------------------------------------------
 
@@ -67,8 +65,13 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`nome`, `descricao`, `identificacao`, `categoria`, `posicao`, `estoque_ideal`, `id`) VALUES
-('Rodrigo5', '77', '55', 3, '55', 55, 1),
-('gabi', '55', '55', 3, '55', 55, 2);
+('Rodrigo5', '77', '54', 3, '55', 55, 1),
+('resistor', '44', '44x', 3, '44', 44, 4),
+('lapis', 'mouse vermelho', '123', 1, '96', 2, 5),
+('livro', 'mouse vermelho', '123', 1, '96', 2, 6),
+('teste', 'mouse vermelho', 'aaa48484844', 1, '96', 2, 7),
+('teste77', 'mouse vermelho', 'aaa48484844', 1, '96', 2, 8),
+('teste2', 'mouse vermelho', '123', 1, '96', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -88,8 +91,13 @@ CREATE TABLE `produtos_semestre` (
 --
 
 INSERT INTO `produtos_semestre` (`id_semestre`, `id_produto`, `quantidade`, `catmat`) VALUES
-('1S2019', 1, 77, 55),
-('1S2019', 2, 55, 55);
+('1S2019', 1, 57, 95),
+('1S2019', 4, 555555, 11111),
+('1S2019', 5, 2, 456),
+('1S2019', 6, 2, 456),
+('1S2019', 7, 2, 456),
+('1S2019', 8, 2, 456),
+('1S2019', 9, 2, 456);
 
 -- --------------------------------------------------------
 
@@ -131,12 +139,8 @@ ALTER TABLE `produtos`
 -- Indexes for table `produtos_semestre`
 --
 ALTER TABLE `produtos_semestre`
-<<<<<<< HEAD
-  ADD PRIMARY KEY (`id_semestre`,`id_produto`);
-=======
   ADD PRIMARY KEY (`id_semestre`,`id_produto`),
   ADD KEY `excluir_produto` (`id_produto`);
->>>>>>> master
 
 --
 -- Indexes for table `semestre`
@@ -152,15 +156,13 @@ ALTER TABLE `semestre`
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-<<<<<<< HEAD
-=======
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -172,7 +174,6 @@ ALTER TABLE `produtos`
 ALTER TABLE `produtos_semestre`
   ADD CONSTRAINT `excluir_produto` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `excluir_semestre` FOREIGN KEY (`id_semestre`) REFERENCES `semestre` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
->>>>>>> master
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
