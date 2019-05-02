@@ -21,6 +21,8 @@
             echo "<script src='js/edita-produto.js'></script>";
         }else if($pagina == 'importar-produtos'){
             echo "<script src='js/importar-produtos.js'></script>";
+        }else if($pagina == 'configuracao'){
+            echo "<script src='js/finaliza-semestre.js'></script>";
         }
     ?>
 
