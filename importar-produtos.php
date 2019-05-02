@@ -14,7 +14,7 @@
               <h4><strong> ATENÇÃO! </strong></h4>
               <p>
                   Os produtos do arquivo devem estar na seguinte ordem e separados por TABULAÇÃO:<br>
-                  <i>Nome, identificação, catmat, quantidade, estoqueIdeal, posição, categoria e descrição.</i>
+                  <i>Nome, Identificação, Catmat, Quantidade, Estoque ideal, Posição, Categoria e Descrição.</i>
               </p>
           </div>
       </div>
