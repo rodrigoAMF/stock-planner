@@ -101,7 +101,6 @@ frm.submit(function (e) {
                 estoque_ideal.removeClass('is-valid is-invalid');
                 $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
-
                 nome.val(' ');
                 quantidade.val(' ');
                 identificacao.val(' ');
@@ -113,10 +112,40 @@ frm.submit(function (e) {
             }
             else if(obj.status === -1){
                 for(let i = 0; i < obj.erros.length; i++){
+                    if(obj.erros[i]['nome_do_campo'] == 'nome'){
+                        nome.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-nome').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-nome').text(obj.erros[i]['mensagem']);
+                    }
+                    if(obj.erros[i]['nome_do_campo'] == 'identificacao'){
+                        identificacao.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-identificacao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-identificacao').text(obj.erros[i]['mensagem']);
+                    }
+                    if(obj.erros[i]['nome_do_campo'] == 'catmat'){
+                        catmat.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-catmat').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-catmat').text(obj.erros[i]['mensagem']);
+                    }
+                    if(obj.erros[i]['nome_do_campo'] == 'quantidade'){
+                        quantidade.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-quantidade').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-quantidade').text(obj.erros[i]['mensagem']);
+                    }
+                    if(obj.erros[i]['nome_do_campo'] == 'estoqueIdeal'){
+                        identificacao.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-estoqueIdeal').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-estoqueIdeal').text(obj.erros[i]['mensagem']);
+                    }
                     if(obj.erros[i]['nome_do_campo'] == 'posicao'){
                         posicao.removeClass("is-valid").addClass("is-invalid");
                         $('#feedback-posicao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
                         $('#feedback-posicao').text(obj.erros[i]['mensagem']);
+                    }
+                    if(obj.erros[i]['nome_do_campo'] == 'descricao'){
+                        descricao.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-descricao').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-descricao').text(obj.erros[i]['mensagem']);
                     }
                 }
             }
