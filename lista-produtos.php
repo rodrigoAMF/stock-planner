@@ -6,6 +6,7 @@
     $pagina = new Pagina();
 
     $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
+    $semestreController = SemestreController::getInstance();
 ?>
 
 <div class="container">
@@ -20,8 +21,8 @@
         <label for="parametroSemestre">Semestre</label>
         <select class="form-control" id="parametroSemestre" name="semestre">
           <?php
-              $semestreController = SemestreController::getInstance();
               $semestres = $semestreController->getSemestres();
+              $semestres = array_reverse($semestres);
               foreach ($semestres as $semestre) {
                   echo "<option value = '" . $semestre['id']."'>" . $semestre['id']. "</option>";
               }
@@ -67,7 +68,8 @@
 
               <?php
                   $produtoController = ProdutoController::getInstance();
-                  $produtos = $produtoController->getProdutos(null,null, 8, "2S2019");
+
+                  $produtos = $produtoController->getProdutos(null,null, 8, null);
 
                   echo $produtos;
               ?>
