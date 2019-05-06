@@ -110,6 +110,33 @@ frm.submit(function (e) {
                 alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
             else if(obj.status === -1){
+                identificacao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-identificacao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-identificacao').text('Okay!');
+
+                posicao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-posicao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-posicao').text('Okay!');
+
+                descricao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-descricao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-descricao').text('Okay!');
+
+                nome.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-nome').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-nome').text('Okay!');
+
+                catmat.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-catmat').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-catmat').text('Okay!');
+
+                estoque_ideal.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-estoque_ideal').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-estoque_ideal').text('Okay!');
+
+                quantidade.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-quantidade').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-quantidade').text('Okay!');
                 for(let i = 0; i < obj.erros.length; i++){
                     if(obj.erros[i]['nome_do_campo'] == 'nome'){
                         nome.removeClass("is-valid").addClass("is-invalid");
