@@ -97,45 +97,6 @@ input[type=text]:focus, textarea:focus {
 	text-decoration: none; //faz o texto em hover nao ficar sublinhado
 }
 
-
-//
-// The Navigation Menu
-//
-// Below defined are all the ins and outs for our navigation menu,
-// referred to as `.nav`. You may wrap the below settings inside
-// `.nav` or any other suitable class too, to make it more strict
-// in terms of location.
-//
-// Example:
-//
-// <nav class="nav">
-//   <ul class="menu">
-//     <li class="menu-item">
-//       <a href="/path/to/.../">...</a>
-//     </li>
-//     <li class="menu-item">
-//       <a href="/path/to/.../">...</a>
-//     </li>
-//     <li class="menu-item has-children">
-//       <a href="/path/to/.../">...
-//         <span class="dropdown-icon"></span>
-//       </a>
-//       <ul class="sub-menu">
-//         <li class="menu-item">
-//           <a href="/path/to/.../">...</a>
-//         </li>
-//         <li class="menu-item">
-//           <a href="/path/to/.../">...</a>
-//         </li>
-//       </ul>
-//     </li>
-//     <li class="menu-item">
-//       <a href="/path/to/.../">...</a>
-//     </li>
-//   </ul>
-// </nav>
-//
-
 // Zero-down the margin and the padding for menu-lists if not done
 // in the base reset
 .menu,
@@ -481,4 +442,24 @@ input[type=text]:focus, textarea:focus {
       }
     }
   }
+}
+
+.btn-grande{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align: center;
+  margin: 0 auto;
+  width: 80%;
+  border-radius: 15px;
+  font-size: 1.2em;
+  color: #fff;
+  background: #275F9E;
+  padding: 60px;
+  height: 200px;
+}
+
+.btn-grande:hover{
+  background: darken(#275F9E, 5%);
+  cursor: pointer;
 }

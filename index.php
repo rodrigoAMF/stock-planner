@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
             <button>
-              <a href="cadastro-produto.php">
+              <a href="escolhe-cadastro.php">
     					<img src="img/cadastrar1.png">
     					<br>
               <div class="textosBotao">
