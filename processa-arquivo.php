@@ -3,6 +3,7 @@ session_start();
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
 require_once("controller/CategoriaController.php");
+require_once("controller/SemestreController.php");
 
 
 $arquivo_temp = $_FILES['arquivo']['tmp_name'];
@@ -110,7 +111,8 @@ if (!$erro) {
     $linhaDuplicado = 1;
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
+        $semestreController = new SemestreController();
+        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestreController->getSemestreAtual());
         if($resultadoCadastro == -1){
             $erro = true;
             $produtoDuplicado = $produto->getNome();
