@@ -9,53 +9,26 @@
 // echo json_encode($arr);
 
     require_once("model/Produto.php");
+    require_once("model/Categoria.php");
     require_once("controller/ProdutoController.php");
 
     $produto = new Produto();
+    $categoria = new Categoria();
 
-    $feedbacks = Array();
+    $categoria->setNome("resistor");
 
-    $feedback = $produto->setNome('nomeTESTE');
-    //array_push($feedbacks, $feedback);
-    // $produto->setIdentificacao(15);
-    // $produto->setCatmat(58);
-    $feedback = $produto->setQuantidade(8688888);
-    //array_push($feedbacks, $feedback);
-    // $produto->setEstoqueIdeal(86);
-    $feedback = $produto->setPosicao(999999999999999);
-    //array_push($feedbacks, $feedback);
+    $produto->setNome("hhgfgha");
+    $produto->setCategoria($categoria);
+    $produto->setCatmat("23");
+    $produto->setDescricao("gaga");
+    $produto->setEstoqueIdeal("45");
+    $produto->setIdentificacao("11");
+    $produto->setPosicao("55");
+    $produto->setQuantidade("55");
 
-    // $json['status'] = 1;
+    $produtoController = ProdutoController::getInstance();
 
-    // for ($i=0, $cont = 0; $i < sizeof($feedbacks); $i++) {
-    //     if($i == 0){
-    //         $json['status'] = $feedbacks[$i]['status'];
-    //     }else if($feedbacks[$i]['status'] == -1){
-    //         $json['status'] = $feedbacks[$i]['status'];
-    //     }
-    //     if($feedbacks[$i]['status'] == -1){
-    //         $json['erros'][$cont]['nome_do_campo'] = $feedbacks[$i]['nome_do_campo'];
-    //         $json['erros'][$cont]['mensagem'] = $feedbacks[$i]['mensagem'];
-    //         $cont++;
-    //     }
-    // }
+    $produtoController->cadastraProduto($produto, "2S2019");
 
-    //print_r($json);
-    //echo "<br>";
-    //$verificaErro = array('status' => $status, 'erros' => $erro);
-    //echo json_encode($json, JSON_UNESCAPED_UNICODE);
-    // if($retorno != 1) 
-    //     $erro = true;
-    // $produto->getCategoria()->setNome('Resistor');
-    // $produto->setDescricao('oi');
-
-    // $produtoController = ProdutoController::getInstance();
-    
-    // if(!$erro){
-    //     $resultadoQuery = $produtoController->cadastraProduto($produto,"1S2019");
-    // }else{
-    //     $resultadoQuery = "Ocorreu um erro";
-    // }
-
-    // echo $resultadoQuery;
+    $produtoController->verificaSeProdutoExiste($produto->getNome());
 ?>

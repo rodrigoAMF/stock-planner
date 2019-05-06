@@ -142,27 +142,6 @@ class ProdutoController{
     	return $produtos;
     }
 
-    function verificaSeProdutoExiste($nome){
-        $conexao = $this->databaseController->open_database();
-
-        $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
-
-        $resultado = $conexao->query($query);
-
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        if($resultado->fetch_row() > 0){
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-
     function getProdutoPorId($id){
         $conexao = $this->databaseController->open_database();
 
@@ -205,13 +184,40 @@ class ProdutoController{
         return $IDProduto;
     }
 
-    function cadastraProduto($produto, $IDSemestre){
-    	$conexao = $this->databaseController->open_database();
+    function verificaSeProdutoExiste($nome){
+        $conexao = $this->databaseController->open_database();
 
+        $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+
+    }
+
+    function cadastraProduto($produto, $IDSemestre){
     	$duplicado = $this->verificaSeProdutoExiste($produto->getNome());
 
-    	if(!$duplicado)
+    	if($duplicado == 0)
         {
+            $conexao = $this->databaseController->open_database();
+
             $query = "INSERT INTO produtos(nome, descricao, identificacao, categoria, posicao, estoque_ideal) values('"
                 . $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ")";
 

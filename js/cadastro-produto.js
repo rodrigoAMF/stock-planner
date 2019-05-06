@@ -73,9 +73,9 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            //console.log(typeof(msg));
-            //alertify.alert(msg);
-            var obj = jQuery.parseJSON(msg); 
+            var obj = jQuery.parseJSON(msg);
+
+            console.log(obj.testando);
 
             if (obj.status === 1) {
                 quantidade.removeClass('is-valid is-invalid');
@@ -106,7 +106,9 @@ frm.submit(function (e) {
                 catmat.val(' ');
                 posicao.val(' ');
                 estoque_ideal.val(' ');
-                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!', function () {
+                    document.location.href = "cadastro-produto.php";
+                }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
             else if(obj.status === -1){
                 identificacao.removeClass("is-invalid").addClass("is-valid");
