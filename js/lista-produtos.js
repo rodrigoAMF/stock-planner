@@ -62,6 +62,7 @@ $("#busca").on("keyup", function(event) {
 
 $(".ordenavel").on("click", function(event)
 {
+	let semestre = $("#parametroSemestre").val();
 	let nomeCampo = $(this).text();
 
 	if (nomeCampo != "")
@@ -69,8 +70,9 @@ $(".ordenavel").on("click", function(event)
 		nomeCampo = nomeCampo.toUpperCase();
 	}
 
+	let url = "get-produto.php?busca=&filtro=&semestre=" + semestre + "&parametroOrdenacao=";
+
 	if(nomeCampo == "NOME"){
-		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickNome == false){
 			url += 1;
 			$("#setaNome").attr("src","img/setaCima.png");
@@ -98,7 +100,6 @@ $(".ordenavel").on("click", function(event)
 		});
 	}
 	if(nomeCampo == "QUANTIDADE"){
-		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickQuantidade == false){
 			url += 7;
 			$("#setaQuantidade").attr("src","img/setaCima.png");
@@ -127,7 +128,6 @@ $(".ordenavel").on("click", function(event)
 	}
 	if(nomeCampo == "")
 	{
-		let url = "get-produto.php?busca=&filtro=&parametroOrdenacao=";
 		if(clickEstadoCritico == true){
 			url += 8;
 			$("#setaVazio").attr("src","img/setaCima.png");
