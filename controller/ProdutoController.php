@@ -332,8 +332,6 @@ class ProdutoController{
 
     	if($produtos != ""){
     		return $produtos;
-    	}else{
-    		return "Não existem produtos!";
     	}
 
     }

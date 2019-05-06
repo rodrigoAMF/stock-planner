@@ -62,7 +62,9 @@ frm.submit(function (e) {
             estoque_ideal.removeClass('is-valid is-invalid');
             $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
-            alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+            alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!', function() {
+                document.location.href = "lista-produtos.php";
+            }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });
 
