@@ -23,6 +23,7 @@ $("#parametroSemestre").on("change", function(){
 		$('table').append("<tbody>");
 		$('table tbody').append(msg);
 		$('table').append("</tbody>");
+		bindDeleteIcons();
 	});
 
 	request.fail(function(jqXHR, textStatus) {
@@ -156,36 +157,42 @@ $(".ordenavel").on("click", function(event)
 	}
 });
 
-$(".delete-icon").on('click', function(event){
-	event.preventDefault();
+function bindDeleteIcons(){
+	$('.delete-icon').each(function(i, obj) {
+		$(obj).on("click", function(event){
+			event.preventDefault();
 
-	let btn = $(this);
-	let url = $(this).attr('href');
+			let btn = $(this);
+			let url = $(this).attr('href');
 
-	alertify.confirm().set('resizable',true).resizeTo(500,250);
-	alertify.confirm('Confirmar','Deseja realmente excluir este item?',
-		function(){
+			alertify.confirm().set('resizable',true).resizeTo(500,250);
+			alertify.confirm('Confirmar','Deseja realmente excluir este item?',
+				function(){
 
-			var request = $.ajax({
-	            url: url,
-	            cache: false
-	        });
+					var request = $.ajax({
+						url: url,
+						cache: false
+					});
 
-	        request.done(function(msg) {
-	        	btn.parent().parent().remove();
-	            alertify.success('Produto excluido com sucesso!');
-	        });
+					request.done(function(msg) {
+						btn.parent().parent().remove();
+						alertify.success('Produto excluido com sucesso!');
+					});
 
-	        request.fail(function(jqXHR, textStatus) {
-	        	alertify.error('Falha ao exluir produto.');
-	            alert("Falha ao cadastrar produto: " + textStatus);
-	        });
+					request.fail(function(jqXHR, textStatus) {
+						alertify.error('Falha ao exluir produto.');
+						alert("Falha ao cadastrar produto: " + textStatus);
+					});
 
 
-		},
-		function(){
-			alertify.notify('Cancelado');
-		}).setting({'labels':{ok:'Sim',cancel:'Não'},
-					'transition':'zoom'
+				},
+				function(){
+					alertify.notify('Cancelado');
+				}).setting({'labels':{ok:'Sim',cancel:'Não'},
+				'transition':'zoom'
+			});
 		});
-});
+	});
+}
+
+bindDeleteIcons();

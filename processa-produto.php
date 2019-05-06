@@ -44,13 +44,13 @@
         }
     }
 
-
     $produtoController = ProdutoController::getInstance();
 
     $resultadoCadastro = 1;
 
     if($json['status'] !== -1){
         $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestre);
+
     }
 
     // Produto duplicado
