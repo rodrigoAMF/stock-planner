@@ -1,8 +1,10 @@
 <?php
     require_once("model/Produto.php");
+    require_once("model/Semestre.php");
     require_once("controller/ProdutoController.php");
 
     $produto = new Produto();
+    $semestre = new Semestre();
 
     $existemErros = false;
 
@@ -22,6 +24,8 @@
     array_push($feedbacks, $feedback);
     $feedback = $produto->setDescricao($_POST['descricao']);
     array_push($feedbacks, $feedback);
+
+    $semestre = $_POST['semestre'];
 
     $produto->getCategoria()->setNome($_POST['categoria']);
 
@@ -46,7 +50,7 @@
     $resultadoCadastro = 1;
 
     if($json['status'] !== -1){
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
+        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestre);
     }
 
     // Produto duplicado
