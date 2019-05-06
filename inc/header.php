@@ -62,6 +62,7 @@
                                     </li>
                                    </ul>
                                  </li>
+                                   <!--
                                  <li class="menu-item has-children">
                                    <a href="">Sites
                                      <span class="dropdown-icon"></span>
@@ -75,6 +76,7 @@
                                      </li>
                                    </ul>
                                  </li>
+                                 -->
 
                                </ul>
                             </nav>
