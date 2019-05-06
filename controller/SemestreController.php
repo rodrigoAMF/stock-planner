@@ -1,5 +1,6 @@
 <?php
 require_once("DatabaseController.php");
+require_once("model/Semestre.php");
 
 class SemestreController{
 
@@ -39,7 +40,7 @@ class SemestreController{
 
     function getSemestreAtual() {
         $conexao = $this->databaseController->open_database();
-        $query = "SELECT MAX(id) FROM semestre";
+        $query = "SELECT * FROM `semestre` ORDER BY ano DESC LIMIT 2";
 
         $resultado = $conexao->query($query);
 
@@ -51,9 +52,15 @@ class SemestreController{
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
-        $IDSemestre = $dados[0]["MAX(id)"];
-
-        return $IDSemestre;
+        if($dados[0]['ano'] == $dados[1]['ano']){
+            if($dados[0]['numero'] > $dados[1]['numero']){
+                return $dados[0]['id'];
+            }else{
+                return $dados[1]['id'];
+            }
+        }else{
+            return $dados[0]['id'];
+        }
     }
 
      function getUltimoAno() {
@@ -92,6 +99,28 @@ class SemestreController{
 
         return true;
 
+    }
+
+    function atualizaSemestre()
+    {
+        $semestre = new Semestre();
+        $ano = $this->getUltimoAno();
+        $numeroid = $this->getSemestreAtual();
+
+        $numero = $numeroid[0];
+        
+
+        if($numero == 1)
+        {
+            $id = '2S'.$ano;
+            $semestre->setAtributos($id, $ano, 2);
+        }else{
+            $ano++;
+            $id = '1S'.$ano;
+            $semestre->setAtributos($id, $ano, 1);
+        }
+
+        return $semestre;
     }
 
 }

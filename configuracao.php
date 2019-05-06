@@ -13,10 +13,12 @@
     <div class="row">
         <div class="col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
             <label for="semestre">Semestre atual:</label>
+            <span id="id-semestre">
             <?php 
                 $semestre = $semestreController->getSemestreAtual();
                 echo $semestre;
              ?>
+            </span>
         </div>
     </div>
     <div class="row">

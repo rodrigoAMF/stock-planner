@@ -2,26 +2,11 @@
     require_once("controller/SemestreController.php");
     require_once("model/Semestre.php");
 
-    $semestre = new Semestre();
 
-    $ano = $semestre->getUltimoAno();
+	$semestreController = SemestreController::getInstance();
 
-    function atualizaSemestre($ano, $numero)
-    {
+    $semestre = $semestreController->atualizaSemestre();
 
-    	if($semestre->getNumero() == 1)
-    	{
-    		$numero++;
-    		$semestre->setAtributos($numero.'S'.$ano, $ano, $numero);
-    	}else if($semestre->getNumero() == 2){
-    		$numero--;
-    		$ano++;
-    		$semestre->setAtributos($numero.'S'.$ano, $ano, $numero);
-    	}
+	$resultadoQuery = $semestreController->cadastraSemestre($semestre);
 
-    	$semestreController = SemestreController::getInstance();
-
-    	$resultadoQuery = $semestreController->cadastraSemestre($semestre);
-    }
-
-    echo $resultadoQuery;
+    echo $semestreController->getSemestreAtual();
