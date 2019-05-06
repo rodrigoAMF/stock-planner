@@ -73,7 +73,6 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            console.log(msg);
             //console.log(typeof(msg));
             //alertify.alert(msg);
             var obj = jQuery.parseJSON(msg); 
