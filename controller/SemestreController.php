@@ -40,7 +40,7 @@ class SemestreController{
 
     function getSemestreAtual() {
         $conexao = $this->databaseController->open_database();
-        $query = "SELECT * FROM `semestre` ORDER BY ano DESC LIMIT 2";
+        $query = "SELECT * FROM `semestre` ORDER BY id DESC LIMIT 1";
 
         $resultado = $conexao->query($query);
 
@@ -52,15 +52,7 @@ class SemestreController{
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
-        if($dados[0]['ano'] == $dados[1]['ano']){
-            if($dados[0]['numero'] > $dados[1]['numero']){
-                return $dados[0]['id'];
-            }else{
-                return $dados[1]['id'];
-            }
-        }else{
-            return $dados[0]['id'];
-        }
+        return $dados[0]['id'];
     }
 
      function getUltimoAno() {
@@ -104,25 +96,23 @@ class SemestreController{
     function atualizaSemestre()
     {
         $semestre = new Semestre();
-        $ano = $this->getUltimoAno();
-        $numeroid = $this->getSemestreAtual();
 
-        $numero = $numeroid[0];
-        
+        $stringSemestre = $this->getSemestreAtual();
+        $ano = substr($stringSemestre, 0, 4);
+        $numero = substr($stringSemestre, 5, 6);
 
         if($numero == 1)
         {
-            $id = '2S'.$ano;
+            $id = $ano . 'S2';
             $semestre->setAtributos($id, $ano, 2);
         }else{
             $ano++;
-            $id = '1S'.$ano;
+            $id = $ano . 'S1';
             $semestre->setAtributos($id, $ano, 1);
         }
 
         return $semestre;
     }
-
 }
 
  ?>
