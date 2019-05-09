@@ -3,6 +3,7 @@ session_start();
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
 require_once("controller/CategoriaController.php");
+require_once("controller/SemestreController.php");
 
 
 $arquivo_temp = $_FILES['arquivo']['tmp_name'];
@@ -23,18 +24,17 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     $dadosLidos[$i] = trim($dadosLidos[$i]);
     $camposProduto = explode("\t", $dadosLidos[$i]);
 
+    // Verifica se usuário informou os 8 campos obrigatórios
+    if (sizeof($camposProduto)<8) {
+        $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i);
+        $erro = true;
+    }
+
     foreach($camposProduto as $campo){
         if($campo == ""){
             $mensagemErro = "Campo com valor vazio na linha " . strval($i);
             $erro = true;
         }
-    }
-
-    // Verifica se usuário informou os 8 campos obrigatórios
-    echo sizeof($camposProduto) . "<br>";
-    if (sizeof($camposProduto)<8) {
-        $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i);
-        $erro = true;
     }
 
     $categoriaController = CategoriaController::getInstance();
@@ -55,38 +55,38 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $categoriaController->cadastraCategoria($categoria);
     }
 
-    if (strlen($camposProduto[0]) > 100) {
+    if (strlen($camposProduto[0]) > 100 &&!erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Nome' suporta no máximo 100 caracteres";
         $erro = true;
     }
 
     // Verifica se os campos são numéricos
-    if (!is_numeric($camposProduto[2])) {
+    if (!is_numeric($camposProduto[2]) &&!erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[2]) > 6){
+    if(strlen($camposProduto[2]) > 6 &&!erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[3])){
+    if (!is_numeric($camposProduto[3]) &&!erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[3]) > 6){
+    if(strlen($camposProduto[3]) > 6 &&!erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[4])){
+    if (!is_numeric($camposProduto[4]) &&!erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Estoque Ideal' deve ser numérico";
         $erro = true;
     }
 
-    if (strlen($camposProduto[5]) > 3) {
+    if (strlen($camposProduto[5]) > 3 &&!erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo posição suporta apenas 3 caracteres";
         $erro = true;
     }
@@ -105,21 +105,26 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 
 // Se não existe nenhum erro no arquivo
 if (!$erro) {
+
     // Cadastra todos os produtos
     $produtoDuplicado = "";
     $linhaDuplicado = 1;
+    $verificaDuplicado = false;
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, "1S2019");
+        $semestreController = new SemestreController();
+        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestreController->getSemestreAtual());
         if($resultadoCadastro == -1){
-            $erro = true;
+            $verificaDuplicado = true;
             $produtoDuplicado = $produto->getNome();
-            break;
+            // break;
+            
         }
         $linhaDuplicado++;
     }
-    if(!$erro){
+    if(!$verificaDuplicado){
         $_SESSION['msg'] = "<p> Produtos foram cadastrados com sucesso</p>";
+        
     }else{
         $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' duplicado na linha " . $linhaDuplicado . "</p>";
     }

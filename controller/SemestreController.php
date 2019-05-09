@@ -1,5 +1,6 @@
 <?php
 require_once("DatabaseController.php");
+require_once("model/Semestre.php");
 
 class SemestreController{
 
@@ -39,7 +40,7 @@ class SemestreController{
 
     function getSemestreAtual() {
         $conexao = $this->databaseController->open_database();
-        $query = "SELECT MAX(id) FROM semestre";
+        $query = "SELECT * FROM `semestre` ORDER BY id DESC LIMIT 1";
 
         $resultado = $conexao->query($query);
 
@@ -51,11 +52,67 @@ class SemestreController{
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
-        $IDSemestre = $dados[0]["MAX(id)"];
-
-        return $IDSemestre;
+        return $dados[0]['id'];
     }
 
+     function getUltimoAno() {
+        $conexao = $this->databaseController->open_database();
+        $query = "SELECT MAX(ano) FROM semestre";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $AnoSemestre = $dados[0]["MAX(ano)"];
+
+        return $AnoSemestre;
+    }
+
+    function cadastraSemestre(Semestre $semestre){
+        $conexao = $this->databaseController->open_database();
+
+        $query = "INSERT INTO semestre(id,ano,numero) values('". $semestre->getId() . "',". $semestre->getAno() . ",". $semestre->getNumero() . ")";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        return true;
+
+    }
+
+    function atualizaSemestre()
+    {
+        $semestre = new Semestre();
+
+        $stringSemestre = $this->getSemestreAtual();
+        $ano = substr($stringSemestre, 0, 4);
+        $numero = substr($stringSemestre, 5, 6);
+
+        if($numero == 1)
+        {
+            $id = $ano . 'S2';
+            $semestre->setAtributos($id, $ano, 2);
+        }else{
+            $ano++;
+            $id = $ano . 'S1';
+            $semestre->setAtributos($id, $ano, 1);
+        }
+
+        return $semestre;
+    }
 }
 
  ?>

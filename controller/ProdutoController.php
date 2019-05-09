@@ -1,5 +1,6 @@
 <?php
 require_once("DatabaseController.php");
+require_once("SemestreController.php");
 
 class ProdutoController{
 
@@ -141,27 +142,6 @@ class ProdutoController{
     	return $produtos;
     }
 
-    function verificaSeProdutoExiste($nome){
-        $conexao = $this->databaseController->open_database();
-
-        $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
-
-        $resultado = $conexao->query($query);
-
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        if($resultado->fetch_row() > 0){
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-
     function getProdutoPorId($id){
         $conexao = $this->databaseController->open_database();
 
@@ -204,13 +184,40 @@ class ProdutoController{
         return $IDProduto;
     }
 
-    function cadastraProduto($produto, $IDSemestre){
-    	$conexao = $this->databaseController->open_database();
+    function verificaSeProdutoExiste($nome){
+        $conexao = $this->databaseController->open_database();
 
+        $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+
+    }
+
+    function cadastraProduto($produto, $IDSemestre){
     	$duplicado = $this->verificaSeProdutoExiste($produto->getNome());
 
-    	if(!$duplicado)
+    	if($duplicado == 0)
         {
+            $conexao = $this->databaseController->open_database();
+
             $query = "INSERT INTO produtos(nome, descricao, identificacao, categoria, posicao, estoque_ideal) values('"
                 . $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ")";
 
@@ -247,32 +254,40 @@ class ProdutoController{
     function getProdutos($busca, $filtro, $parametroOrdenacao, $semestre){
     	$conexao = $this->databaseController->open_database();
 
+      $semestreController = SemestreController::getInstance();
+      $semestreAtual = $semestreController->getSemestreAtual();
+
+      if ($semestre == null){
+        $semestre = $semestreAtual;
+      }
+
+
     	if ($busca == null) {
-    		$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id";
+    		$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id";
     	}
     	else
     	{
     		switch($filtro){
     			case 1:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
     			break;
     			case 2:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.identificacao LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.identificacao LIKE '%" . $busca . "%'";
     			break;
     			case 3:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
     			break;
     			case 4:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND c.nome LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND c.nome LIKE '%" . $busca . "%'";
     			break;
     			case 5:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.posicao LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.posicao LIKE '%" . $busca . "%'";
     			break;
     			case 6:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
     			break;
     			case 7:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
     			break;
     		}
     	}
@@ -310,18 +325,19 @@ class ProdutoController{
     		$produtos .= "<td>" . $dados['posicao'] . "</td>";
     		$produtos .= "<td>" . $dados['estoque_ideal'] . "</td>";
     		$produtos .= "<td>" . $dados['quantidade'] . "</td>";
-    		if(true){
+    		if($semestre == $semestreAtual){
             $produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
     		    $produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
     		    <i class='material-icons'>edit</i></a></td>";
+        } else{
+           $produtos .= "<td> </td>";
+           $produtos .= "<td> </td>";
         }
     		$produtos .= "</tr>";
     	}
 
     	if($produtos != ""){
     		return $produtos;
-    	}else{
-    		return "Não existem produtos!";
     	}
 
     }

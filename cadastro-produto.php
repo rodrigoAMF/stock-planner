@@ -16,12 +16,12 @@
 
     <div id="principal">
         <form class="formulario-produto" method="post" action="processa-produto.php">
+            <input type="text" name="semestre" hidden value="<?= $semestreController->getSemestreAtual(); ?>">
             <div class="form-row">
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="semestre">O produto será cadastrado no</label>
-                    <?php 
-                        $semestre = $semestreController->getSemestreAtual();
-                        echo $semestre;
+                    <?php
+                        echo $semestreController->getSemestreAtual();
                      ?>
                 </div>
             </div>

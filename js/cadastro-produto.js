@@ -26,7 +26,7 @@ $('#formato-botao-mais').on('click',function(){
 
           let url = "processa-categoria.php?nome=" + value;
 
-          alertify.success('Cadastrado com sucesso')
+          alertify.success('Cadastrado com sucesso');
 
           var request = $.ajax({
     	            url: url,
@@ -34,7 +34,6 @@ $('#formato-botao-mais').on('click',function(){
     	     });
 
            request.done(function(msg) {
-               alert(msg);
                $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
                $("#categoria").val( $('option:contains('+value+')').val() );
            });
@@ -54,8 +53,6 @@ $('#formato-botao-mais').on('click',function(){
 
 frm.submit(function (e) {
 
-
-
     e.preventDefault();
 
     let erros = false;
@@ -73,11 +70,9 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            console.log(msg);
-            //console.log(typeof(msg));
-            //alertify.alert(msg);
             var obj = jQuery.parseJSON(msg);
-            
+
+            console.log(obj.testando);
 
             if (obj.status === 1) {
                 quantidade.removeClass('is-valid is-invalid');
@@ -108,9 +103,38 @@ frm.submit(function (e) {
                 catmat.val(' ');
                 posicao.val(' ');
                 estoque_ideal.val(' ');
-                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!', function () {
+                    document.location.href = "cadastro-produto.php";
+                }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
             else if(obj.status === -1){
+                identificacao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-identificacao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-identificacao').text('Okay!');
+
+                posicao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-posicao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-posicao').text('Okay!');
+
+                descricao.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-descricao').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-descricao').text('Okay!');
+
+                nome.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-nome').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-nome').text('Okay!');
+
+                catmat.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-catmat').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-catmat').text('Okay!');
+
+                estoque_ideal.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-estoque_ideal').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-estoque_ideal').text('Okay!');
+
+                quantidade.removeClass("is-invalid").addClass("is-valid");
+                $('#feedback-quantidade').removeClass('feedback invalid-feedback').addClass('valid-feedback');
+                $('#feedback-quantidade').text('Okay!');
                 for(let i = 0; i < obj.erros.length; i++){
                     if(obj.erros[i]['nome_do_campo'] == 'nome'){
                         nome.removeClass("is-valid").addClass("is-invalid");
@@ -133,9 +157,9 @@ frm.submit(function (e) {
                         $('#feedback-quantidade').text(obj.erros[i]['mensagem']);
                     }
                     if(obj.erros[i]['nome_do_campo'] == 'estoqueIdeal'){
-                        identificacao.removeClass("is-valid").addClass("is-invalid");
-                        $('#feedback-estoqueIdeal').removeClass('feedback valid-feedback').addClass('invalid-feedback');
-                        $('#feedback-estoqueIdeal').text(obj.erros[i]['mensagem']);
+                        estoque_ideal.removeClass("is-valid").addClass("is-invalid");
+                        $('#feedback-estoque_ideal').removeClass('feedback valid-feedback').addClass('invalid-feedback');
+                        $('#feedback-estoque_ideal').text(obj.erros[i]['mensagem']);
                     }
                     if(obj.erros[i]['nome_do_campo'] == 'posicao'){
                         posicao.removeClass("is-valid").addClass("is-invalid");
@@ -152,42 +176,6 @@ frm.submit(function (e) {
             else {
                 alertify.alert("Produto Duplicado");
             }
-
-            /*if (msg === "1") {
-                quantidade.removeClass('is-valid is-invalid');
-                $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
-
-                nome.removeClass('is-valid is-invalid');
-                $('#feedback-nome').remove('valid-feedback invalid-feedback').add('feedback');
-
-                identificacao.removeClass('is-valid is-invalid');
-                $('#feedback-identificacao').remove('valid-feedback invalid-feedback').add('feedback');
-
-                descricao.removeClass('is-valid is-invalid');
-                $('#feedback-descricao').remove('valid-feedback invalid-feedback').add('feedback');
-
-                catmat.removeClass('is-valid is-invalid');
-                $('#feedback-catmat').remove('valid-feedback invalid-feedback').add('feedback');
-
-                posicao.removeClass('is-valid is-invalid');
-                $('#feedback-posicao').remove('valid-feedback invalid-feedback').add('feedback');
-
-                estoque_ideal.removeClass('is-valid is-invalid');
-                $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
-
-                nome.val(' ');
-                quantidade.val(' ');
-                identificacao.val(' ');
-                descricao.val(' ');
-                catmat.val(' ');
-                posicao.val(' ');
-                estoque_ideal.val(' ');
-                alertify.alert('Mensagem de sistema', 'Produto cadastrado com Sucesso!').setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
-            }
-            else {
-                alertify.alert("Produto Duplicado");
-            }*/
-
 
         });
 

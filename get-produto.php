@@ -4,8 +4,11 @@
     $busca = $_GET['busca'];
     $filtro = $_GET['filtro'];
     $parametroOrdenacao = $_GET['parametroOrdenacao'];
-    if(isset($_GET['semestre'])){$semestre = $_GET['semestre'];
-    }else{$semestre = null;}
+    if(isset($_GET['semestre'])){
+      $semestre = $_GET['semestre'];
+    }else{
+      $semestre = null;
+    }
 
     $busca = ($busca == "") ? null: $busca;
     $filtro = ($filtro == "") ? null: $filtro;
