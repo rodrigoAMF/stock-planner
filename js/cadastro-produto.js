@@ -26,7 +26,7 @@ $('#formato-botao-mais').on('click',function(){
 
           let url = "processa-categoria.php?nome=" + value;
 
-          alertify.success('Cadastrado com sucesso')
+          alertify.success('Cadastrado com sucesso');
 
           var request = $.ajax({
     	            url: url,
@@ -34,7 +34,6 @@ $('#formato-botao-mais').on('click',function(){
     	     });
 
            request.done(function(msg) {
-               alert(msg);
                $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
                $("#categoria").val( $('option:contains('+value+')').val() );
            });
@@ -53,8 +52,6 @@ $('#formato-botao-mais').on('click',function(){
 })
 
 frm.submit(function (e) {
-
-
 
     e.preventDefault();
 
