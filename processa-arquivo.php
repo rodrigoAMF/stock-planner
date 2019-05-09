@@ -105,22 +105,26 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 
 // Se não existe nenhum erro no arquivo
 if (!$erro) {
+
     // Cadastra todos os produtos
     $produtoDuplicado = "";
     $linhaDuplicado = 1;
+    $verificaDuplicado = false;
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
         $semestreController = new SemestreController();
         $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestreController->getSemestreAtual());
         if($resultadoCadastro == -1){
-            $erro = true;
+            $verificaDuplicado = true;
             $produtoDuplicado = $produto->getNome();
-            break;
+            // break;
+            
         }
         $linhaDuplicado++;
     }
-    if(!$erro){
+    if(!$verificaDuplicado){
         $_SESSION['msg'] = "<p> Produtos foram cadastrados com sucesso</p>";
+        
     }else{
         $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' duplicado na linha " . $linhaDuplicado . "</p>";
     }
