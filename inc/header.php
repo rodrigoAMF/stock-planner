@@ -52,7 +52,7 @@
                                    </a>
                                    <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="cadastro-produto.php">Cadastro</a>
+                                        <a href="escolhe-cadastro.php">Cadastro</a>
                                     </li>
                                     <li class="menu-item">
                                         <a href="lista-produtos.php">Listar</a>
