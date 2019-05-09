@@ -1,3 +1,5 @@
-Nome	Identificação	Catmat	Quantidade	Estoque Ideal	Posição	Categoria	Descrição
-lapis	123	456	2	2	96	Resistor	mouse vermelho
-livro	123	456	2	2	96	Resistor	mouse vermelho
+﻿Nome	Identificação	Catmat	Quantidade	Estoque Ideal	Posição	Categoria	Descrição
+sapato	123	456	2	2	96	Resistor	mouse vermelho
+garrafinha	123	456	2	2	96	Resistor	mouse vermelho
+corda	123	456	2	2	96	Resistor	mouse vermelho
+capa	123	456	2	2	96	Resistor	mouse vermelho
