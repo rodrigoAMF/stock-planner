@@ -52,11 +52,12 @@
         $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestre);
     }
 
-    $json['testando'] = $resultadoCadastro;
-
-    // Produto duplicado
-    if($resultadoCadastro == -1){
+    // Produto com nome duplicado
+    if($resultadoCadastro == -2){
         $json['status'] = -2;
+    }else if($resultadoCadastro == -3){
+        // Produto com identificação duplicada
+        $json['status'] = -3;
     }
 
     echo json_encode($json, JSON_UNESCAPED_UNICODE);

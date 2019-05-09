@@ -184,7 +184,7 @@ class ProdutoController{
         return $IDProduto;
     }
 
-    function verificaSeProdutoExiste($nome){
+    function verificaSeProdutoExistePorNome($nome){
         $conexao = $this->databaseController->open_database();
 
         $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
@@ -206,15 +206,37 @@ class ProdutoController{
         }else{
             return 0;
         }
+    }
 
+    function verificaSeProdutoExistePorIdentificacao($identificacao){
+        $conexao = $this->databaseController->open_database();
 
+        $query = "SELECT * FROM produtos WHERE identificacao = '" . $identificacao . "'";
 
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     function cadastraProduto($produto, $IDSemestre){
-    	$duplicado = $this->verificaSeProdutoExiste($produto->getNome());
+    	$duplicadoNome = $this->verificaSeProdutoExistePorNome($produto->getNome());
+        $duplicadoIdentificacao = $this->verificaSeProdutoExistePorIdentificacao($produto->getIdentificacao());
 
-    	if($duplicado == 0)
+    	if($duplicadoNome == 0 && $duplicadoIdentificacao == 0)
         {
             $conexao = $this->databaseController->open_database();
 
@@ -245,7 +267,10 @@ class ProdutoController{
 
             return 1;
         }else{
-    	    return -1;
+    	    if($duplicadoNome == 1)
+    	        return -2;
+    	    else
+    	        return -3;
         }
 
 
