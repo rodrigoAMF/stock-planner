@@ -8,7 +8,9 @@
 
 // echo json_encode($arr);
 
-    require_once("model/Produto.php");
+    echo (trim(' ') == null) ? 'sim': 'nao';
+
+    /*require_once("model/Produto.php");
     require_once("model/Categoria.php");
     require_once("controller/ProdutoController.php");
 
@@ -30,5 +32,5 @@
 
     $produtoController->cadastraProduto($produto, "2S2019");
 
-    $produtoController->verificaSeProdutoExiste($produto->getNome());
+    $produtoController->verificaSeProdutoExiste($produto->getNome());*/
 ?>

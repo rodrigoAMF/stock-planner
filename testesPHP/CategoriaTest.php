@@ -5,18 +5,19 @@ use PHPUnit\Framework\TestCase;
 
 class CategoriaTest extends TestCase{
 
-    public function testSetNomeNovo(){
+    public function testGetNomeNovo(){
         $categoria = new Categoria();
         $categoria->setNomeNovo("Nova Categoria");
 
-        $this->assertEquals("Novb Categoria", $categoria->getNome());
+        $this->assertEquals("Nova Categoria", $categoria->getNome());
     }
 
-    public function testSetAtributos(){
+    public function testSetNomeNovo(){
         $categoria = new Categoria();
-        $categoria->setAtributos(1, "Teste Categoria");
-
-        $this->assertEquals("Teste Categoria", $categoria->getNome());
-        $this->assertEquals(1, $categoria->getId());
+        
+        $this->assertEquals(1, $categoria->setNomeNovo("Nova Categoria"));
+        $this->assertEquals(-1, $categoria->setNomeNovo(""));
+        $this->assertEquals(-1, $categoria->setNomeNovo(" "));
     }
+
 }
