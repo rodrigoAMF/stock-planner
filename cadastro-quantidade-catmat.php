@@ -44,7 +44,6 @@
           <table class="table table-borderless table-responsive-md">
               <thead>
                   <tr>
-                      <th class="ordenavel sticky"><img src="img/setaBaixo.png" id="setaVazio" ></th>
                       <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome" ></th>
                       <th class="sticky">CATMAT</th>
                       <th class="ordenavel sticky">Quantidade<img src="img/setaBaixo.png" id="setaQuantidade" ></th>
@@ -56,8 +55,7 @@
 
               <?php
                   $produtoController = ProdutoController::getInstance();
-
-                  $produtos = $produtoController->getProdutosCadastrados(null,null, 8);
+                  $produtos = $produtoController->getProdutosCadastrados(null,null, 8, null);
 
                   echo $produtos;
               ?>

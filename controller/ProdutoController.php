@@ -416,43 +416,86 @@ class ProdutoController{
         return $rgb;
     }
 
+    function sortListaProdutosCadastrados($produtos, $parametro){
+
+        if($parametro == null) $parametro = 8;
+        /*
+        1- nome
+        2- ident
+        3- catmat
+        4- categoria
+        5- posicao
+        6- estoque ideal
+        7- quantidade
+        8, default- crit
+        */
+        if(abs($parametro) == 1){
+            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                if($parametro > 0){
+                    if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
+                        $aux = $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }else{
+                    if(strtoupper($produtos[$j]['nome']) < strtoupper($produtos[$j+1]['nome'])){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            }
+        }
+        if(abs($parametro) == 3){
+            $parametro /= 3;
+            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                if($produtos[$j]['catmat']*$parametro > $produtos[$j+1]['catmat']*$parametro){
+                    $aux =  $produtos[$j];
+                    $produtos[$j] = $produtos[$j+1];
+                    $produtos[$j+1] = $aux;
+                }
+            }
+        }
+        if(abs($parametro) == 7){
+            $parametro /= 7;
+            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                if($produtos[$j]['quantidade']*$parametro > $produtos[$j+1]['quantidade']*$parametro){
+                    $aux =  $produtos[$j];
+                    $produtos[$j] = $produtos[$j+1];
+                    $produtos[$j+1] = $aux;
+                }
+            }
+        }
+        if(abs($parametro) == 8){
+            $parametro /= 8;
+            // for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+            //     if($produtos[$j]['porcentagem']*$parametro < $produtos[$j+1]['porcentagem']*$parametro){
+            //         $aux =  $produtos[$j];
+            //         $produtos[$j] = $produtos[$j+1];
+            //         $produtos[$j+1] = $aux;
+            //     }
+            // }
+        }
+        return $produtos;
+    }
+
     function getProdutosCadastrados($busca, $filtro, $parametroOrdenacao){
-        $conexao = $this->databaseController->open_database();
-
-      $semestreController = SemestreController::getInstance();
-      $semestreAtual = $semestreController->getSemestreAtual();
-
-      if ($semestre == null){
-        $semestre = $semestreAtual;
-      }
-
+       $conexao = $this->databaseController->open_database();
 
         if ($busca == null) {
-            $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id";
+            $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id";
         }
         else
         {
             switch($filtro){
                 case 1:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
-                break;
-                case 2:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.identificacao LIKE '%" . $busca . "%'";
+                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
                 break;
                 case 3:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
-                break;
-                case 4:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND c.nome LIKE '%" . $busca . "%'";
-                break;
-                case 5:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.posicao LIKE '%" . $busca . "%'";
-                break;
-                case 6:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
+                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
                 break;
                 case 7:
-                    $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '" . $semestre . "' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
+                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
                 break;
             }
         }
@@ -469,37 +512,33 @@ class ProdutoController{
 
         $this->databaseController->close_database();
 
-        for ($i=0; $i < sizeof($dados); $i++) {
-            $dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
-        }
         if($busca == null && $filtro == null){
-            $dados = $this->sortLista($dados, $parametroOrdenacao);
+            $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
         }
 
 
         $produtos = "";
 
         foreach ($dados as $dados) {
-            $rgb = $this->pickColor($dados['porcentagem']);
-            $produtos .= "<tr>";
-            $produtos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
+           // $rgb = $this->pickColor($dados['porcentagem']);
+           // $produtos .= "<tr>";
+          //  $produtos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
             $produtos .= "<td>" . $dados['nome'] . "</td>";
             $produtos .= "<td>" . $dados['catmat'] . "</td>";
             $produtos .= "<td>" . $dados['quantidade'] . "</td>";
-            if($semestre == $semestreAtual){
-            $produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
-                $produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
-                <i class='material-icons'>edit</i></a></td>";
-        } else{
+        //     if($semestre == $semestreAtual){
+        //     $produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
+        //         $produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
+        //         <i class='material-icons'>edit</i></a></td>";
+        // } else{
+         $produtos .= "<td> </td>";
            $produtos .= "<td> </td>";
-           $produtos .= "<td> </td>";
-        }
+        // }
             $produtos .= "</tr>";
         }
 
         if($produtos != ""){
             return $produtos;
         }
-
     }
 }
