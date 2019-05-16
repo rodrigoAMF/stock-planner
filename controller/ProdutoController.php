@@ -480,10 +480,12 @@ class ProdutoController{
     }
 
     function getProdutosCadastrados($busca, $filtro, $parametroOrdenacao){
+        $semestreController = SemestreController::getInstance();
+        $semestreAtual = $semestreController->getSemestreAtual();
        $conexao = $this->databaseController->open_database();
 
         if ($busca == null) {
-            $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id";
+            $query = "SELECT * FROM produtos WHERE id NOT IN (SELECT id_produto FROM produtos_semestre WHERE id_semestre = '" . $semestreAtual . "')";
         }
         else
         {
