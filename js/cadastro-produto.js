@@ -26,7 +26,7 @@ $('#formato-botao-mais').on('click',function(){
 
           let url = "processa-categoria.php?nome=" + value;
 
-          alertify.success('Cadastrado com sucesso');
+          //alertify.success('Cadastrado com sucesso');
 
           var request = $.ajax({
     	            url: url,
@@ -34,8 +34,15 @@ $('#formato-botao-mais').on('click',function(){
     	     });
 
            request.done(function(msg) {
-               $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
-               $("#categoria").val( $('option:contains('+value+')').val() );
+               if(msg == -1){
+                alertify.error("Falha ao cadastrar categoria");
+               }
+               else{
+                   $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
+                   $("#categoria").val( $('option:contains('+value+')').val() );
+                   alertify.success('Cadastrado com sucesso');
+               }
+               
            });
 
            request.fail(function(jqXHR, textStatus) {

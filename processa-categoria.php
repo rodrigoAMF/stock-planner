@@ -11,7 +11,7 @@
         echo $resultadoQuery;
     }
     else{
-        echo false;
+        echo -1;
     }
 
     

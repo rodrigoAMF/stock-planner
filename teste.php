@@ -1,4 +1,5 @@
 <?php
+require_once("controller/CategoriaController.php");
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';
 // $erros[5]['nome_do_campo'] = 'quantidade';
@@ -8,7 +9,12 @@
 
 // echo json_encode($arr);
 
-    echo (trim(' ') == null) ? 'sim': 'nao';
+    //echo (trim(' ') == null) ? 'sim': 'nao';
+    $categoriaController = CategoriaController::getInstance();
+
+    echo $categoriaController->verificaSeCategoriaExistePorNome("abelha");
+
+    
 
     /*require_once("model/Produto.php");
     require_once("model/Categoria.php");
