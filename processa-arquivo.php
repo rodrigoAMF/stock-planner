@@ -5,7 +5,6 @@ require_once("controller/ProdutoController.php");
 require_once("controller/CategoriaController.php");
 require_once("controller/SemestreController.php");
 
-
 $arquivo_temp = $_FILES['arquivo']['tmp_name'];
 $dadosLidos = file($arquivo_temp);
 $cont = 0;
@@ -13,6 +12,7 @@ $erro = false;
 
 $produtos = Array();
 
+// Itera por todas as linhas do arquivo
 for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 {
     // ignora a primeira linha (Cabeçalho)
@@ -29,7 +29,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i);
         $erro = true;
     }
-
+    // Verifica se existe algum campo vazio
     foreach($camposProduto as $campo){
         if($campo == ""){
             $mensagemErro = "Campo com valor vazio na linha " . strval($i);
@@ -37,12 +37,12 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         }
     }
 
+
     $categoriaController = CategoriaController::getInstance();
     $categorias = $categoriaController->getCategorias();
 
     // Verifica se já existe uma categoria com o nome atual
     for ($j=0; $j < sizeof($categorias); $j++) {
-
         if ($categorias[$j]['nome'] == $camposProduto[6]) {
             $existeCategoria = true;
             break;
@@ -55,6 +55,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $categoriaController->cadastraCategoria($categoria);
     }
 
+    /* Verificações de erro nos campos */
     if (strlen($camposProduto[0]) > 100 &&!erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Nome' suporta no máximo 100 caracteres";
         $erro = true;
@@ -91,6 +92,8 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $erro = true;
     }
 
+    // Se não existe nenhum erro NA LINHA ATUAL, cria uma instância de produto
+    // e adiciona elementos à ele
     if(!$erro){
         $produtos[$i]->setNome($camposProduto[0]);
         $produtos[$i]->setIdentificacao($camposProduto[1]);
@@ -103,9 +106,8 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     }
 }
 
-// Se não existe nenhum erro no arquivo
+// Se não existe nenhum erro em NENHUMA linha
 if (!$erro) {
-
     // Cadastra todos os produtos
     $produtoDuplicado = "";
     $linhaDuplicado = 1;
@@ -113,7 +115,8 @@ if (!$erro) {
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
         $semestreController = new SemestreController();
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestreController->getSemestreAtual());
+
+        $resultadoCadastro = $produtoController->cadastroProdutoCondicional($produto);
         if($resultadoCadastro == -1){
             $verificaDuplicado = true;
             $produtoDuplicado = $produto->getNome();
@@ -130,9 +133,11 @@ if (!$erro) {
     }
 
 }else {
-    // significa que tem erro
+    // Se existe algum erro em ALGUMA LINHA
+    // Salva a mensagem de erro na SESSION
     $_SESSION['msg'] = "<p>" .$mensagemErro . "</p>";
 }
+// Rediciona o usuário de volta para a página anterior
 header("Location: importar-produtos.php");
 
 ?>
