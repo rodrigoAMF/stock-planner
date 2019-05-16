@@ -116,7 +116,7 @@ class Produto
 
     public function setCatmat(string $catmat){
         if($catmat != null){
-            if(is_numeric(intval($catmat))){
+            if(is_numeric($catmat)){
                 if(strlen ($catmat) <= 6){
                     $feedback['status'] = 1;
 
@@ -141,7 +141,7 @@ class Produto
 
     public function setQuantidade(string $quantidade){
         if($quantidade != null){
-            if(is_numeric(intval($quantidade))){
+            if(is_numeric($quantidade)){
                 if(strlen ($quantidade) <= 6){
                     $feedback['status'] = 1;
                     $this->quantidade = intval($quantidade);
@@ -165,7 +165,7 @@ class Produto
 
     public function setEstoqueIdeal(string $estoqueIdeal){
         if($estoqueIdeal != null){
-            if(is_numeric(intval($estoqueIdeal))){
+            if(is_numeric($estoqueIdeal)){
                 if(strlen ($estoqueIdeal) <= 6){
                     $feedback['status'] = 1;
                     $this->estoqueIdeal = intval($estoqueIdeal);
