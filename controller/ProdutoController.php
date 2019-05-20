@@ -344,7 +344,7 @@ class ProdutoController{
         }else if(!$produtoCadastradoEmSemestreAnterior){
             // Produto não foi cadastrado em um semestre anteiror
             // Cadastra então o produto no semestre atual
-            $this->cadastraProduto($produto, $semestreAtual);
+            return $this->cadastraProduto($produto, $semestreAtual);
         }
     }
 
@@ -446,7 +446,11 @@ class ProdutoController{
         $this->databaseController->close_database();
 
     	for ($i=0; $i < sizeof($dados); $i++) {
-    		$dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
+    	    if($dados[$i]['estoque_ideal'] == 0){
+                $dados[$i]['porcentagem'] = 0;
+            }else{
+                $dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
+            }
     	}
     	if($busca == null && $filtro == null){
     		$dados = $this->sortLista($dados, $parametroOrdenacao);

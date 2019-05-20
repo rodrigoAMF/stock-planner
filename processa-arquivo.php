@@ -1,4 +1,7 @@
 <?php
+ini_set('max_execution_time', 0);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 session_start();
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
@@ -55,39 +58,39 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $categoriaController->cadastraCategoria($categoria);
     }
 
-    /* Verificações de erro nos campos */
-    if (strlen($camposProduto[0]) > 100 &&!erro) {
+    // Verificações de erro nos campos
+    if (strlen($camposProduto[0]) > 100 &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Nome' suporta no máximo 100 caracteres";
         $erro = true;
     }
 
     // Verifica se os campos são numéricos
-    if (!is_numeric($camposProduto[2]) &&!erro) {
+    if (!is_numeric($camposProduto[2]) &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[2]) > 6 &&!erro){
+    if(strlen($camposProduto[2]) > 6 &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[3]) &&!erro){
+    if (!is_numeric($camposProduto[3]) &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[3]) > 6 &&!erro){
+    if(strlen($camposProduto[3]) > 6 &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[4]) &&!erro){
+    if (!is_numeric($camposProduto[4]) &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Estoque Ideal' deve ser numérico";
         $erro = true;
     }
 
-    if (strlen($camposProduto[5]) > 3 &&!erro) {
+    if (strlen($camposProduto[5]) > 3 &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo posição suporta apenas 3 caracteres";
         $erro = true;
     }
@@ -111,25 +114,30 @@ if (!$erro) {
     // Cadastra todos os produtos
     $produtoDuplicado = "";
     $linhaDuplicado = 1;
-    $verificaDuplicado = false;
+    $verificaNomeDuplicado = false;
+    $verificaIdentificaoDuplicada = false;
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
         $semestreController = new SemestreController();
 
         $resultadoCadastro = $produtoController->cadastroProdutoCondicional($produto);
-        if($resultadoCadastro == -1){
-            $verificaDuplicado = true;
+        if($resultadoCadastro == -2){
+            $verificaNomeDuplicado = true;
             $produtoDuplicado = $produto->getNome();
-            // break;
-            
+            break;
+        }else if($resultadoCadastro == -3){
+            $verificaIdentificaoDuplicada = true;
+            $produtoDuplicado = $produto->getNome();
+            break;
         }
         $linhaDuplicado++;
     }
-    if(!$verificaDuplicado){
+    if(!$verificaNomeDuplicado && !$verificaIdentificaoDuplicada){
         $_SESSION['msg'] = "<p> Produtos foram cadastrados com sucesso</p>";
-        
+    }else if($verificaIdentificaoDuplicada){
+        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' com identificação duplicada na linha " . $linhaDuplicado . "</p>";
     }else{
-        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' duplicado na linha " . $linhaDuplicado . "</p>";
+        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' com nome duplicado na linha " . $linhaDuplicado . "</p>";
     }
 
 }else {
