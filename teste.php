@@ -1,5 +1,13 @@
 <?php
 require_once("controller/CategoriaController.php");
+require_once("controller/ProdutoController.php");
+
+$produtoController = ProdutoController::getInstance();
+
+$retorno = $produtoController->excluirProduto(120);
+
+echo $retorno;
+
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';
 // $erros[5]['nome_do_campo'] = 'quantidade';
@@ -10,9 +18,9 @@ require_once("controller/CategoriaController.php");
 // echo json_encode($arr);
 
     //echo (trim(' ') == null) ? 'sim': 'nao';
-    $categoriaController = CategoriaController::getInstance();
+    /*$categoriaController = CategoriaController::getInstance();
 
-    echo $categoriaController->verificaSeCategoriaExistePorNome("abelha");
+    echo $categoriaController->verificaSeCategoriaExistePorNome("abelha");*/
 
     
 
