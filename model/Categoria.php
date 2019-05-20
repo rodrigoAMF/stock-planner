@@ -42,13 +42,13 @@ class Categoria{
     }
 
     public function setNome(string $nome){
-        $categoriaController = CategoriaController::getInstance();
-        $this->id = $categoriaController->getIDPeloNome($nome);
-        if($this->id >= 0)
-        {
-            $this->nome = $nome;
-        }else{
-            throw new Exception('Essa categoria não existe!');
-        }
+         $categoriaController = CategoriaController::getInstance();
+         $this->id = $categoriaController->getIDPeloNome($nome);
+         if($this->id >= 0)
+         {
+             $this->nome = $nome;
+         }else{
+             throw new Exception('Essa categoria não existe!');
+         }
     }
 }
