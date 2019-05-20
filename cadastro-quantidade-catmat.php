@@ -19,19 +19,16 @@
 
   <div class="form-row">
     <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
-        <label for="semestre">O produto será cadastrado no</label>
-        <?php
-            echo $semestreController->getSemestreAtual();
-         ?>
+        <label >O produto será cadastrado no</label>
+        <span id="parametroSemestre"><?= $semestreController->getSemestreAtual(); ?>
+        </span>
     </div>
   </div>
 
    <div class="form-group">
        <label for="parametroFiltro">Filtro</label>
        <select class="form-control" id="parametroFiltro" name="filtro">
-             <option value="1">Nome</option>
-             <option value="3">CATMAT</option>
-             <option value="7">Quantidade</option>
+             <option value="1">Nome</option>             
        </select>
   </div>
 
@@ -41,13 +38,12 @@
     </div>
         <!--<div class="col-md-8 col-xl-12 col-sm-2 col-2 col-lg-12">-->
         <div class="col-sm-12">
-          <table class="table table-borderless table-responsive-md">
+          <table class="table table-borderless table-responsive-md" id="tabelaEditavel">
               <thead>
                   <tr>
                       <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome" ></th>
                       <th class="sticky">CATMAT</th>
-                      <th class="ordenavel sticky">Quantidade<img src="img/setaBaixo.png" id="setaQuantidade" ></th>
-                      <th class="sticky"></th>
+                      <th class="sticky">Quantidade</th>
                       <th class="sticky"></th>
                   </tr>
               </thead>
@@ -55,7 +51,7 @@
 
               <?php
                   $produtoController = ProdutoController::getInstance();
-                  $produtos = $produtoController->getProdutosCadastrados(null,null, 8, null);
+                  $produtos = $produtoController->getProdutosCadastrados(null,null,8);
 
                   echo $produtos;
               ?>

@@ -1,48 +1,16 @@
 let clickNome = false;
-let clickQuantidade = false;
-let clickEstadoCritico = false;
-
-$("#parametroSemestre").on("change", function(){
-	let semestre = $(this).val();
-	let filtro = $("#parametroFiltro").val().toUpperCase();
-	let val = $("#busca").val();
-
-	if(val != ""){
-		val = val.toUpperCase();
-	}
-
-	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&semestre=" + semestre + "&parametroOrdenacao=";
-
-	var request = $.ajax({
-		url: url,
-		cache: false
-	});
-
-	request.done(function(msg) {
-		$('table tbody').remove();
-		$('table').append("<tbody>");
-		$('table tbody').append(msg);
-		$('table').append("</tbody>");
-		bindDeleteIcons();
-	});
-
-	request.fail(function(jqXHR, textStatus) {
-		alertify.error('Falha ao buscar produtos');
-	});
-
-});
 
 $("#busca").on("keyup", function(event) {
 	let val = $(this).val();
 	let filtro = $("#parametroFiltro").val().toUpperCase();
-	let semestre = $("#parametroSemestre").val();
-
+	let semestre = $("#parametroSemestre").text();
+	//alert(val);
 	if(val != ""){
 		val = val.toUpperCase();
 	}
 
-	let url = "get-produto.php?busca=" + val + "&filtro=" + filtro + "&semestre=" + semestre + "&parametroOrdenacao=";
-
+	let url = "get-produto-cadastrado.php?busca=" + val + "&filtro=" + filtro + "&parametroOrdenacao=";
+	//alert(url);
 	var request = $.ajax({
 		url: url,
 		cache: false
@@ -63,7 +31,7 @@ $("#busca").on("keyup", function(event) {
 
 $(".ordenavel").on("click", function(event)
 {
-	let semestre = $("#parametroSemestre").val();
+	let semestre = $("#parametroSemestre").text();
 	let nomeCampo = $(this).text();
 
 	if (nomeCampo != "")
@@ -71,7 +39,7 @@ $(".ordenavel").on("click", function(event)
 		nomeCampo = nomeCampo.toUpperCase();
 	}
 
-	let url = "get-produto.php?busca=&filtro=&semestre=" + semestre + "&parametroOrdenacao=";
+	let url = "get-produto-cadastrado.php?busca=&filtro=&parametroOrdenacao=";
 
 	if(nomeCampo == "NOME"){
 		if(clickNome == false){
@@ -100,65 +68,37 @@ $(".ordenavel").on("click", function(event)
 			alertify.error('Falha ao ordenar produtos');
 		});
 	}
-	if(nomeCampo == "QUANTIDADE"){
-		if(clickQuantidade == false){
-			url += 7;
-			$("#setaQuantidade").attr("src","img/setaCima.png");
-		}else{
-			url += -7;
-			$("#setaQuantidade").attr("src","img/setaBaixo.png");
-		}
+	
+	
+});
 
-		clickQuantidade = !clickQuantidade;
-
-		var request = $.ajax({
-			url: url,
-			cache: false
-		});
-
-		request.done(function(msg) {
-			$('table tbody').remove();
-			$('table').append("<tbody>");
-			$('table tbody').append(msg);
-			$('table').append("</tbody>");
-		});
-
-		request.fail(function(jqXHR, textStatus) {
-			alertify.error('Falha ao ordenar produtos');
-		});
+$("#tabelaEditavel td").dblclick(function () {
+	if($(this).attr('class') === "nomeNaoEditavel"){
+		return;
 	}
-	if(nomeCampo == "")
-	{
-		if(clickEstadoCritico == true){
-			url += 8;
-			$("#setaVazio").attr("src","img/setaCima.png");
-		}else{
-			url += -8;
-			$("#setaVazio").attr("src","img/setaBaixo.png");
+	var conteudoOriginal = $(this).text();
+
+	$(this).addClass("celulaEmEdicao");
+	$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control' width='100%' />");
+	$(this).children().first().focus();
+	
+	$(this).children().first().keypress(function (e) {
+		if (e.which == 13) {
+			var novoConteudo = $(this).val();
+			$(this).parent().text(novoConteudo);
+			$(this).parent().removeClass("celulaEmEdicao");
 		}
-
-		clickEstadoCritico = !clickEstadoCritico;
-
-		var request = $.ajax({
-			url: url,
-			cache: false
-		});
-
-		request.done(function(msg) {
-			$('table tbody').remove();
-			$('table').append("<tbody>");
-			$('table tbody').append(msg);
-			$('table').append("</tbody>");
-		});
-
-		request.fail(function(jqXHR, textStatus) {
-			alertify.error('Falha ao ordenar produtos');
-		});
-	}
+	});
+	
+	$(this).children().first().blur(function(){
+		$(this).parent().text(conteudoOriginal);
+		$(this).parent().removeClass("celulaEmEdicao");
+	});
+	
 });
 
 function bindDeleteIcons(){
-	$('.delete-icon').each(function(i, obj) {
+	$('.check_circle_outline').each(function(i, obj) {
 		$(obj).on("click", function(event){
 			event.preventDefault();
 
@@ -166,7 +106,7 @@ function bindDeleteIcons(){
 			let url = $(this).attr('href');
 
 			alertify.confirm().set('resizable',true).resizeTo(500,250);
-			alertify.confirm('Confirmar','Deseja realmente excluir este item?',
+			alertify.confirm('Confirmar','Deseja realmente salvar este item?',
 				function(){
 
 					var request = $.ajax({
@@ -175,13 +115,14 @@ function bindDeleteIcons(){
 					});
 
 					request.done(function(msg) {
+						//salva no banco de dados
 						btn.parent().parent().remove();
-						alertify.success('Produto excluido com sucesso!');
+						alertify.success('Produto salvo com sucesso!');
 					});
 
 					request.fail(function(jqXHR, textStatus) {
-						alertify.error('Falha ao exluir produto.');
-						alert("Falha ao cadastrar produto: " + textStatus);
+						alertify.error('Falha ao salvar produto.');
+						alert("Falha ao salvar produto: " + textStatus);
 					});
 
 

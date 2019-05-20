@@ -418,7 +418,8 @@ class ProdutoController{
 
     function sortListaProdutosCadastrados($produtos, $parametro){
 
-        if($parametro == null) $parametro = 8;
+        if($parametro == null) 
+            $parametro = 8;
         /*
         1- nome
         2- ident
@@ -430,42 +431,24 @@ class ProdutoController{
         8, default- crit
         */
         if(abs($parametro) == 1){
-            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-                if($parametro > 0){
-                    if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
-                        $aux = $produtos[$j];
-                        $produtos[$j] = $produtos[$j+1];
-                        $produtos[$j+1] = $aux;
+            for($i=1;$i < sizeof($produtos);$i++) 
+                for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($parametro > 0){
+                        if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
+                            $aux = $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }else{
+                        if(strtoupper($produtos[$j]['nome']) < strtoupper($produtos[$j+1]['nome'])){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
                     }
-                }else{
-                    if(strtoupper($produtos[$j]['nome']) < strtoupper($produtos[$j+1]['nome'])){
-                        $aux =  $produtos[$j];
-                        $produtos[$j] = $produtos[$j+1];
-                        $produtos[$j+1] = $aux;
-                    }
-                }
             }
         }
-        if(abs($parametro) == 3){
-            $parametro /= 3;
-            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-                if($produtos[$j]['catmat']*$parametro > $produtos[$j+1]['catmat']*$parametro){
-                    $aux =  $produtos[$j];
-                    $produtos[$j] = $produtos[$j+1];
-                    $produtos[$j+1] = $aux;
-                }
-            }
-        }
-        if(abs($parametro) == 7){
-            $parametro /= 7;
-            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-                if($produtos[$j]['quantidade']*$parametro > $produtos[$j+1]['quantidade']*$parametro){
-                    $aux =  $produtos[$j];
-                    $produtos[$j] = $produtos[$j+1];
-                    $produtos[$j+1] = $aux;
-                }
-            }
-        }
+        
         if(abs($parametro) == 8){
             $parametro /= 8;
             // for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
@@ -491,13 +474,7 @@ class ProdutoController{
         {
             switch($filtro){
                 case 1:
-                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
-                break;
-                case 3:
-                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
-                break;
-                case 7:
-                    $query = "SELECT p.nome, ps.quantidade, ps.catmat, ps.id_produto FROM produtos p, produtos_semestre ps WHERE ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
+                    $query = "SELECT * FROM produtos WHERE id NOT IN (SELECT id_produto FROM produtos_semestre WHERE id_semestre = '" . $semestreAtual . "') AND produtos.nome LIKE '%" . $busca . "%'";
                 break;
             }
         }
@@ -518,24 +495,14 @@ class ProdutoController{
             $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
         }
 
-
         $produtos = "";
-
-        foreach ($dados as $dados) {
-           // $rgb = $this->pickColor($dados['porcentagem']);
-           // $produtos .= "<tr>";
-          //  $produtos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
-            $produtos .= "<td>" . $dados['nome'] . "</td>";
-            $produtos .= "<td>" . $dados['catmat'] . "</td>";
-            $produtos .= "<td>" . $dados['quantidade'] . "</td>";
-        //     if($semestre == $semestreAtual){
-        //     $produtos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $dados['id'] . "'><i class='material-icons' id='delete-" . $dados['id'] . "'>delete_outline</i></a></td>";
-        //         $produtos .= "<td><a href='editar-produto.php?id=" . $dados['id'] . "'>
-        //         <i class='material-icons'>edit</i></a></td>";
-        // } else{
-         $produtos .= "<td> </td>";
-           $produtos .= "<td> </td>";
-        // }
+        
+        foreach ($dados as $dado) {
+            $produtos .= "<tr>";
+            $produtos .= "<td class='nomeNaoEditavel'>" . $dado['nome'] . "</td>";
+            $produtos .= "<td> </td>";
+            $produtos .= "<td> </td>";
+            $produtos .= "<td><a class='check_circle_outline' href='excluir-produto.php?id=" . $dado['id'] . "'><i class='material-icons' id='delete-" . $dado['id'] . "'>check_circle_outline</i></a></td>";
             $produtos .= "</tr>";
         }
 
