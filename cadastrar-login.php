@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="modal-login">
-        <!--<form class="form-signin">-->
+        <form  method="post" action='processa-login.php'>
             <div class="row">
                 <div class="col-12">
                     <div class="text-center mb-3">
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputEmail" class="label-invisivel">Nome Completo</label>
-                        <input type="nome" id="inputNome" class="form-control" placeholder="Nome Completo" autofocus>
+                        <input type="nome" name="nome" id="nome" class="form-control" placeholder="Nome Completo" autofocus>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputEmail" class="label-invisivel">Email</label>
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email" autofocus>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" autofocus>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputPassword" class="label-invisivel">Senha</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Senha">
+                        <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputPassword" class="label-invisivel">Confirmar senha</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Confirmar senha">
+                        <input type="password" name="senhaConfirma" id="senhaConfirma" class="form-control" placeholder="Confirmar senha">
                     </div>
                 </div>
             </div>
@@ -69,11 +69,11 @@
                     <a href="index.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cadastrar</button></a>
                 </div>
                 <div class="col-6 ">
-                    <a href="login.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cancelar</button></a>
+                    <button class="btn botoes-login btn-primary btn-block mb-2" type="button" onclick="window.location = 'login.php';">Cancelar</button>
                 </div>
                 
             </div>
-        <!--</form>-->
+        </form>
     </div>
 </body>
 </html>

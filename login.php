@@ -59,10 +59,10 @@
 
             <div class="row botoes-login">
                 <div class="col-6">
-                    <a href="index.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Entrar</button></a>
+                    <button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Entrar</button>
                 </div>
                 <div class="col-6">
-                    <a href="cadastrar-login.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cadastrar</button></a>
+                    <a href="cadastrar-login.php"><button class="btn botoes-login btn-primary btn-block mb-2">Cadastrar</button></a>
                 </div>
             </div>
         <!--</form>-->
