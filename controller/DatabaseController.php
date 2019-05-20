@@ -3,12 +3,12 @@
 require_once("model/Database.php");
 
 class DatabaseController{
-    private $databaseModel;
+	private $databaseModel;
     private $conexao;
 
     public function __construct(){
         $this->databaseModel = new Database();
-    }
+	}
 
     function open_database() {
     	try {
