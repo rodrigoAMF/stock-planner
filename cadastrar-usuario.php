@@ -66,7 +66,7 @@
 
             <div class="row botoes-login">
                 <div class="col-6">
-                    <a href="index.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cadastrar</button></a>
+                    <a href="inicio.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cadastrar</button></a>
                 </div>
                 <div class="col-6 ">
                     <button class="btn botoes-login btn-primary btn-block mb-2" type="button" onclick="window.location = 'login.php';">Cancelar</button>

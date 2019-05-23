@@ -1,12 +1,22 @@
 <?php
-require_once("controller/CategoriaController.php");
+/*require_once("controller/CategoriaController.php");
 require_once("controller/ProdutoController.php");
+*/
+require_once("model/Usuario.php");
+require_once("controller/UsuarioController.php");
 
-$categoriaController = CategoriaController::getInstance();
+$usuario = new Usuario();
 
-$retorno = $categoriaController->getCategorias();
+$email = "rodrigoamf@outlook.com";
+$senha = MD5("123");
 
-print_r($retorno);
+$usuarioController = UsuarioController::getInstance();
+
+$loginSucesso = $usuarioController->verificarLogin($email, $senha);
+
+echo "{$email} {$senha}<br>";
+echo $loginSucesso;
+
 
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';

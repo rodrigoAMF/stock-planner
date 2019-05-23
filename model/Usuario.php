@@ -1,12 +1,13 @@
 <?php
-require_once("controller/LoginController.php");
+require_once("controller/UsuarioController.php");
 
-class Login{
+class Usuario{
 
     private $id;
-    private $login;
+    private $username;
     private $senha;
     private $nome;
+    private $email;
     private $dataUltimoAcesso;
     private $dataCadastro;
 
@@ -14,8 +15,8 @@ class Login{
         return $this->id;
     }
 
-    public function getLogin():string{
-        return $this->login;
+    public function getUsername():string{
+        return $this->username;
     }
 
     public function getSenha():string{
@@ -34,9 +35,21 @@ class Login{
         return $this->dataCadastro;
     }
 
+    public function setUsername($username){
+        $this->username = $username;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+    }
+
+    public function setSenha($senha){
+        $this->senha = $senha;
+    }
+
     public function setAtributos(string $login, string  $senha, string $nome, string $dataCadastro, string $dataUltimoAcesso ) {
         // $this->id = $id;
-        $this->login = $login;
+        $this->username = $login;
         $this->senha = $senha;
         $this->nome = $nome;
         $this->dataCadastro = $dataCadastro;
