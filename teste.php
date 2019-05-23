@@ -1,12 +1,19 @@
 <?php
-require_once("controller/CategoriaController.php");
+/*require_once("controller/CategoriaController.php");
 require_once("controller/ProdutoController.php");
 
 $produtoController = ProdutoController::getInstance();
 
 $retorno = $produtoController->excluirProduto(120);
 
-echo $retorno;
+echo $retorno;*/
+
+$data1 = "lais";
+$data2 = "mateus";
+
+$result = "{$data1} now() {$data2}";
+
+echo $result;
 
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';
