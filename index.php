@@ -1,81 +1,84 @@
-<?php
-    require_once("model/Config.php");
-    require_once("model/Pagina.php");
-    $pagina = new Pagina();
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="img/favicon.png">
+    <title>Stock Planner - Login</title>
+    <meta charset="utf-8">
 
-    $pagina->incluiCabecalho("Stock Planner - Home", "pagina-inicial");
-?>
-<div class="container conteudo-principal">
-	<div>
-		<nav class="navbar navbar-expand-lg">
-			<div class="fonte-barra">
-				Produtos
-			</div>
-		</nav>
-		<div  class="container-produto">
-			<div class="row">
-				<div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-            <button>
-              <a href="cadastro-produto.php">
-    					<img src="img/cadastrar1.png">
-    					<br>
-              <div class="textosBotao">
-                Cadastrar
-              </div>
-              </a>
-            </button>
+     <!-- Bootstrap -->
+     <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <!-- Ícones do material design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Alertify -->
+    <link rel="stylesheet" href="css/alertify.min.css" >
+    <!-- Default theme for alertify -->
+    <link rel="stylesheet" href="css/default-theme-alertify.min.css" >
+    <!-- CSS da página -->
+    <link rel="stylesheet" href="css/login.css" >
 
-				</div>
-        <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="lista-produtos.php">
-            <button>
-    					<img src="img/listar.png">
-    					<br>
-              <div class="textosBotao">
-                Listar
-              </div>
-            </button>
-          </a>
-				</div>
+</head>
+<body>
+    <div class="modal-login">
+        <form class="form-signin" id="formulario-login" method="post" action="processa-login.php">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <img class="mb-2 img-fluid" src="img/logotxt.png" alt="Logo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-label-group">
+                        <label for="inputEmail" class="label-invisivel">Email</label>
+                        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" autofocus>
+                    </div>
+                </div>
+            </div>
 
-         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="importar-produtos.php">
-            <button>
-              <img src="img/importar.png">
-              <br>
-              <div class="textosBotao">
-                Importar
-              </div>
-            </button>
-          </a>
-        </div>
-			</div>
-		</div>
-    <br>
-    <nav class="navbar navbar-expand-lg">
-      <div class="fonte-barra">
-        Configurações
-      </div>
-    </nav>
-    <div class="container-produto">
-      <div class="row">
-        <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-            <button>
-              <a href="configuracao.php">
-              <img src="img/configuracao.png">
-              <br>
-              <div class="textosBotao">
-                Configurações
-              </div>
-              </a>
-            </button>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="form-label-group">
+                        <label for="inputPassword" class="label-invisivel">Senha</label>
+                        <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Senha">
+                    </div>
+                </div>
+                <div class="col-12 link-senha">
+                    <a href="recupera-senha.php">Esqueci minha senha</a>
+                </div>
+            </div>
 
-        </div>
-      </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                        <label class="custom-control-label" for="customControlAutosizing">Mantenha-me conectado</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row botoes-login">
+                <div class="col-6">
+                    <button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Entrar</button>
+                </div>
+                <div class="col-6">
+                    <a href="cadastrar-login.php"><button type="button" class="btn botoes-login btn-primary btn-block mb-2">Cadastrar</button></a>
+                </div>
+            </div>
+        </form>
     </div>
-</div>
-</div>
+    <!-- A ordem de importação importa!, jQuery primeiro, depois Popper.js e por fim Bootstrap JS -->
+    <!-- jQuery 3.3.1 Slim -->
+    <script src="js/jquery.min.js"></script>
 
-<?php
-    require_once(Config::FOOTER_TEMPLATE);
-?>
+    <!-- Popper.js -->
+    <script src="js/popper.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="js/alertify.min.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

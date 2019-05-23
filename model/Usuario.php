@@ -55,8 +55,4 @@ class Usuario{
         $this->dataCadastro = $dataCadastro;
         $this->dataUltimoAcesso = $dataUltimoAcesso;
     }
-
-    public function verificarLogin($email, $senha){
-        $query = "SELECT * FROM `usuarios` WHERE username = 'lais' AND senha = '123456'";
-    }
 }
