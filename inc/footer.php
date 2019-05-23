@@ -23,6 +23,8 @@
             echo "<script src='js/importar-produtos.js'></script>";
         }else if($pagina == 'configuracao'){
             echo "<script src='js/finaliza-semestre.js'></script>";
+        }else if($pagina == 'cadastro-quantidade-catmat'){
+            echo "<script src='js/cadastro-quantidade-catmat.js'></script>";
         }
     ?>
 

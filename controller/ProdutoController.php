@@ -572,4 +572,99 @@ class ProdutoController{
         }
         return $rgb;
     }
+
+    function sortListaProdutosCadastrados($produtos, $parametro){
+
+        if($parametro == null) 
+            $parametro = 8;
+        /*
+        1- nome
+        2- ident
+        3- catmat
+        4- categoria
+        5- posicao
+        6- estoque ideal
+        7- quantidade
+        8, default- crit
+        */
+        if(abs($parametro) == 1){
+            for($i=1;$i < sizeof($produtos);$i++) 
+                for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($parametro > 0){
+                        if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
+                            $aux = $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }else{
+                        if(strtoupper($produtos[$j]['nome']) < strtoupper($produtos[$j+1]['nome'])){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }
+            }
+        }
+        
+        if(abs($parametro) == 8){
+            $parametro /= 8;
+            // for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+            //     if($produtos[$j]['porcentagem']*$parametro < $produtos[$j+1]['porcentagem']*$parametro){
+            //         $aux =  $produtos[$j];
+            //         $produtos[$j] = $produtos[$j+1];
+            //         $produtos[$j+1] = $aux;
+            //     }
+            // }
+        }
+        return $produtos;
+    }
+
+    function getProdutosCadastrados($busca, $filtro, $parametroOrdenacao){
+        $semestreController = SemestreController::getInstance();
+        $semestreAtual = $semestreController->getSemestreAtual();
+       $conexao = $this->databaseController->open_database();
+
+        if ($busca == null) {
+            $query = "SELECT * FROM produtos WHERE id NOT IN (SELECT id_produto FROM produtos_semestre WHERE id_semestre = '" . $semestreAtual . "')";
+        }
+        else
+        {
+            switch($filtro){
+                case 1:
+                    $query = "SELECT * FROM produtos WHERE id NOT IN (SELECT id_produto FROM produtos_semestre WHERE id_semestre = '" . $semestreAtual . "') AND produtos.nome LIKE '%" . $busca . "%'";
+                break;
+            }
+        }
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+        if($busca == null && $filtro == null){
+            $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
+        }
+
+        $produtos = "";
+        
+        foreach ($dados as $dado) {
+            $produtos .= "\t\t<tr>\n";
+            $produtos .= "\t\t\t<td class='nomeNaoEditavel'>{$dado['nome']}</td>\n";
+            $produtos .= "\t\t\t<td id='catmat'></td>\n";
+            $produtos .= "\t\t\t<td id='quantidade'></td>\n";
+            $produtos .= "\t\t\t<td><a class='check_circle_outline' href='salvar-produto-modificado.php?id={$dado['id']}'><i class='material-icons' id='check-" . $dado['id'] . "'>check_circle_outline</i></a></td>\n";
+            $produtos .= "\t\t</tr>\n";
+        }
+
+        if($produtos != ""){
+            return $produtos;
+        }
+    }
 }
