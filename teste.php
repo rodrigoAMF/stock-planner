@@ -1,4 +1,13 @@
 <?php
+require_once("controller/CategoriaController.php");
+require_once("controller/ProdutoController.php");
+
+$produtoController = ProdutoController::getInstance();
+
+$retorno = $produtoController->excluirProduto(120);
+
+echo $retorno;
+
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';
 // $erros[5]['nome_do_campo'] = 'quantidade';
@@ -8,7 +17,14 @@
 
 // echo json_encode($arr);
 
-    require_once("model/Produto.php");
+    //echo (trim(' ') == null) ? 'sim': 'nao';
+    /*$categoriaController = CategoriaController::getInstance();
+
+    echo $categoriaController->verificaSeCategoriaExistePorNome("abelha");*/
+
+    
+
+    /*require_once("model/Produto.php");
     require_once("model/Categoria.php");
     require_once("controller/ProdutoController.php");
 
@@ -30,5 +46,5 @@
 
     $produtoController->cadastraProduto($produto, "2S2019");
 
-    $produtoController->verificaSeProdutoExiste($produto->getNome());
+    $produtoController->verificaSeProdutoExiste($produto->getNome());*/
 ?>

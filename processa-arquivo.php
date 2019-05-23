@@ -1,10 +1,12 @@
 <?php
+ini_set('max_execution_time', 0);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 session_start();
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
 require_once("controller/CategoriaController.php");
 require_once("controller/SemestreController.php");
-
 
 $arquivo_temp = $_FILES['arquivo']['tmp_name'];
 $dadosLidos = file($arquivo_temp);
@@ -13,6 +15,7 @@ $erro = false;
 
 $produtos = Array();
 
+// Itera por todas as linhas do arquivo
 for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 {
     // ignora a primeira linha (Cabeçalho)
@@ -29,7 +32,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $mensagemErro = "Existe algum campo não preenchido na linha " . strval($i);
         $erro = true;
     }
-
+    // Verifica se existe algum campo vazio
     foreach($camposProduto as $campo){
         if($campo == ""){
             $mensagemErro = "Campo com valor vazio na linha " . strval($i);
@@ -37,12 +40,12 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         }
     }
 
+
     $categoriaController = CategoriaController::getInstance();
     $categorias = $categoriaController->getCategorias();
 
     // Verifica se já existe uma categoria com o nome atual
     for ($j=0; $j < sizeof($categorias); $j++) {
-
         if ($categorias[$j]['nome'] == $camposProduto[6]) {
             $existeCategoria = true;
             break;
@@ -55,42 +58,45 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $categoriaController->cadastraCategoria($categoria);
     }
 
-    if (strlen($camposProduto[0]) > 100 &&!erro) {
+    // Verificações de erro nos campos
+    if (strlen($camposProduto[0]) > 100 &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Nome' suporta no máximo 100 caracteres";
         $erro = true;
     }
 
     // Verifica se os campos são numéricos
-    if (!is_numeric($camposProduto[2]) &&!erro) {
+    if (!is_numeric($camposProduto[2]) &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[2]) > 6 &&!erro){
+    if(strlen($camposProduto[2]) > 6 &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Catmat' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[3]) &&!erro){
+    if (!is_numeric($camposProduto[3]) &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ser numérico";
         $erro = true;
     }
 
-    if(strlen($camposProduto[3]) > 6 &&!erro){
+    if(strlen($camposProduto[3]) > 6 &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Quantidade' deve ter no máximo 6 digitos";
         $erro = true;
     }
 
-    if (!is_numeric($camposProduto[4]) &&!erro){
+    if (!is_numeric($camposProduto[4]) &&!$erro){
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo 'Estoque Ideal' deve ser numérico";
         $erro = true;
     }
 
-    if (strlen($camposProduto[5]) > 3 &&!erro) {
+    if (strlen($camposProduto[5]) > 3 &&!$erro) {
         $mensagemErro = "Erro na linha " . strval($i) . ". O campo posição suporta apenas 3 caracteres";
         $erro = true;
     }
 
+    // Se não existe nenhum erro NA LINHA ATUAL, cria uma instância de produto
+    // e adiciona elementos à ele
     if(!$erro){
         $produtos[$i]->setNome($camposProduto[0]);
         $produtos[$i]->setIdentificacao($camposProduto[1]);
@@ -103,36 +109,43 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     }
 }
 
-// Se não existe nenhum erro no arquivo
+// Se não existe nenhum erro em NENHUMA linha
 if (!$erro) {
-
     // Cadastra todos os produtos
     $produtoDuplicado = "";
     $linhaDuplicado = 1;
-    $verificaDuplicado = false;
+    $verificaNomeDuplicado = false;
+    $verificaIdentificaoDuplicada = false;
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
         $semestreController = new SemestreController();
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestreController->getSemestreAtual());
-        if($resultadoCadastro == -1){
-            $verificaDuplicado = true;
+
+        $resultadoCadastro = $produtoController->cadastroProdutoCondicional($produto);
+        if($resultadoCadastro == -2){
+            $verificaNomeDuplicado = true;
             $produtoDuplicado = $produto->getNome();
-            // break;
-            
+            break;
+        }else if($resultadoCadastro == -3){
+            $verificaIdentificaoDuplicada = true;
+            $produtoDuplicado = $produto->getNome();
+            break;
         }
         $linhaDuplicado++;
     }
-    if(!$verificaDuplicado){
+    if(!$verificaNomeDuplicado && !$verificaIdentificaoDuplicada){
         $_SESSION['msg'] = "<p> Produtos foram cadastrados com sucesso</p>";
-        
+    }else if($verificaIdentificaoDuplicada){
+        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' com identificação duplicada na linha " . $linhaDuplicado . "</p>";
     }else{
-        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' duplicado na linha " . $linhaDuplicado . "</p>";
+        $_SESSION['msg'] = "<p> Produto '" . $produtoDuplicado . "' com nome duplicado na linha " . $linhaDuplicado . "</p>";
     }
 
 }else {
-    // significa que tem erro
+    // Se existe algum erro em ALGUMA LINHA
+    // Salva a mensagem de erro na SESSION
     $_SESSION['msg'] = "<p>" .$mensagemErro . "</p>";
 }
+// Rediciona o usuário de volta para a página anterior
 header("Location: importar-produtos.php");
 
 ?>

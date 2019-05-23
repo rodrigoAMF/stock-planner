@@ -18,6 +18,30 @@ class CategoriaController{
         return self::$categoriaController;
     }
 
+    function verificaSeCategoriaExistePorNome($nome){
+        $conexao = $this->databaseController->open_database();
+
+        $query = "SELECT * FROM categoria WHERE nome = '" . $nome . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     public function getIDPeloNome(string $nomecategoria): int {
 
         $conexao = $this->databaseController->open_database();
@@ -68,21 +92,29 @@ class CategoriaController{
     }
 
     function cadastraCategoria(Categoria $categoria){
-    	$conexao = $this->databaseController->open_database();
+        $verificaDuplicado = $this->verificaSeCategoriaExistePorNome($categoria->getNome());
 
-    	$query = "INSERT INTO categoria(nome) values('". $categoria->getNome() . "')";
+        if($verificaDuplicado == 0){
+            $conexao = $this->databaseController->open_database();
 
-    	$resultado = $conexao->query($query);
-
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
+            $query = "INSERT INTO categoria(nome) values('". $categoria->getNome() . "')";
+    
+            $resultado = $conexao->query($query);
+    
+            if($resultado == false)
+            {
+                $erro = 'Falha ao realizar a Query: ' . $query;
+                throw new Exception($erro);
+            }
+    
+            $this->databaseController->close_database();
+    
+            return 1;
+        }
+        else{
+            return -1;
         }
 
-        $this->databaseController->close_database();
-
-        return true;
 
     }
 

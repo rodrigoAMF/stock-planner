@@ -3,10 +3,15 @@
     require_once("model/Categoria.php");
 
     $categoria = new Categoria();
-    $categoria->setNomeNovo($_GET['nome']);
+    if($categoria->setNomeNovo($_GET['nome']) == 1){
+        $categoriaController = CategoriaController::getInstance();
 
-    $categoriaController = CategoriaController::getInstance();
+        $resultadoQuery = $categoriaController->cadastraCategoria($categoria);
 
-    $resultadoQuery = $categoriaController->cadastraCategoria($categoria);
+        echo $resultadoQuery;
+    }
+    else{
+        echo -1;
+    }
 
-    echo $resultadoQuery;
+    

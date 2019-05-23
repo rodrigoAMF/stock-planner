@@ -184,7 +184,7 @@ class ProdutoController{
         return $IDProduto;
     }
 
-    function verificaSeProdutoExiste($nome){
+    function verificaSeProdutoExistePorNome($nome){
         $conexao = $this->databaseController->open_database();
 
         $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
@@ -206,15 +206,153 @@ class ProdutoController{
         }else{
             return 0;
         }
+    }
 
+    function verificaSeProdutoExistePorIdentificacao($identificacao){
+        $conexao = $this->databaseController->open_database();
 
+        $query = "SELECT * FROM produtos WHERE identificacao = '" . $identificacao . "'";
 
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+    function verificaSeProdutoExisteEmSemestreAnterior($produto){
+        $semestreController = SemestreController::getInstance();
+        $conexao = $this->databaseController->open_database();
+
+        $semestreAtual = $semestreController->getSemestreAtual();
+
+        $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome = '" . $produto->getNome() . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+        if(sizeof($dados) == 0){
+            return false;
+        }else{
+            for($i = 0; $i < sizeof($dados); $i++){
+                if($dados[$i]['id_semestre'] != $semestreAtual){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    function verificaSeProdutoExisteNoSemestreAtual($produto){
+        $semestreController = SemestreController::getInstance();
+        $conexao = $this->databaseController->open_database();
+
+        $semestreAtual = $semestreController->getSemestreAtual();
+
+        $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome = '" . $produto->getNome() . "' AND ps.id_semestre = '" . $semestreAtual . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+        if(sizeof($dados) == 0){
+            return false;
+        }else{
+            if($dados[0]['id_semestre'] == $semestreAtual){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    function cadastroProdutoCondicional($produto){
+        $semestreController = SemestreController::getInstance();
+
+        $semestreAtual = $semestreController->getSemestreAtual();
+
+        $produtoCadastradoEmSemestreAnterior = $this->verificaSeProdutoExisteEmSemestreAnterior($produto);
+        $produtoCadastradoNoSemestreAtual = $this->verificaSeProdutoExisteNoSemestreAtual($produto);
+
+        if($produtoCadastradoEmSemestreAnterior && !$produtoCadastradoNoSemestreAtual){
+            // Produto cadastrado em semestre anterior mas,
+            // sem registro no semestre atual
+            $conexao = $this->databaseController->open_database();
+
+            // Busca ID do produto no Banco de dados
+            $query = "SELECT id from produtos where nome = '" . $produto->getNome() . "'";
+
+            $resultado = $conexao->query($query);
+
+            if($resultado == false)
+            {
+                $erro = 'Falha ao realizar a Query: ' . $query;
+                throw new Exception($erro);
+            }
+
+            $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+            $idProduto = $dados[0]['id'];
+
+            // Cadastra novo CATMAT e Quantidade do produto
+            // no semestre atual
+
+            $query = "INSERT INTO produtos_semestre (id_semestre, id_produto, quantidade, catmat) VALUES ('" . $semestreAtual . "', " . $idProduto . ", " . $produto->getQuantidade() . ", " . $produto->getCatmat() . ")";
+
+            $resultado = $conexao->query($query);
+
+            if($resultado == false)
+            {
+                $erro = 'Falha ao realizar a Query: ' . $query;
+                throw new Exception($erro);
+            }
+
+            $this->databaseController->close_database();
+
+            return 1;
+        }else if($produtoCadastradoEmSemestreAnterior && $produtoCadastradoNoSemestreAtual){
+            // Produto já cadastrado no semestreAtual
+            return -1;
+        }else if(!$produtoCadastradoEmSemestreAnterior){
+            // Produto não foi cadastrado em um semestre anteiror
+            // Cadastra então o produto no semestre atual
+            return $this->cadastraProduto($produto, $semestreAtual);
+        }
     }
 
     function cadastraProduto($produto, $IDSemestre){
-    	$duplicado = $this->verificaSeProdutoExiste($produto->getNome());
+    	$duplicadoNome = $this->verificaSeProdutoExistePorNome($produto->getNome());
+        $duplicadoIdentificacao = $this->verificaSeProdutoExistePorIdentificacao($produto->getIdentificacao());
 
-    	if($duplicado == 0)
+    	if($duplicadoNome == 0 && $duplicadoIdentificacao == 0)
         {
             $conexao = $this->databaseController->open_database();
 
@@ -245,7 +383,10 @@ class ProdutoController{
 
             return 1;
         }else{
-    	    return -1;
+    	    if($duplicadoNome == 1)
+    	        return -2;
+    	    else
+    	        return -3;
         }
 
 
@@ -305,7 +446,11 @@ class ProdutoController{
         $this->databaseController->close_database();
 
     	for ($i=0; $i < sizeof($dados); $i++) {
-    		$dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
+    	    if($dados[$i]['estoque_ideal'] == 0){
+                $dados[$i]['porcentagem'] = 0;
+            }else{
+                $dados[$i]['porcentagem'] = floatval($dados[$i]['quantidade']/$dados[$i]['estoque_ideal']);
+            }
     	}
     	if($busca == null && $filtro == null){
     		$dados = $this->sortLista($dados, $parametroOrdenacao);
