@@ -22,7 +22,7 @@
             <div class="form-row">
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" name="nome" id="nome" value="<?= $produto['nome']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="nome" id="nome" value="<?= $produto->getNome(); ?>" placeholder="">
                     <div class="feedback" id="feedback-nome">
 
                     </div>
@@ -32,7 +32,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="catmat">CATMAT:</label>
-                    <input type="text" class="form-control" name="catmat" id="catmat" value="<?= $produto['catmat']; ?>" placeholder="" >
+                    <input type="text" class="form-control" name="catmat" id="catmat" value="<?= $produto->getCatmat(); ?>" placeholder="" >
                     <div class="feedback" id="feedback-catmat">
 
                     </div>
@@ -42,7 +42,7 @@
             <div class="form-row">
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="identificacao">Identificação:</label>
-                    <input type="text" class="form-control" name="identificacao" id="identificacao" value="<?= $produto['identificacao']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="identificacao" id="identificacao" value="<?= $produto->getIdentificacao(); ?>" placeholder="">
                     <div class="feedback" id="feedback-identificacao">
 
                     </div>
@@ -52,7 +52,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="posicao">Localização:</label>
-                    <input type="text" class="form-control" name="posicao" id="posicao" value="<?= $produto['posicao']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="posicao" id="posicao" value="<?= $produto->getPosicao(); ?>" placeholder="">
                     <div class="feedback" id="feedback-posicao">
 
                     </div>
@@ -63,7 +63,7 @@
             <div class="form-row">
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="descricao">Descrição:</label>
-                    <textarea class="form-control" name="descricao" id="descricao" placeholder=""><?= $produto['descricao']; ?></textarea>
+                    <textarea class="form-control" name="descricao" id="descricao" placeholder=""><?= $produto->getDescricao(); ?></textarea>
                     <div class="feedback" id="feedback-descricao">
                         okay!
                     </div>
@@ -74,7 +74,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="estoque_ideal">Estoque ideal:</label>
-                    <input type="text" class="form-control" name="estoqueIdeal" id="estoque_ideal" value="<?= $produto['estoque_ideal']; ?>" placeholder="">
+                    <input type="text" class="form-control" name="estoqueIdeal" id="estoque_ideal" value="<?= $produto->getEstoqueIdeal(); ?>" placeholder="">
                     <div class="feedback" id="feedback-estoque_ideal">
 
                     </div>
@@ -88,12 +88,12 @@
                 <div class="form-group col-md-4 col-xl-4 col-sm-9 col-9 col-lg-4">
                    <label for="categoria">Categoria:</label>
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
-                       <option value="<?= $produto['categoria']; ?>"><?= $produto['categoria']; ?></option>
+                       <option value="<?= $produto->getCategoria()->getNome(); ?>"><?= $produto->getCategoria()->getNome(); ?></option>
                     <?php
                         $categorias = $categoriaController->getCategorias();
                         foreach ($categorias as $categoria) {
-                            if($categoria['nome'] != $produto['categoria'])
-                                echo "<option value = '" . $categoria['nome']."'>" . $categoria['nome']. "</option>";
+                            if($categoria->getNome() != $produto->getCategoria()->getNome())
+                                echo "<option value = '" . $categoria->getNome()."'>" . $categoria->getNome(). "</option>";
                         }
                     ?>
                     </select>
@@ -115,7 +115,7 @@
 
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                 <label for="quantidade">Quantidade:</label>
-                    <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?= $produto['quantidade']; ?>" placeholder="" >
+                    <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?= $produto->getQuantidade(); ?>" placeholder="" >
                     <div class="feedback" id="feedback-quantidade">
 
                     </div>

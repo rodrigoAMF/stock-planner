@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Maio-2019 às 18:51
--- Versão do servidor: 10.1.34-MariaDB
--- PHP Version: 7.2.8
+-- Generation Time: May 23, 2019 at 06:30 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,117 +25,55 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `categoria`
+-- Table structure for table `usuarios`
 --
 
-CREATE TABLE `categoria` (
-  `id` int(6) NOT NULL,
-  `nome` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `produtos`
---
-
-CREATE TABLE `produtos` (
-  `nome` varchar(100) NOT NULL,
-  `descricao` text,
-  `identificacao` varchar(50) NOT NULL,
-  `categoria` int(6) DEFAULT NULL,
-  `posicao` varchar(3) NOT NULL,
-  `estoque_ideal` int(6) NOT NULL,
-  `id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+CREATE TABLE `usuarios` (
+  `ID` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `senha` varchar(40) NOT NULL,
+  `nome` varchar(80) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `dataUltimoAcesso` datetime NOT NULL,
+  `dataCadastro` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Estrutura da tabela `produtos_semestre`
+-- Dumping data for table `usuarios`
 --
 
-CREATE TABLE `produtos_semestre` (
-  `id_semestre` varchar(6) NOT NULL,
-  `id_produto` int(6) NOT NULL,
-  `quantidade` int(6) NOT NULL,
-  `catmat` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `semestre`
---
-
-CREATE TABLE `semestre` (
-  `id` varchar(6) NOT NULL,
-  `ano` int(4) NOT NULL,
-  `numero` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `semestre`
---
-
-INSERT INTO `semestre` (`id`, `ano`, `numero`) VALUES
-('2019S1', 2019, 1);
+INSERT INTO `usuarios` (`ID`, `username`, `senha`, `nome`, `email`, `dataUltimoAcesso`, `dataCadastro`) VALUES
+(0000000001, 'lais', '123456', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000002, 'lais', '123456', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000003, 'gih', '12345', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000004, 'gigi@gmail.com', '71b3b26aaa319e0cdf6fdb8429c112b0', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000005, 'lala@gmail.com', 'bba321cd21fd697cc21b5beaab2e0193', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000006, 'lala@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000007, 'lala@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000008, 'lalal', '789', 'lais', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000009, 'lalal', '789', 'lais', '', '2019-05-20 16:02:15', '2019-05-20 16:02:15'),
+(0000000010, 'gi', '456123', 'giovanna', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(0000000011, 'gi', '456123', 'giovanna', '', '2019-05-20 16:06:10', '2019-05-20 16:06:10');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `categoria`
+-- Indexes for table `usuarios`
 --
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `produtos`
---
-ALTER TABLE `produtos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `produtos_semestre`
---
-ALTER TABLE `produtos_semestre`
-  ADD PRIMARY KEY (`id_semestre`,`id_produto`),
-  ADD KEY `excluir_produto` (`id_produto`);
-
---
--- Indexes for table `semestre`
---
-ALTER TABLE `semestre`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `categoria`
+-- AUTO_INCREMENT for table `usuarios`
 --
-ALTER TABLE `categoria`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `produtos`
---
-ALTER TABLE `produtos`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Limitadores para a tabela `produtos_semestre`
---
-ALTER TABLE `produtos_semestre`
-  ADD CONSTRAINT `excluir_produto` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `excluir_semestre` FOREIGN KEY (`id_semestre`) REFERENCES `semestre` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `usuarios`
+  MODIFY `ID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

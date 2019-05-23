@@ -136,7 +136,13 @@ class CategoriaController{
         $this->databaseController->close_database();
 
         if(isset($dados[0]['nome'])){
-            return $dados;
+            for($i=0; $i< sizeof($dados); $i++){
+                $categoria = new Categoria;
+                $categoria->setNome($dados[$i]['nome']);
+
+                $arrayCategorias[$i] = $categoria;
+            }
+            return $arrayCategorias;
         }else{
             return "Não existem registros!";
         }

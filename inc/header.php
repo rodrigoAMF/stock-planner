@@ -44,7 +44,7 @@
                             <nav class="nav">
                                <ul class="menu">
                                  <li class="menu-item">
-                                  <a href="index.php">Home</a>
+                                  <a href="inicio.php">Home</a>
                                  </li>
                                  <li class="menu-item has-children">
                                    <a href="">Produtos
@@ -77,6 +77,9 @@
                                    </ul>
                                  </li>
                                  -->
+                                 <li class="menu-item">
+                                     <a href="logout.php">Logout</a>
+                                 </li>
 
                                </ul>
                             </nav>

@@ -1,0 +1,4 @@
+Função de editar não verifica se o nome e a identificação já existe no banco de dados
+Refatorar função getProduto (Dividir funções) 
+Na função de Cadastrar produto "não é certo" passar o semestre como parametro, pois sempre cadastrara no semestre atual, podendo pedar o semestre dentro da própria função
+Deve existir uma função de editar e excluir uma categoria

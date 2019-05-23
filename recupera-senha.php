@@ -38,7 +38,7 @@
             <div class="row botoes-login">
                 <div class="col-6"></div>
                 <div class="col-6">
-                    <a href="login.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Enviar</button></a>
+                    <a href="index.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Enviar</button></a>
                 </div>
             </div>
 

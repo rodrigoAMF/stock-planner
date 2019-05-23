@@ -46,7 +46,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 
     // Verifica se já existe uma categoria com o nome atual
     for ($j=0; $j < sizeof($categorias); $j++) {
-        if ($categorias[$j]['nome'] == $camposProduto[6]) {
+        if ($categorias[$j]->getNome() == $camposProduto[6]) {
             $existeCategoria = true;
             break;
         }
