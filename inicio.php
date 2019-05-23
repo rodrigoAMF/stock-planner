@@ -1,8 +1,8 @@
 <?php
+    require_once ("verificaLogin.php");
     require_once("model/Config.php");
     require_once("model/Pagina.php");
     $pagina = new Pagina();
-//require_once ("verificaLogin.php");
 
     $pagina->incluiCabecalho("Stock Planner - Home", "pagina-inicial");
 ?>
