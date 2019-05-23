@@ -62,7 +62,7 @@
                     <button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Entrar</button>
                 </div>
                 <div class="col-6">
-                    <a href="cadastrar-login.php"><button class="btn botoes-login btn-primary btn-block mb-2">Cadastrar</button></a>
+                    <a href="cadastrar-usuario.php"><button class="btn botoes-login btn-primary btn-block mb-2">Cadastrar</button></a>
                 </div>
             </div>
         <!--</form>-->

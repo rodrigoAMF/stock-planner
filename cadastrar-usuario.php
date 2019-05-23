@@ -19,25 +19,34 @@
 </head>
 <body>
     <div class="modal-login">
-        <form  method="post" action='processa-login.php'>
+        <form  method="post" action='processa-usuario.php'>
             <div class="row">
                 <div class="col-12">
-                    <div class="text-center mb-3">
+                    <div class="text-center">
                         <img class="mb-2 img-fluid" src="img/logotxt.png" alt="Logo">
                     </div>
                 </div>
             </div>
 
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-12">
                     <div class="form-label-group">
-                        <label for="inputEmail" class="label-invisivel">Nome Completo</label>
+                        <label for="inputNomeCompleto" class="label-invisivel">Nome Completo</label>
                         <input type="nome" name="nome" id="nome" class="form-control" placeholder="Nome Completo" autofocus>
                     </div>
                 </div>
             </div>
 
-            <div class="row mb-2">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-label-group">
+                        <label for="inputUsername" class="label-invisivel">Username</label>
+                        <input type="username" name="username" id="username" class="form-control" placeholder="Username" autofocus>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputEmail" class="label-invisivel">Email</label>
@@ -46,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="row mb-2">
+            <div class="row ">
                 <div class="col-12">
                     <div class="form-label-group">
                         <label for="inputPassword" class="label-invisivel">Senha</label>
@@ -55,10 +64,10 @@
                 </div>
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-12">
                     <div class="form-label-group">
-                        <label for="inputPassword" class="label-invisivel">Confirmar senha</label>
+                        <label for="inputConfirmarPassword" class="label-invisivel">Confirmar senha</label>
                         <input type="password" name="senhaConfirma" id="senhaConfirma" class="form-control" placeholder="Confirmar senha">
                     </div>
                 </div>
@@ -66,10 +75,10 @@
 
             <div class="row botoes-login">
                 <div class="col-6">
-                    <a href="index.php"><button class="btn botoes-login btn-primary btn-block mb-2" type="submit">Cadastrar</button></a>
+                    <a href="index.php"><button class="btn botoes-login btn-primary btn-block" type="submit">Cadastrar</button></a>
                 </div>
-                <div class="col-6 ">
-                    <button class="btn botoes-login btn-primary btn-block mb-2" type="button" onclick="window.location = 'login.php';">Cancelar</button>
+                <div class="col-6">
+                    <button class="btn botoes-login btn-primary btn-block" type="button" onclick="window.location = 'login.php';">Cancelar</button>
                 </div>
                 
             </div>

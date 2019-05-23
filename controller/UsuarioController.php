@@ -5,7 +5,7 @@ require_once("model/Usuario.php");
 class UsuarioController{
 
     private $databaseController;
-    private static $loginController;
+    private static $usuarioController;
 
     public function __construct(){
         $this->databaseController = new DatabaseController();
@@ -38,10 +38,10 @@ class UsuarioController{
         return $dados;
     }
 
-    function cadastraLogin(Usuario $usuario){
+    function cadastraUsuario(Usuario $usuario){
         $conexao = $this->databaseController->open_database();
 
-        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername}','{$usuario->getSenha()}','{$usuario->getNome}','{$usuario->getEmail}',now(),now())";
+        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername()}','{$usuario->getSenha()}','{$usuario->getNome()}','{$usuario->getEmail()}',now(),now())";
         
         $resultado = $conexao->query($query);
 

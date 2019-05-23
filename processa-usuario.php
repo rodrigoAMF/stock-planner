@@ -1,41 +1,49 @@
 <?php 
-require_once("model/Login.php");
-require_once("controller/LoginController.php");
+require_once("model/Usuario.php");
+require_once("controller/UsuarioController.php");
 
-$usuario = new Login();
+$usuario = new Usuario();
+$feedbacks = Array();
 
-
-$login = $_POST['login'];
+$nome = $_POST['nome'];
+$username = $_POST['username'];
+$email = $_POST['email'];
 $senha = MD5($_POST['senha']);
-$nome  = $_POST['nome'];
 
-$usuario->setAtributos($login,$senha);
+$feedback = $usuario->setNome($nome);
+array_push($feedbacks, $feedback);
+$feedback = $usuario->setUsername($username);
+array_push($feedbacks, $feedback);
+$feedback = $usuario->setEmail($email);
+array_push($feedbacks, $feedback);
+$feedback = $usuario->setSenha($senha);
+array_push($feedbacks, $feedback);
 
-$loginController = LoginController::getInstance();
- 
-$array = $loginController->getLogins();
-$logarray = $array['login'];
 
 
-if($login == "" || $login == null){
-    echo"<script language='javascript' type='text/javascript'>alert('O campo login deve ser preenchido');window.location.href='cadastro.html';</script>";
-}else{
-    if($logarray == $login){
+$json['status'] = 1;
 
-        echo"<script language='javascript' type='text/javascript'>alert('Esse login já existe');window.location.href='cadastro.html';</script>";
-        die();
-
-    }else{
-
-        $resultadoCadastro = $loginController->cadastraLogin($usuario);
-        // $query = "INSERT INTO usuarios (login,senha) VALUES ('$login','$senha')";
-        // $insert = mysql_query($query,$connect);
-            
-        if($insert){
-            echo"<script language='javascript' type='text/javascript'>alert('Usuário cadastrado com sucesso!');window.location.href='login.html'</script>";
-        }else{
-            echo"<script language='javascript' type='text/javascript'>alert('Não foi possível cadastrar esse usuário');window.location.href='cadastro.html'</script>";
-        }
+for ($i=0, $cont = 0; $i < sizeof($feedbacks); $i++) {
+    if($i == 0){
+        $json['status'] = $feedbacks[$i]['status'];
+    }else if($feedbacks[$i]['status'] == -1){
+        $json['status'] = $feedbacks[$i]['status'];
+    }
+    if($feedbacks[$i]['status'] == -1){
+        $json['erros'][$cont]['nome_do_campo'] = $feedbacks[$i]['nome_do_campo'];
+        $json['erros'][$cont]['mensagem'] = $feedbacks[$i]['mensagem'];
+        $cont++;
     }
 }
+
+
+$usuarioController = UsuarioController::getInstance();
+
+if($json['status'] !== -1 ){
+    $resultadoCadastro = $usuarioController->cadastraUsuario($usuario);
+}
+
+
+
+//echo json_encode($json, JSON_UNESCAPED_UNICODE);
 ?>
