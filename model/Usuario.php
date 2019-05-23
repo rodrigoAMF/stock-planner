@@ -1,7 +1,7 @@
 <?php
-require_once("controller/LoginController.php");
+require_once("controller/UsuarioController.php");
 
-class Login{
+class Usuario{
 
     private $id;
     private $login;

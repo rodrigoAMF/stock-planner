@@ -2,7 +2,7 @@
 require_once("DatabaseController.php");
 require_once("model/Login.php");
 
-class LoginController{
+class UsuarioController{
 
     private $databaseController;
     private static $loginController;
@@ -12,13 +12,13 @@ class LoginController{
     }
 
     public static function getInstance(){
-        if(!isset(self::$loginController)){
-            self::$loginController = new LoginController();
+        if(!isset(self::$usuarioController)){
+            self::$usuarioController = new UsuarioController();
         }
-        return self::$loginController;
+        return self::$usuarioController;
     }
 
-    function getLogins(){
+    function getUsuarios(){
         $conexao = $this->databaseController->open_database();
 
         $query = "SELECT * FROM usuarios";
@@ -38,9 +38,10 @@ class LoginController{
         return $dados;
     }
 
-    function cadastraLogin(Login $login){
+    function cadastraLogin(Usuario $usuario){
         $conexao = $this->databaseController->open_database();
 
+        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('".$usuario->getUsername."','"$usuario->getSenha(), $usuario->getNome, $usuario->getEmail, now(), now())";
         $query = "INSERT INTO usuarios(login,senha,nome,dataUltimoAcesso,dataCadastro) VALUES (".$login->getLogin()."', '".$login->getSenha()."', '".$login->getNome()."', now(), now()");
 
         $resultado = $conexao->query($query);
