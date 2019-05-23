@@ -10,15 +10,10 @@ $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "escolhe-cadast
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="btn-grande">
-                    <a href="cadastro-produto.php">Cadastrar Novo Produto</a>
-                </div>
-
+                <a href="cadastro-produto.php" class="btn-grande">Cadastrar Novo Produto</a>
             </div>
             <div class="col-md-6">
-                <div class="btn-grande">
-                    <a href="cadastro-quantidade-catmat.php">Cadastrar CATMAT e Quantidade de Produto já cadastrado</a>    
-                </div>
+                <a href="cadastro-quantidade-catmat.php" class="btn-grande">Cadastrar CATMAT e Quantidade de Produto já cadastrado</a>   
             </div>
         </div>
     </div>
