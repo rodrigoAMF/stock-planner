@@ -2,11 +2,11 @@
 require_once("controller/CategoriaController.php");
 require_once("controller/ProdutoController.php");
 
-$produtoController = ProdutoController::getInstance();
+$categoriaController = CategoriaController::getInstance();
 
-$retorno = $produtoController->excluirProduto(120);
+$retorno = $categoriaController->getCategorias();
 
-echo $retorno;
+print_r($retorno);
 
 // $erros[0]['nome_do_campo'] = 'nome';
 // $erros[0]['mensagem'] = 'Nome muito grande';
