@@ -21,6 +21,8 @@ $("#busca").on("keyup", function(event) {
 		$('table').append("<tbody>");
 		$('table tbody').append(msg);
 		$('table').append("</tbody>");
+		bindDoubleClickTable();
+		bindCheckIcons();
 	});
 
 	request.fail(function(jqXHR, textStatus) {
@@ -62,6 +64,8 @@ $(".ordenavel").on("click", function(event)
 			$('table').append("<tbody>");
 			$('table tbody').append(msg);
 			$('table').append("</tbody>");
+			bindDoubleClickTable();
+			bindCheckIcons();
 		});
 
 		request.fail(function(jqXHR, textStatus) {
@@ -71,40 +75,42 @@ $(".ordenavel").on("click", function(event)
 	
 	
 });
-
-$("#tabelaEditavel td").dblclick(function () {
-	if($(this).attr('class') === "nomeNaoEditavel"){
-		return;
-	}
-	var conteudoOriginal = $(this).text();
-
-	$(this).addClass("celulaEmEdicao");
-	$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control' width='100%' />");
-	$(this).children().first().focus();
-	
-	$(this).children().first().keypress(function (e) {
-		if (e.which == 13) {
-			var novoConteudo = $(this).val();
-			$(this).parent().text(novoConteudo);
-			$(this).parent().removeClass("celulaEmEdicao");
+function bindDoubleClickTable(){
+	$("#tabelaEditavel td").dblclick(function () {
+		if($(this).attr('class') === "nomeNaoEditavel"){
+			return;
 		}
-	});
-	
-	$(this).children().first().blur(function(){
-		$(this).parent().text(conteudoOriginal);
-		$(this).parent().removeClass("celulaEmEdicao");
-	});
-	
-});
+		var conteudoOriginal = $(this).text();
 
-function bindDeleteIcons(){
+		$(this).addClass("celulaEmEdicao");
+		$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control' width='100%' />");
+		$(this).children().first().focus();
+		
+		$(this).children().first().keypress(function (e) {
+			if (e.which == 13) {
+				var novoConteudo = $(this).val();
+				$(this).parent().text(novoConteudo);
+				$(this).parent().removeClass("celulaEmEdicao");
+			}
+		});
+		
+		$(this).children().first().blur(function(){
+			$(this).parent().text(conteudoOriginal);
+			$(this).parent().removeClass("celulaEmEdicao");
+		});
+		
+	});
+}
+
+
+function bindCheckIcons(){
 	$('.check_circle_outline').each(function(i, obj) {
 		$(obj).on("click", function(event){
 			event.preventDefault();
-
+			let catmat = $("#catmat").text();
+			let quantidade = $("#quantidade").text();
 			let btn = $(this);
-			let url = $(this).attr('href');
-
+			let url = $(this).attr('href') + "&catmat=" + catmat + "&quantidade=" + quantidade;
 			alertify.confirm().set('resizable',true).resizeTo(500,250);
 			alertify.confirm('Confirmar','Deseja realmente salvar este item?',
 				function(){
@@ -115,7 +121,6 @@ function bindDeleteIcons(){
 					});
 
 					request.done(function(msg) {
-						//salva no banco de dados
 						btn.parent().parent().remove();
 						alertify.success('Produto salvo com sucesso!');
 					});
@@ -124,7 +129,6 @@ function bindDeleteIcons(){
 						alertify.error('Falha ao salvar produto.');
 						alert("Falha ao salvar produto: " + textStatus);
 					});
-
 
 				},
 				function(){
@@ -136,4 +140,5 @@ function bindDeleteIcons(){
 	});
 }
 
-bindDeleteIcons();
+bindCheckIcons();
+bindDoubleClickTable();

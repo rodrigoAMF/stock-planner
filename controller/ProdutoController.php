@@ -643,12 +643,12 @@ class ProdutoController{
         $produtos = "";
         
         foreach ($dados as $dado) {
-            $produtos .= "<tr>";
-            $produtos .= "<td class='nomeNaoEditavel'>" . $dado['nome'] . "</td>";
-            $produtos .= "<td> </td>";
-            $produtos .= "<td> </td>";
-            $produtos .= "<td><a class='check_circle_outline' href='excluir-produto.php?id=" . $dado['id'] . "'><i class='material-icons' id='delete-" . $dado['id'] . "'>check_circle_outline</i></a></td>";
-            $produtos .= "</tr>";
+            $produtos .= "\t\t<tr>\n";
+            $produtos .= "\t\t\t<td class='nomeNaoEditavel'>{$dado['nome']}</td>\n";
+            $produtos .= "\t\t\t<td id='catmat'></td>\n";
+            $produtos .= "\t\t\t<td id='quantidade'></td>\n";
+            $produtos .= "\t\t\t<td><a class='check_circle_outline' href='salvar-produto-modificado.php?id={$dado['id']}'><i class='material-icons' id='check-" . $dado['id'] . "'>check_circle_outline</i></a></td>\n";
+            $produtos .= "\t\t</tr>\n";
         }
 
         if($produtos != ""){
