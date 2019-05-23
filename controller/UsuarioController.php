@@ -1,6 +1,6 @@
 <?php
 require_once("DatabaseController.php");
-require_once("model/Login.php");
+require_once("model/Usuario.php");
 
 class UsuarioController{
 
@@ -41,9 +41,8 @@ class UsuarioController{
     function cadastraLogin(Usuario $usuario){
         $conexao = $this->databaseController->open_database();
 
-        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('".$usuario->getUsername."','"$usuario->getSenha(), $usuario->getNome, $usuario->getEmail, now(), now())";
-        $query = "INSERT INTO usuarios(login,senha,nome,dataUltimoAcesso,dataCadastro) VALUES (".$login->getLogin()."', '".$login->getSenha()."', '".$login->getNome()."', now(), now()");
-
+        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername}','{$usuario->getSenha()}','{$usuario->getNome}','{$usuario->getEmail}',now(),now())";
+        
         $resultado = $conexao->query($query);
 
         if($resultado == false)
@@ -61,7 +60,7 @@ class UsuarioController{
     function getUsuarioPorId($id){
         $conexao = $this->databaseController->open_database();
 
-        $query = "SELECT u.id, u.login, u.senha FROM usuarios u WHERE u.id = " . $id;
+        $query = "SELECT u.id, u.username, u.senha, u.nome, u.email, u.dataUltimoAcesso, u.dataCadastro FROM usuarios u WHERE u.id = " . $id;
 
         $resultado = $conexao->query($query);
 
@@ -78,14 +77,14 @@ class UsuarioController{
     	if(isset($dados[0]['id'])){
     		return $dados[0];
     	}else{
-    		return "Não existe um produto com esse id!";
+    		return "Não existe um usuario com esse id!";
     	}
     }
 
-    function getUsuarioPorLogin($login){
+    function getUsuarioPorUsername($username){
         $conexao = $this->databaseController->open_database();
 
-        $query = "SELECT u.id, u.login, u.senha FROM usuarios u WHERE u.login = " . $login;
+        $query = "SELECT u.id, u.username, u.senha, u.nome, u.email, u.dataUltimoAcesso, u.dataCadastro FROM usuarios u WHERE u.username = " . $username;
 
         $resultado = $conexao->query($query);
 
@@ -102,7 +101,7 @@ class UsuarioController{
     	if(isset($dados[0]['login'])){
     		return $dados[0];
     	}else{
-    		return "Não existe um produto com esse id!";
+    		return "Não existe um usuario com esse id!";
     	}
     }
 
