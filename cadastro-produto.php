@@ -1,6 +1,7 @@
 <?php
     require_once("model/Config.php");
     require_once("model/Pagina.php");
+    require_once("model/Categoria.php");
     require_once("controller/CategoriaController.php");
     require_once("controller/SemestreController.php");
 
