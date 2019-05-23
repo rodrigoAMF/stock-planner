@@ -1,6 +1,7 @@
 <?php
 require_once("DatabaseController.php");
 require_once("SemestreController.php");
+require_once("model/Produto.php");
 
 class ProdutoController{
 
@@ -160,7 +161,18 @@ class ProdutoController{
         $this->databaseController->close_database();
 
     	if(isset($dados[0]['id'])){
-    		return $dados[0];
+            $produto = new Produto();
+
+            $produto->setNome($dados[0]['nome']);
+            $produto->setIdentificacao($dados[0]['identificacao']);
+            $produto->setCatmat($dados[0]['catmat']);
+            $produto->setQuantidade($dados[0]['quantidade']);
+            $produto->setEstoqueIdeal($dados[0]['estoque_ideal']);
+            $produto->setPosicao($dados[0]['posicao']);
+            $produto->setDescricao($dados[0]['descricao']);
+            $produto->getCategoria()->setNome($dados[0]['categoria']);
+
+    		return $produto;
     	}else{
     		return "Não existe um produto com esse id!";
     	}
