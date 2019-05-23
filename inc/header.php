@@ -1,16 +1,3 @@
-<?php
-    // A sessão precisa ser iniciada em cada página diferente
-    if (!isset($_SESSION)) session_start();
-
-    // Verifica se não há a variável da sessão que identifica o usuário
-    if (!isset($_SESSION['UsuarioID'])) {
-        // Destrói a sessão por segurança
-        session_destroy();
-        // Redireciona o visitante de volta pro login
-        header("Location: index.php"); exit;
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -57,7 +44,7 @@
                             <nav class="nav">
                                <ul class="menu">
                                  <li class="menu-item">
-                                  <a href="index.php">Home</a>
+                                  <a href="inicio.php">Home</a>
                                  </li>
                                  <li class="menu-item has-children">
                                    <a href="">Produtos
@@ -90,6 +77,9 @@
                                    </ul>
                                  </li>
                                  -->
+                                 <li class="menu-item">
+                                     <a href="logout.php">Logout</a>
+                                 </li>
 
                                </ul>
                             </nav>
