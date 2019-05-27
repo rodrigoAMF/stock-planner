@@ -119,7 +119,6 @@ function bindCheckIcons(){
 						url: url,
 						cache: false
 					});
-
 					request.done(function(msg) {
 						btn.parent().parent().remove();
 						alertify.success('Produto salvo com sucesso!');

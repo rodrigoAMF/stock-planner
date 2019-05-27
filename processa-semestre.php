@@ -5,8 +5,6 @@
 
 	$semestreController = SemestreController::getInstance();
 
-    $semestre = $semestreController->atualizaSemestre();
-
-	$resultadoQuery = $semestreController->cadastraSemestre($semestre);
+	$resultadoQuery = $semestreController->cadastraSemestre();
 
     echo $semestreController->getSemestreAtual();

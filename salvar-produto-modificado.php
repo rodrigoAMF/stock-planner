@@ -10,14 +10,9 @@
 
     $produtoController = ProdutoController::getInstance();
 
- 	$dados = $produtoController->getProdutoPorId($id);
- 	$produto = new Produto();
+ 	$produto = $produtoController->getProdutoPorId($id);
 
- 	$produto->setNome($dados['nome']);
- 	$produto->setCatmat($catmat);
- 	$produto->setQuantidade($quantidade);
-
-   $resultadoQuery = $produtoController->cadastroProdutoCondicional($produto);
+    $resultadoQuery = $produtoController->cadastroProdutoCondicional($produto);
 
    echo $resultadoQuery;
 ?>
