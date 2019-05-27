@@ -95,11 +95,19 @@ class Usuario{
         return $feedback;
     }
 
-    public function setSenha($senha){
+    public function setSenha($senha, $confirmaSenha){
         if($senha != null){
             if(strlen ($senha) <= 60){
-                $feedback['status'] = 1;
-                $this->senha = $senha;
+                if(strcmp($senha,$confirmaSenha) == 0){ 
+                    $feedback['status'] = 1;
+                    $this->senha = MD5($senha);
+                    
+                }else if(strcmp($senha,$confirmaSenha) != 0){
+
+                    $feedback['nome_do_campo'] = "confirmaSenha";
+                    $feedback['mensagem'] = "As senhas não conferem";
+                    $feedback['status'] = -1;
+                }
             }else{
                 $feedback['nome_do_campo'] = "senha";       
                 $feedback['mensagem'] = "O senha excedeu o tamanho máximo";
