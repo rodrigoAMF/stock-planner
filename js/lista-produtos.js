@@ -53,6 +53,7 @@ $("#busca").on("keyup", function(event) {
 		$('table').append("<tbody>");
 		$('table tbody').append(msg);
 		$('table').append("</tbody>");
+		bindDeleteIcons();
 	});
 
 	request.fail(function(jqXHR, textStatus) {
@@ -94,6 +95,7 @@ $(".ordenavel").on("click", function(event)
 			$('table').append("<tbody>");
 			$('table tbody').append(msg);
 			$('table').append("</tbody>");
+			bindDeleteIcons();
 		});
 
 		request.fail(function(jqXHR, textStatus) {
@@ -121,6 +123,7 @@ $(".ordenavel").on("click", function(event)
 			$('table').append("<tbody>");
 			$('table tbody').append(msg);
 			$('table').append("</tbody>");
+			bindDeleteIcons();
 		});
 
 		request.fail(function(jqXHR, textStatus) {
@@ -149,6 +152,7 @@ $(".ordenavel").on("click", function(event)
 			$('table').append("<tbody>");
 			$('table tbody').append(msg);
 			$('table').append("</tbody>");
+			bindDeleteIcons();
 		});
 
 		request.fail(function(jqXHR, textStatus) {
