@@ -120,9 +120,14 @@ class UsuarioController{
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
-        $this->databaseController->close_database();
-
         if(isset($dados[0]['ID'])){
+            // Atualiza a data de último acesso
+            $query = "UPDATE usuarios SET dataUltimoAcesso = NOW() WHERE ID = {$dados[0]['ID']}";
+
+            $conexao->query($query);
+
+            $this->databaseController->close_database();
+
             // Se a sessão não existir, inicia uma
             if (!isset($_SESSION)) session_start();
 
@@ -133,6 +138,7 @@ class UsuarioController{
 
             return 1;
         }else{
+            $this->databaseController->close_database();
             return 0;
         }
     }
