@@ -24,7 +24,7 @@
               $semestres = $semestreController->getSemestres();
               $semestres = array_reverse($semestres);
               foreach ($semestres as $semestre) {
-                  echo "<option value = '" . $semestre['id']."'>" . $semestre['id']. "</option>";
+                  echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
               }
           ?>
         </select>

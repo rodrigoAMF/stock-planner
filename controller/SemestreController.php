@@ -35,7 +35,13 @@ class SemestreController{
 
         $this->databaseController->close_database();
 
-        return $dados;
+        for($i=0; $i< sizeof($dados); $i++){
+            $semestre = new Semestre();
+            $semestre->setAtributos($dados[$i]['id'],$dados[$i]['ano'],$dados[$i]['numero']);
+
+            $arraySemestres[$i] = $semestre;
+        }
+        return $arraySemestres;
     }
 
     function getSemestreAtual() {
