@@ -1,6 +1,7 @@
 <?php
     require_once("model/Config.php");
     require_once("model/Pagina.php");
+    require_once("model/Semestre.php");
     require_once("controller/ProdutoController.php");
     require_once("controller/SemestreController.php");
     $pagina = new Pagina();

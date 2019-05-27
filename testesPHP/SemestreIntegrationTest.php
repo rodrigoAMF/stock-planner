@@ -45,6 +45,12 @@ class SemestreIntegrationTest extends TestCase{
 
         $this->assertEquals(3, $count);
     }
+
+    public function testGetSemestreAtual(){
+        $semestreController = SemestreController::getInstance();
+        
+        $this->assertEquals("2051S2", $semestreController->getSemestreAtual());
+    }
     
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
