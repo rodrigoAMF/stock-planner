@@ -23,14 +23,22 @@ class ProdutoController{
         $produtosMapeados = array_map(function($dado){
             $produto = new Produto();
 
-            $produto->setNome($dado['nome']);
-            $produto->setIdentificacao($dado['identificacao']);
-            $produto->setCatmat($dado['catmat']);
-            $produto->setQuantidade($dado['quantidade']);
-            $produto->setEstoqueIdeal($dado['estoque_ideal']);
-            $produto->setPosicao($dado['posicao']);
-            $produto->setDescricao($dado['descricao']);
-            $produto->getCategoria()->setNome($dado['categoria']);
+            if(isset($dado['nome']))
+                $produto->setNome($dado['nome']);
+            if(isset($dado['identificacao']))
+                $produto->setIdentificacao($dado['identificacao']);
+            if(isset($dado['catmat']))
+                $produto->setCatmat($dado['catmat']);
+            if(isset($dado['quantidade']))
+                $produto->setQuantidade($dado['quantidade']);
+            if(isset($dado['estoque_ideal']))
+                $produto->setEstoqueIdeal($dado['estoque_ideal']);
+            if(isset($dado['posicao']))
+                $produto->setPosicao($dado['posicao']);
+            if(isset($dado['descricao']))
+                $produto->setDescricao($dado['descricao']);
+            if(isset($dado['categoria']))
+                $produto->getCategoria()->setNome($dado['categoria']);
 
             return $produto;
         }, $produtosNaoMapeados);
@@ -163,14 +171,37 @@ class ProdutoController{
     }
 
     function getProdutoPorId($id){
-        $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
-        $resultado = $this->databaseController->select($query);
+        $conexao = $this->databaseController->open_database();
 
-    	if($resultado['status'] === 200) {
-            $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
+        
+        $resultado = $conexao->query($query);
+
+    	if($resultado == false)
+    	{
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
-    	return $resultado;
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+    	if(isset($dados[0]['id'])){
+            $produto = new Produto();
+
+            $produto->setNome($dados[0]['nome']);
+            $produto->setIdentificacao($dados[0]['identificacao']);
+            $produto->setCatmat($dados[0]['catmat']);
+            $produto->setQuantidade($dados[0]['quantidade']);
+            $produto->setEstoqueIdeal($dados[0]['estoque_ideal']);
+            $produto->setPosicao($dados[0]['posicao']);
+            $produto->setDescricao($dados[0]['descricao']);
+            $produto->getCategoria()->setNome($dados[0]['categoria']);
+
+    		return $produto;
+    	}else{
+    		return "Não existe um produto com esse id!";
+    	}
     }
 
     function getIDUltimoProdutoCadastrado($conexao) {
