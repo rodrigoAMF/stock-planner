@@ -55,7 +55,7 @@
                                         <a href="escolhe-cadastro.php">Cadastro</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="lista-produtos.php">Listar</a>
+                                        <a href="escolhe-listar.php">Listar</a>
                                     </li>
                                     <li class="menu-item">
                                         <a href="importar-produtos.php">Importar</a>

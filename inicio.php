@@ -27,7 +27,7 @@
 
 				</div>
         <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
-          <a href="lista-produtos.php">
+          <a href="escolhe-listar.php">
             <button>
     					<img src="img/listar.png">
     					<br>
@@ -51,7 +51,7 @@
         </div>
 			</div>
 		</div>
-    <br>
+    <br>/
     <nav class="navbar navbar-expand-lg">
       <div class="fonte-barra">
         Configurações
