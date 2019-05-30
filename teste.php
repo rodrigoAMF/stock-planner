@@ -1,21 +1,14 @@
 <?php
-/*require_once("controller/CategoriaController.php");
+require_once("controller/CategoriaController.php");
 require_once("controller/ProdutoController.php");
-*/
-require_once("model/Usuario.php");
-require_once("controller/UsuarioController.php");
+require_once ("controller/DatabaseController.php");
 
-$usuario = new Usuario();
+$produtoController = ProdutoController::getInstance();
 
-$email = "rodrigoamf@outlook.com";
-$senha = MD5("123");
+$produto = $produtoController->getProdutoPorId(6);
 
-$usuarioController = UsuarioController::getInstance();
+print_r($produto);
 
-$loginSucesso = $usuarioController->verificarLogin($email, $senha);
-
-echo "{$email} {$senha}<br>";
-echo $loginSucesso;
 
 
 // $erros[0]['nome_do_campo'] = 'nome';
