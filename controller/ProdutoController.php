@@ -166,8 +166,13 @@ class ProdutoController{
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
         $resultado = $this->databaseController->select($query);
 
-    	if($resultado['status'] === 200) {
-            $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
+        
+        $resultado = $conexao->query($query);
+
+    	if($resultado == false)
+    	{
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
     	}
 
     	return $resultado;

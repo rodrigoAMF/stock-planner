@@ -80,6 +80,9 @@
                                  <li class="menu-item">
                                      <a href="logout.php">Logout</a>
                                  </li>
+                                 <li class="menu-item" id="cadastro">
+                                   <a href="cadastrar-usuario.php">Cadastrar Usuário</a>
+                                 </li>
 
                                </ul>
                             </nav>
