@@ -35,7 +35,13 @@ class SemestreController{
 
         $this->databaseController->close_database();
 
-        return $dados;
+        for($i=0; $i< sizeof($dados); $i++){
+            $semestre = new Semestre();
+            $semestre->setAtributos($dados[$i]['id'],$dados[$i]['ano'],$dados[$i]['numero']);
+
+            $arraySemestres[$i] = $semestre;
+        }
+        return $arraySemestres;
     }
 
     function getSemestreAtual() {
@@ -74,27 +80,7 @@ class SemestreController{
         return $AnoSemestre;
     }
 
-    function cadastraSemestre(Semestre $semestre){
-        $conexao = $this->databaseController->open_database();
-
-        $query = "INSERT INTO semestre(id,ano,numero) values('". $semestre->getId() . "',". $semestre->getAno() . ",". $semestre->getNumero() . ")";
-
-        $resultado = $conexao->query($query);
-
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        $this->databaseController->close_database();
-
-        return true;
-
-    }
-
-    function atualizaSemestre()
-    {
+    function cadastraSemestre(){
         $semestre = new Semestre();
 
         $stringSemestre = $this->getSemestreAtual();
@@ -111,7 +97,22 @@ class SemestreController{
             $semestre->setAtributos($id, $ano, 1);
         }
 
-        return $semestre;
+        $conexao = $this->databaseController->open_database();
+
+        $query = "INSERT INTO semestre(id,ano,numero) values('". $semestre->getId() . "',". $semestre->getAno() . ",". $semestre->getNumero() . ")";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $this->databaseController->close_database();
+
+        return true;
+
     }
 }
 

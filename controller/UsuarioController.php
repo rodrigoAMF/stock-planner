@@ -38,11 +38,10 @@ class UsuarioController{
         return $dados;
     }
 
-    function cadastraUsuario(Usuario $usuario){
-        $conexao = $this->databaseController->open_database();
+    public function verificaSeUsuarioExistePorEmail($email, $conexao){
 
-        $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername()}','{$usuario->getSenha()}','{$usuario->getNome()}','{$usuario->getEmail()}',now(),now())";
-        
+        $query = "SELECT * FROM usuarios WHERE email = '" . $email . "'";
+
         $resultado = $conexao->query($query);
 
         if($resultado == false)
@@ -51,9 +50,61 @@ class UsuarioController{
             throw new Exception($erro);
         }
 
-        $this->databaseController->close_database();
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 
-        return true;
+    public function verificaSeUsuarioExistePorUsername($username,$conexao){
+        $query = "SELECT * FROM usuarios WHERE username = '" . $username . "'";
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        if($resultado->num_rows > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    function cadastraUsuario(Usuario $usuario){
+        $conexao = $this->databaseController->open_database();
+
+        $duplicadoUsername = $this->verificaSeUsuarioExistePorUsername($usuario->getUsername(), $conexao);
+        $duplicadoEmail = $this->verificaSeUsuarioExistePorEmail($usuario->getEmail(), $conexao);
+
+        if($duplicadoUsername == 0 && $duplicadoEmail == 0)
+        {
+
+            $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername()}','{$usuario->getSenha()}','{$usuario->getNome()}','{$usuario->getEmail()}',now(),now())";
+            
+            $resultado = $conexao->query($query);
+
+            if($resultado == false)
+            {
+                $erro = 'Falha ao realizar a Query: ' . $query;
+                throw new Exception($erro);
+            }
+
+            $this->databaseController->close_database();
+
+            return 1;
+        }else{
+            $this->databaseController->close_database();
+    	    if($duplicadoUsername == 1)
+    	        return -2;
+    	    else if($duplicadoEmail == 1){
+                return -3;
+            }
+        }
 
     }
 
@@ -142,6 +193,5 @@ class UsuarioController{
             return 0;
         }
     }
-
 }
 ?>
