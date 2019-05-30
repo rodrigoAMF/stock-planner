@@ -23,4 +23,8 @@ class Pagina{
         echo $codigo_header;
     }
 
+    function verificaAdmin(){
+        require_once("verificaAdmin.php");
+    }
+
 }

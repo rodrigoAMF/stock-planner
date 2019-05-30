@@ -1,3 +1,12 @@
+<?php
+    require_once("model/Config.php");
+    require_once("model/Pagina.php");
+    $pagina = new Pagina();
+
+    $pagina->verificaAdmin();
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +102,7 @@
                     <button class="btn botoes-login btn-primary btn-block" type="submit">Cadastrar</button>
                 </div>
                 <div class="col-6">
-                    <button class="btn botoes-login btn-primary btn-block" type="button" onclick="window.location = 'index.php';">Cancelar</button>
+                    <button class="btn botoes-login btn-primary btn-block" type="button" onclick="window.location = 'inicio.php';">Cancelar</button>
                 </div>
                 
             </div>

@@ -183,9 +183,10 @@ class UsuarioController{
             if (!isset($_SESSION)) session_start();
 
             // Salva os dados encontrados na sessão
-            $_SESSION['UsuarioID'] = $dados[0]['ID'];
-            $_SESSION['UsuarioNome'] = $dados[0]['nome'];
-            $_SESSION['UsuarioEmail'] = $dados[0]['email'];
+            $_SESSION['usuario']['id'] = $dados[0]['ID'];
+            $_SESSION['usuario']['nome'] = $dados[0]['nome'];
+            $_SESSION['usuario']['email'] = $dados[0]['email'];
+            $_SESSION['usuario']['tipo'] = $dados[0]['tipoUsuario'];
 
             return 1;
         }else{

@@ -70,7 +70,22 @@
               </a>
             </button>
 
+
         </div>
+        <?php if(isset($_SESSION['usuario']['tipo'])) if($_SESSION['usuario']['tipo'] == 1){
+          echo'
+            <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
+              <a href="cadastrar-usuario.php">
+                <button>
+                  <img src="img/cadastrar1.png">
+                  <br>
+                  <div class="textosBotao">
+                    Cadastrar Usuário
+                  </div>
+                </button>
+              </a>
+            </div>';
+        }?>
       </div>
     </div>
 </div>
