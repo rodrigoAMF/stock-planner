@@ -23,14 +23,22 @@ class ProdutoController{
         $produtosMapeados = array_map(function($dado){
             $produto = new Produto();
 
-            $produto->setNome($dado['nome']);
-            $produto->setIdentificacao($dado['identificacao']);
-            $produto->setCatmat($dado['catmat']);
-            $produto->setQuantidade($dado['quantidade']);
-            $produto->setEstoqueIdeal($dado['estoque_ideal']);
-            $produto->setPosicao($dado['posicao']);
-            $produto->setDescricao($dado['descricao']);
-            $produto->getCategoria()->setNome($dado['categoria']);
+            if(isset($dado['nome']))
+            	$produto->setNome($dado['nome']);
+			if(isset($dado['identificacao']))
+            	$produto->setIdentificacao($dado['identificacao']);
+			if(isset($dado['catmat']))
+            	$produto->setCatmat($dado['catmat']);
+			if(isset($dado['quantidade']))
+            	$produto->setQuantidade($dado['quantidade']);
+			if(isset($dado['estoque_ideal']))
+            	$produto->setEstoqueIdeal($dado['estoque_ideal']);
+			if(isset($dado['posicao']))
+            	$produto->setPosicao($dado['posicao']);
+			if(isset($dado['descricao']))
+            	$produto->setDescricao($dado['descricao']);
+			if(isset($dado['categoria']))
+            	$produto->getCategoria()->setNome($dado['categoria']);
 
             return $produto;
         }, $produtosNaoMapeados);
@@ -166,237 +174,197 @@ class ProdutoController{
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
         $resultado = $this->databaseController->select($query);
 
-    	if($resultado['status'] === 200) {
+    	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
+			$resultado['dados'] = $resultado['dados'][0];
     	}
 
     	return $resultado;
     }
 
-    function getIDUltimoProdutoCadastrado($conexao) {
+    function getIDUltimoProdutoCadastrado() {
         $query = "SELECT MAX(id) FROM produtos";
 
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		if($resultado['status'] == 200) {
+			$resultado['dados'] = $resultado['dados'][0]["MAX(id)"];
+		}
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $IDProduto = $dados[0]["MAX(id)"];
-
-        return $IDProduto;
+        return $resultado;
     }
 
     function verificaSeProdutoExistePorNome($nome){
-        $conexao = $this->databaseController->open_database();
-
         $query = "SELECT * FROM produtos WHERE nome = '" . $nome . "'";
 
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		if($resultado['status'] == 200) {
+			$resultado['dados'] = $resultado['dados'][0];
+		}
 
-        $this->databaseController->close_database();
-
-        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
-
-        if($resultado->num_rows > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return $resultado;
     }
 
     function verificaSeProdutoExistePorIdentificacao($identificacao){
-        $conexao = $this->databaseController->open_database();
-
         $query = "SELECT * FROM produtos WHERE identificacao = '" . $identificacao . "'";
 
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		if($resultado['status'] == 200) {
+			$resultado['dados'] = $resultado['dados'][0];
+		}
 
-        $this->databaseController->close_database();
-
-        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
-
-        if($resultado->num_rows > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+		return $resultado;
     }
     
-    function verificaSeProdutoExisteEmSemestreAnterior($produto){
+    function verificaSeProdutoExisteEmSemestreAnterior($produto) {
         $semestreController = SemestreController::getInstance();
-        $conexao = $this->databaseController->open_database();
 
-        $semestreAtual = $semestreController->getSemestreAtual();
+        $resultado = $semestreController->getSemestreAtual();
+
+        if($resultado['status'] != 200){
+        	return $resultado;
+		}
+
+		$semestresAtual = $resultado['dados'];
 
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome = '" . $produto->getNome() . "'";
 
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		if($resultado['status'] == 200) {
+			for($i = 0; $i < sizeof($resultado['dados']); $i++){
+				if($resultado['dados'][$i]['id_semestre'] != $semestresAtual->getId()){
+					$resultado['dados'] = 1;
+					return $resultado;
+				}
+			}
+		}
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $this->databaseController->close_database();
-
-        if(sizeof($dados) == 0){
-            return false;
-        }else{
-            for($i = 0; $i < sizeof($dados); $i++){
-                if($dados[$i]['id_semestre'] != $semestreAtual){
-                    return true;
-                }
-            }
-            return false;
-        }
+		$resultado['dados'] = 0;
+		return $resultado;
     }
 
     function verificaSeProdutoExisteNoSemestreAtual($produto){
-        $semestreController = SemestreController::getInstance();
-        $conexao = $this->databaseController->open_database();
+		$semestreController = SemestreController::getInstance();
 
-        $semestreAtual = $semestreController->getSemestreAtual();
+		$resultado = $semestreController->getSemestreAtual();
 
-        $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome = '" . $produto->getNome() . "' AND ps.id_semestre = '" . $semestreAtual . "'";
+		if($resultado['status'] != 200){
+			return $resultado;
+		}
 
-        $resultado = $conexao->query($query);
+		$semestresAtual = $resultado['dados'];
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome = '" . $produto->getNome() . "'";
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+		$resultado = $this->databaseController->select($query);
 
-        $this->databaseController->close_database();
+		if($resultado['status'] == 200) {
+			for($i = 0; $i < sizeof($resultado['dados']); $i++){
+				if($resultado['dados'][$i]['id_semestre'] == $semestresAtual->getId()){
+					$resultado['dados'] = 1;
+					return $resultado;
+				}
+			}
+		}
 
-        if(sizeof($dados) == 0){
-            return false;
-        }else{
-            if($dados[0]['id_semestre'] == $semestreAtual){
-                return true;
-            }
-            return false;
-        }
+		$resultado['dados'] = 0;
+		return $resultado;
     }
 
-    function cadastroProdutoCondicional($produto){
+    function cadastroProduto($produto){
         $semestreController = SemestreController::getInstance();
 
-        $semestreAtual = $semestreController->getSemestreAtual();
+		$resultado = $semestreController->getSemestreAtual();
+		if($resultado['status'] != 200){
+			return $resultado;
+		}
+        $semestreAtual = $resultado['dados'];
 
-        $produtoCadastradoEmSemestreAnterior = $this->verificaSeProdutoExisteEmSemestreAnterior($produto);
-        $produtoCadastradoNoSemestreAtual = $this->verificaSeProdutoExisteNoSemestreAtual($produto);
+        $resultado = $this->verificaSeProdutoExisteEmSemestreAnterior($produto);
+		if($resultado['status'] != 200){
+			return $resultado;
+		}
+		$produtoCadastradoEmSemestreAnterior = $resultado['dados'];
+
+        $resultado = $this->verificaSeProdutoExisteNoSemestreAtual($produto);
+		if($resultado['status'] != 200){
+			return $resultado;
+		}
+		$produtoCadastradoNoSemestreAtual = $resultado['dados'];
 
         if($produtoCadastradoEmSemestreAnterior && !$produtoCadastradoNoSemestreAtual){
             // Produto cadastrado em semestre anterior mas,
             // sem registro no semestre atual
-            $conexao = $this->databaseController->open_database();
-
             // Busca ID do produto no Banco de dados
             $query = "SELECT id from produtos where nome = '" . $produto->getNome() . "'";
 
-            $resultado = $conexao->query($query);
+            $resultado = $this->databaseController->select($query);
 
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
+			if ($resultado['status'] != 200){
+				return $resultado;
+			}
 
-            $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-            $idProduto = $dados[0]['id'];
+			$idProduto = $resultado['dados'][0]['id'];
 
             // Cadastra novo CATMAT e Quantidade do produto
             // no semestre atual
+            $query = "INSERT INTO produtos_semestre (id_semestre, id_produto, quantidade, catmat) VALUES ('" . $semestreAtual->getId() . "', " . $idProduto . ", " . $produto->getQuantidade() . ", " . $produto->getCatmat() . ")";
 
-            $query = "INSERT INTO produtos_semestre (id_semestre, id_produto, quantidade, catmat) VALUES ('" . $semestreAtual . "', " . $idProduto . ", " . $produto->getQuantidade() . ", " . $produto->getCatmat() . ")";
-
-            $resultado = $conexao->query($query);
-
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
-
-            $this->databaseController->close_database();
-
-            return 1;
+			$resultado = $this->databaseController->insert($query);
+			if($resultado['status'] == 200){
+				$resultado['dados'] = 1;
+			}
+            return $resultado;
         }else if($produtoCadastradoEmSemestreAnterior && $produtoCadastradoNoSemestreAtual){
             // Produto já cadastrado no semestreAtual
-            return -1;
+			$resultado['dados'] = -1;
+            return $resultado;
         }else if(!$produtoCadastradoEmSemestreAnterior){
             // Produto não foi cadastrado em um semestre anteiror
             // Cadastra então o produto no semestre atual
-            return $this->cadastraProduto($produto, $semestreAtual);
+			$this->cadastraNovoProduto($produto, $semestreAtual);
         }
     }
 
-    function cadastraProduto($produto, $IDSemestre){
+    function cadastraNovoProduto($produto){
+		$semestreController = SemestreController::getInstance();
+		$semestreAtual = $semestreController->getSemestreAtual();
     	$duplicadoNome = $this->verificaSeProdutoExistePorNome($produto->getNome());
         $duplicadoIdentificacao = $this->verificaSeProdutoExistePorIdentificacao($produto->getIdentificacao());
 
     	if($duplicadoNome == 0 && $duplicadoIdentificacao == 0)
         {
-            $conexao = $this->databaseController->open_database();
-
             $query = "INSERT INTO produtos(nome, descricao, identificacao, categoria, posicao, estoque_ideal) values('"
                 . $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ")";
 
-            $resultado = $conexao->query($query);
+            $resultado = $this->databaseController->insert($query);
 
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
+            if($resultado['status'] != 200){
+            	return $resultado;
+			}
 
-            $IDProduto = $this->getIDUltimoProdutoCadastrado($conexao);
+			$resultado = $this->getIDUltimoProdutoCadastrado();
 
-            $query = "INSERT INTO produtos_semestre(id_semestre, id_produto, quantidade, catmat) values('" . $IDSemestre . "', " . $IDProduto . ", " . $produto->getQuantidade() . "," . $produto->getCatmat() . ")";
+            $IDProduto = $resultado['dados'];
 
-            $resultado = $conexao->query($query);
+            $query = "INSERT INTO produtos_semestre(id_semestre, id_produto, quantidade, catmat) values('" . $semestreAtual->getId() . "', " . $IDProduto . ", " . $produto->getQuantidade() . "," . $produto->getCatmat() . ")";
 
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
+			$resultado = $this->databaseController->insert($query);
 
-            $this->databaseController->close_database();
-
-            return 1;
+			if($resultado['status'] == 200){
+				$resultado['dados'] = 1;
+			}
         }else{
     	    if($duplicadoNome == 1)
-    	        return -2;
+				$resultado['dados'] = -2;
     	    else
-    	        return -3;
+				$resultado['dados'] = -3;
         }
 
-
+		return $resultado;
     }
 
     function getProdutos($busca, $filtro, $parametroOrdenacao, $semestre){

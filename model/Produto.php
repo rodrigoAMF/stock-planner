@@ -190,4 +190,15 @@ class Produto
     public function setCategoria($categoria){
         $this->categoria = $categoria;
     }
+
+    public function preencheDadosTeste($categoria){
+		$this->setNome("MINI JUMPER");
+		$this->setQuantidade(500);
+		$this->setPosicao("1A");
+		$this->setIdentificacao("145");
+		$this->setEstoqueIdeal(55);
+		$this->setDescricao("MINI JUMPER");
+		$this->setCatmat(55);
+		$this->setCategoria($categoria);
+	}
 }
