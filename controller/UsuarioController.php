@@ -18,6 +18,7 @@ class UsuarioController{
         return self::$usuarioController;
     }
 
+    //essa nao está sendo usada no momento, porém pode ser usada um dia por isso deixamos ela
     function getUsuarios(){
         $conexao = $this->databaseController->open_database();
 
@@ -35,7 +36,16 @@ class UsuarioController{
 
         $this->databaseController->close_database();
 
-        return $dados;
+        for($i=0; $i< sizeof($dados); $i++){
+            $usuario = new Usuario;
+            $usuario->setNome($dados[$i]['nome']);
+            $usuario->setUsername($dados[$i]['username']);
+            $usuario->setEmail($dados[$i]['email']);
+            $usuario->setSenha($dados[$i]['senha'],$dados[$i]['senha']);
+
+            $arrayUsuarios[$i] = $usuario;
+        }
+        return $arrayUsuarios;
     }
 
     public function verificaSeUsuarioExistePorEmail($email, $conexao){
@@ -85,7 +95,7 @@ class UsuarioController{
         {
 
             $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername()}','{$usuario->getSenha()}','{$usuario->getNome()}','{$usuario->getEmail()}',now(),now())";
-            
+
             $resultado = $conexao->query($query);
 
             if($resultado == false)
@@ -106,54 +116,6 @@ class UsuarioController{
             }
         }
 
-    }
-
-    function getUsuarioPorId($id){
-        $conexao = $this->databaseController->open_database();
-
-        $query = "SELECT u.id, u.username, u.senha, u.nome, u.email, u.dataUltimoAcesso, u.dataCadastro FROM usuarios u WHERE u.id = " . $id;
-
-        $resultado = $conexao->query($query);
-
-    	if($resultado == false)
-    	{
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-    	}
-
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $this->databaseController->close_database();
-
-    	if(isset($dados[0]['id'])){
-    		return $dados[0];
-    	}else{
-    		return "Não existe um usuario com esse id!";
-    	}
-    }
-
-    function getUsuarioPorUsername($username){
-        $conexao = $this->databaseController->open_database();
-
-        $query = "SELECT u.id, u.username, u.senha, u.nome, u.email, u.dataUltimoAcesso, u.dataCadastro FROM usuarios u WHERE u.username = " . $username;
-
-        $resultado = $conexao->query($query);
-
-    	if($resultado == false)
-    	{
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-    	}
-
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $this->databaseController->close_database();
-
-    	if(isset($dados[0]['login'])){
-    		return $dados[0];
-    	}else{
-    		return "Não existe um usuario com esse id!";
-    	}
     }
 
     public function verificarLogin($email, $senha){
@@ -180,7 +142,7 @@ class UsuarioController{
             $this->databaseController->close_database();
 
             // Se a sessão não existir, inicia uma
-            if (!isset($_SESSION)) session_start();
+             if (!isset($_SESSION)) session_start();
 
             // Salva os dados encontrados na sessão
             $_SESSION['usuario']['id'] = $dados[0]['ID'];
