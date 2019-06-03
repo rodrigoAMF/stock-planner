@@ -69,8 +69,11 @@ class DatabaseController{
         if(!$resultadoQuery) {
             return $this->erroBD($query);
         }else{
-            $resultado['status'] = 200;
+			$resultado['status'] = 200;
             $resultado['dados'] = $resultadoQuery->fetch_all(MYSQLI_ASSOC);
+            if(empty($resultado['dados'])) {
+				$resultado['status'] = 204;
+			}
 
             return $resultado;
         }
