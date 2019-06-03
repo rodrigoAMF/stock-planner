@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Maio-2019 às 19:10
--- Versão do servidor: 10.1.34-MariaDB
--- PHP Version: 7.2.8
+-- Generation Time: 03-Jun-2019 às 18:30
+-- Versão do servidor: 10.1.36-MariaDB
+-- versão do PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -79,7 +79,11 @@ CREATE TABLE `semestre` (
 --
 
 INSERT INTO `semestre` (`id`, `ano`, `numero`) VALUES
-('2019S1', 2019, 1);
+('2019S1', 2019, 1),
+('2019S2', 2019, 2),
+('2020S1', 2020, 1),
+('2020S2', 2020, 2),
+('2021S1', 2021, 1);
 
 -- --------------------------------------------------------
 
@@ -94,22 +98,23 @@ CREATE TABLE `usuarios` (
   `nome` varchar(80) NOT NULL,
   `email` varchar(60) NOT NULL,
   `dataUltimoAcesso` datetime NOT NULL,
-  `dataCadastro` datetime NOT NULL
+  `dataCadastro` datetime NOT NULL,
+  `tipoUsuario` int(2) NOT NULL DEFAULT '2'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`ID`, `username`, `senha`, `nome`, `email`, `dataUltimoAcesso`, `dataCadastro`) VALUES
-(1, 'rodrigoamf', '202cb962ac59075b964b07152d234b70', 'Rodrigo Araújo Marinho Franco', 'rodrigoamf@outlook.com', '2019-05-27 14:01:30', '2019-05-22 12:00:00'),
-(2, 'laismr', 'bb03e43ffe34eeb242a2ee4a4f125e56', 'Laís Magalhães', 'lais.magalhaes13@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(3, 'nadianogues', '202cb962ac59075b964b07152d234b70', 'Nadia Nogues de Almeida', 'nadianogues19@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(4, 'gabii6431', '202cb962ac59075b964b07152d234b70', 'Gabriela dos Reis Garcia', 'gabii6431@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(5, 'luziane', '202cb962ac59075b964b07152d234b70', 'luziane', 'freitas.lu@outlook.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(6, 'naat-alves', '202cb962ac59075b964b07152d234b70', 'Natasha', 'nathy-ac@hotmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(7, 'matheusmelo', '202cb962ac59075b964b07152d234b70', 'Matheus Augusto Melo dos Santos Franco', 'matheus.franco@alunos.ifsuldeminas.edu.br', '2019-05-27 13:42:45', '2019-05-27 13:00:00'),
-(8, 'giovanna', '202cb962ac59075b964b07152d234b70', 'Giovanna Verola', 'giovanna.verola2016@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00');
+INSERT INTO `usuarios` (`ID`, `username`, `senha`, `nome`, `email`, `dataUltimoAcesso`, `dataCadastro`, `tipoUsuario`) VALUES
+(1, 'rodrigoamf', '202cb962ac59075b964b07152d234b70', 'Rodrigo Araújo Marinho Franco', 'rodrigoamf@outlook.com', '2019-05-27 14:01:30', '2019-05-22 12:00:00', 1),
+(2, 'laismr', 'bb03e43ffe34eeb242a2ee4a4f125e56', 'Laís Magalhães', 'lais.magalhaes13@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00', 2),
+(3, 'nadianogues', '202cb962ac59075b964b07152d234b70', 'Nadia Nogues de Almeida', 'nadianogues19@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00', 2),
+(4, 'gabii6431', '202cb962ac59075b964b07152d234b70', 'Gabriela dos Reis Garcia', 'gabii6431@gmail.com', '2019-05-30 15:43:03', '2019-05-27 13:00:00', 1),
+(5, 'luziane', '202cb962ac59075b964b07152d234b70', 'luziane', 'freitas.lu@outlook.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00', 2),
+(6, 'naat-alves', '202cb962ac59075b964b07152d234b70', 'Natasha', 'nathy-ac@hotmail.com', '2019-05-27 15:41:12', '2019-05-27 13:00:00', 2),
+(7, 'matheusmelo', '202cb962ac59075b964b07152d234b70', 'Matheus Augusto Melo dos Santos Franco', 'matheus.franco@alunos.ifsuldeminas.edu.br', '2019-05-30 15:38:38', '2019-05-27 13:00:00', 2),
+(8, 'giovanna', '202cb962ac59075b964b07152d234b70', 'Giovanna Verola', 'giovanna.verola2016@gmail.com', '2019-05-27 13:42:45', '2019-05-27 13:00:00', 2);
 
 --
 -- Indexes for dumped tables
