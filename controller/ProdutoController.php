@@ -706,7 +706,7 @@ class ProdutoController{
         {
             switch($filtro){
                 case 1:
-                    $query = "SELECT * FROM produtos WHERE produtos.nome LIKE '%" . $busca . "%'";
+                    $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto AND produtos.nome LIKE '%" . $busca . "%'";
                 break;
             }
         }
