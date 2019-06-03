@@ -648,7 +648,7 @@ class ProdutoController{
     function getProdutosCadastrados($busca, $filtro, $parametroOrdenacao){
         $semestreController = SemestreController::getInstance();
         $semestreAtual = $semestreController->getSemestreAtual();
-       $conexao = $this->databaseController->open_database();
+        $conexao = $this->databaseController->open_database();
 
         if ($busca == null) {
             $query = "SELECT * FROM produtos WHERE id NOT IN (SELECT id_produto FROM produtos_semestre WHERE id_semestre = '" . $semestreAtual . "')";
@@ -686,6 +686,52 @@ class ProdutoController{
             $produtos .= "\t\t\t<td id='catmat'></td>\n";
             $produtos .= "\t\t\t<td id='quantidade'></td>\n";
             $produtos .= "\t\t\t<td><a class='check_circle_outline' href='salvar-produto-modificado.php?id={$dado['id']}'><i class='material-icons' id='check-" . $dado['id'] . "'>check_circle_outline</i></a></td>\n";
+            $produtos .= "\t\t</tr>\n";
+        }
+
+        if($produtos != ""){
+            return $produtos;
+        }
+    }
+
+    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
+        $semestreController = SemestreController::getInstance();
+        $semestreAtual = $semestreController->getSemestreAtual();
+        $conexao = $this->databaseController->open_database();
+
+        if ($busca == null) {
+            $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto";
+        }
+        else
+        {
+            switch($filtro){
+                case 1:
+                    $query = "SELECT * FROM produtos WHERE produtos.nome LIKE '%" . $busca . "%'";
+                break;
+            }
+        }
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+        if($busca == null && $filtro == null){
+            $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
+        }
+
+        $produtos = "";
+        
+        foreach ($dados as $dado) {
+            $produtos .= "\t\t<tr>\n";
+            $produtos .= "\t\t\t<td>{$dado['nome']}</td>\n";
             $produtos .= "\t\t</tr>\n";
         }
 

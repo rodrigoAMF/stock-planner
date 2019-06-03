@@ -6,7 +6,7 @@
     require_once("controller/SemestreController.php");
     $pagina = new Pagina();
 
-    $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos");
+    $pagina->incluiCabecalho("Stock Planner - Cadastro de produtos", "lista-produtos-quantidade");
     $semestreController = SemestreController::getInstance();
 ?>
 
@@ -32,21 +32,48 @@
         <input name="busca" type="text" class="form-control" id="busca" aria-describedby="emailHelp" placeholder="Busca">
     </div>
         <!--<div class="col-md-8 col-xl-12 col-sm-2 col-2 col-lg-12">-->
-        <div class="col-sm-12">
-          <table class="table table-borderless table-responsive-md">
+        <div cla ss="col-sm-12">
+          <table id="teste" class="table table-borderless table-responsive-md">
               <thead>
                   <tr>
-                    <th class="ordenavel sticky"><img src="img/setaBaixo.png" id="setaVazio" ></th>
-                    <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>
+                    <th></th>
+                    <th></th>
                     <th colspan="4">Quantidade</th>
                   </tr>
                   <tr>
-                    <th></th>
-                    <th></th>
-                    <th class="ordenavel sticky">2019S1<img src="img/setaBaixo.png" id="setaQuantidade"></th>
-                    <th class="ordenavel sticky">2019S2<img src="img/setaBaixo.png" id="setaQuantidade"></th>
-                    <th class="ordenavel sticky">2020S1<img src="img/setaBaixo.png" id="setaQuantidade"></th>
-                    <th class="ordenavel sticky">2020S2<img src="img/setaBaixo.png" id="setaQuantidade"></th>
+                    <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>
+                    <th class="ordenavel sticky" id="borda">
+                       <?php
+                          $semestres = $semestreController->getSemestres();
+                          $semestres = array_reverse($semestres);
+                              echo $semestres[0]->getId();     
+                      ?>
+                      <img src="img/setaBaixo.png" id="setaQuantidade">
+                    </th>
+                    <th class="ordenavel sticky" id="borda">
+                      <?php
+                          $semestres = $semestreController->getSemestres();
+                          $semestres = array_reverse($semestres);
+                              echo $semestres[1]->getId();     
+                      ?>
+                      <img src="img/setaBaixo.png" id="setaQuantidade">
+                    </th>
+                    <th class="ordenavel sticky" id="borda">
+                      <?php
+                          $semestres = $semestreController->getSemestres();
+                          $semestres = array_reverse($semestres);
+                              echo $semestres[2]->getId();     
+                      ?>
+                      <img src="img/setaBaixo.png" id="setaQuantidade">
+                    </th>
+                    <th class="ordenavel sticky" id="borda">
+                      <?php
+                          $semestres = $semestreController->getSemestres();
+                          $semestres = array_reverse($semestres);
+                              echo $semestres[3]->getId();     
+                      ?>
+                      <img src="img/setaBaixo.png" id="setaQuantidade">
+                    </th>
                   </tr>
               </thead>
               <tbody>
@@ -54,7 +81,7 @@
               <?php
                   $produtoController = ProdutoController::getInstance();
 
-                  $produtos = $produtoController->getProdutos(null,null, 8, null);
+                  $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8);
 
                   echo $produtos;
               ?>
