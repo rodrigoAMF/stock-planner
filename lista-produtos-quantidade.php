@@ -37,7 +37,6 @@
               <thead>
                   <tr>
                     <th></th>
-                    <th></th>
                     <th colspan="4">Quantidade</th>
                   </tr>
                   <tr>
