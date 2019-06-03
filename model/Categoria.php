@@ -22,4 +22,9 @@ class Categoria{
             $this->nome = trim($nome);
         }
     }
+
+    public function preencheDadosTeste(){
+    	$this->setId(1);
+    	$this->setNome("Consumo");
+	}
 }

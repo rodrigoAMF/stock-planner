@@ -1,6 +1,7 @@
 <?php
 //mysqli_report(MYSQLI_REPORT_STRICT);
 require_once("DatabaseController.php");
+require_once("model/Categoria.php");
 
 // Singleton
 class CategoriaController{
@@ -38,13 +39,10 @@ class CategoriaController{
 
         $resultado = $this->databaseController->select($query);
 
-        if($resultado['status'] === 200) {
-            // Se tiver vazio não existe, retorna 0
-            if (empty($resultado['dados'])) {
-                $resultado['dados'] = 0;
-            }else{
-                $resultado['dados'] = 1;
-            }
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = 1;
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = 0;
         }
 
         return $resultado;
@@ -55,13 +53,10 @@ class CategoriaController{
 
         $resultado = $this->databaseController->select($query);
 
-        if($resultado['status'] === 200) {
-            // Se tiver vazio não existe, retorna 0
-            if (empty($resultado['dados'])) {
-                $resultado['dados'] = 0;
-            }else{
-                $resultado['dados'] = 1;
-            }
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = 1;
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = 0;
         }
 
         return $resultado;
@@ -72,13 +67,10 @@ class CategoriaController{
 
         $resultado = $this->databaseController->select($query);
 
-        if($resultado['status'] === 200) {
-            // Se tiver vazio não existe categoria com este nome, retorna 0
-            if (empty($resultado['dados'])) {
-                $resultado['dados'] = -1;
-            }else{
-                $resultado['dados'] = $resultado['dados'][0]['id'];
-            }
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = $resultado['dados'][0]['id'];
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = -1;
         }
 
         return $resultado;
@@ -89,13 +81,10 @@ class CategoriaController{
 
         $resultado = $this->databaseController->select($query);
 
-        if($resultado['status'] === 200) {
-            // Se tiver vazio não existe categoria com este id, retorna 0
-            if (empty($resultado['dados'])) {
-                $resultado['dados'] = -1;
-            }else{
-                $resultado['dados'] = $resultado['dados'][0]['nome'];
-            }
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = $resultado['dados'][0]['nome'];
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = -1;
         }
 
         return $resultado;
@@ -104,7 +93,7 @@ class CategoriaController{
     function cadastraCategoria(Categoria $categoria){
         $resultado = $this->verificaSeNomeExiste($categoria->getNome());
 
-        if($resultado['status'] === 200 && $resultado['dados'] === 0) {
+        if($resultado['status'] == 200 && $resultado['dados'] == 0) {
             $query = "INSERT INTO categoria(nome) values('{$categoria->getNome()}')";
 
             $resultado = $this->databaseController->insert($query);
@@ -118,7 +107,7 @@ class CategoriaController{
 
         $resultado = $this->databaseController->select($query);
 
-        if($resultado['status'] === 200) {
+        if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearCategoriaEmArray($resultado['dados']);
         }
 
