@@ -1,3 +1,6 @@
+<?php
+require_once("verificaLogoff.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>

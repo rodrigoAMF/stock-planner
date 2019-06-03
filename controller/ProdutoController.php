@@ -693,4 +693,50 @@ class ProdutoController{
             return $produtos;
         }
     }
+
+    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
+        $semestreController = SemestreController::getInstance();
+        $semestreAtual = $semestreController->getSemestreAtual();
+        $conexao = $this->databaseController->open_database();
+
+        if ($busca == null) {
+            $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto";
+        }
+        else
+        {
+            switch($filtro){
+                case 1:
+                    $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto AND produtos.nome LIKE '%" . $busca . "%'";
+                break;
+            }
+        }
+
+        $resultado = $conexao->query($query);
+
+        if($resultado == false)
+        {
+            $erro = 'Falha ao realizar a Query: ' . $query;
+            throw new Exception($erro);
+        }
+
+        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $this->databaseController->close_database();
+
+        if($busca == null && $filtro == null){
+            $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
+        }
+
+        $produtos = "";
+        
+        foreach ($dados as $dado) {
+            $produtos .= "\t\t<tr>\n";
+            $produtos .= "\t\t\t<td>{$dado['nome']}</td>\n";
+            $produtos .= "\t\t</tr>\n";
+        }
+
+        if($produtos != ""){
+            return $produtos;
+        }
+    }
 }
