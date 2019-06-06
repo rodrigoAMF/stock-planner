@@ -22,8 +22,29 @@ frm.submit(function (e) {
 
             if (msg === "1") {
                 // criar outro request para criar numero aleatorio e enviar o email
-            }
+                var request2 = $.ajax({
+                    type: frm.attr('method'),
+                    url: "gera-codigo.php",
+                    data: frm.serialize(),
+                    cache: false
+                });
 
+                request2.done(function(msg2){
+                    alert(msg2);
+                    if(msg2 > 0){
+                        alert("E-mail enviado!");
+                    }else{
+                        alert("Erro ao gerar o código!");
+                    }
+                });
+
+                request2.fail(function(jqXHR, textStatus){
+                    let mensagem = "Falha ao enviar e-mail!";
+                    alertify.alert('Mensagem de sistema', mensagem).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+                });
+            }else{
+                alert("E-mail não cadastrado no banco de dados!");
+            }
         });
 
         request.fail(function(jqXHR, textStatus) {

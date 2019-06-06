@@ -1,7 +1,10 @@
 <?php
+    require_once("controller/DatabaseController.php");
+
+    $databaseController = DatabaseController::getInstance();
     $email = $_POST['email'];
 
-    $conexao = $this->databaseController->open_database();
+    $conexao = $databaseController->open_database();
 
     $query = "SELECT * FROM usuarios WHERE email = '{$email}'";
 
@@ -20,10 +23,8 @@
         echo "1";
     }
     else{
-        $this->databaseController->close_database();
+        $databaseController->close_database();
         echo "0";
     }
-
-    
 
 ?>

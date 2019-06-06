@@ -1,5 +1,7 @@
 <?php
 require_once("verificaLogoff.php");
+$codigoEnviado = $_GET['codigo'];
+echo $codigoEnviado;
 ?>
 
 <!DOCTYPE html>
