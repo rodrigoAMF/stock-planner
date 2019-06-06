@@ -114,12 +114,4 @@ class Usuario{
         return $feedback;
     }
 
-    public function setAtributos(string $login, string  $senha, string $nome, string $email) {
-        $this->username = $login;
-        $this->senha = $senha;
-        $this->nome = $nome;
-        $this->email = $email;
-        // $this->dataCadastro = $dataCadastro;
-        // $this->dataUltimoAcesso = $dataUltimoAcesso;
-    }
 }
