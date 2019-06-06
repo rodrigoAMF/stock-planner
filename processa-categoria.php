@@ -3,15 +3,17 @@
     require_once("model/Categoria.php");
 
     $categoria = new Categoria();
-    if($categoria->setNomeNovo($_GET['nome']) == 1){
-        $categoriaController = CategoriaController::getInstance();
+    $categoriaController = CategoriaController::getInstance();
 
-        $resultadoQuery = $categoriaController->cadastraCategoria($categoria);
+    if($categoria->setNome($_GET['nome']) == 1){
+        if($categoriaController->getSemestreAtual()['status'] == 200){
 
-        echo $resultadoQuery;
-    }
-    else{
-        echo -1;
+            $resultadoQuery = $categoriaController->cadastraCategoria($categoria);
+            echo $resultadoQuery;
+
+        }else{
+            echo -1;
+        }
     }
 
     

@@ -59,18 +59,6 @@ class SemestreController{
 		return $resultado;
 	}
 
-	function getUltimoAno() {
-		$query = "SELECT MAX(ano) FROM semestre";
-
-		$resultado = $this->databaseController->select($query);
-
-		if($resultado['status'] == 200) {
-			$resultado['dados'] = $resultado['dados'][0]["MAX(ano)"];
-		}
-
-		return $resultado;
-	}
-
 	function cadastraProximoSemestre(){
 		$resultado = $this->getSemestreAtual();
 		if($resultado['status'] != 200){
