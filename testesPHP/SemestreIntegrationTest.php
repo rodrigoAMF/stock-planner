@@ -9,24 +9,20 @@ class SemestreIntegrationTest extends TestCase{
 
     public static function setUpBeforeClass(): void{
         $databaseController = new DatabaseController();
-        $conexao = $databaseController->open_database();
-
         $query = "INSERT INTO semestre(id,ano,numero) values('2050S2',2050,2)";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->insert($query);
 
         $query = "INSERT INTO semestre(id,ano,numero) values('2051S1',2051,1)";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->insert($query);
 
         $query = "INSERT INTO semestre(id,ano,numero) values('2051S2',2051,2)";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->insert($query);
 
-        if($resultado == false)
+        if($resultado['status'] == 204)
         {
             $erro = 'Falha ao realizar a Query: ' . $query;
             throw new Exception($erro);
         }
-
-        $databaseController->close_database();
 
     }
 
@@ -35,9 +31,9 @@ class SemestreIntegrationTest extends TestCase{
         $count = 0;
 
         $semestres = $semestreController->getSemestres();
-        for($i= 0; $i< sizeof($semestres); $i++){
-            if($semestres[$i]->getId() == "2050S2" || $semestres[$i]->getId() == "2051S1"
-                || $semestres[$i]->getId() == "2051S2"){
+        for($i= 0; $i< sizeof($semestres['dados']); $i++){
+            if($semestres['dados'][$i]->getId() == "2050S2" || $semestres['dados'][$i]->getId() == "2051S1"
+                || $semestres['dados'][$i]->getId() == "2051S2"){
                     $count++;
             }
 
@@ -45,31 +41,34 @@ class SemestreIntegrationTest extends TestCase{
 
         $this->assertEquals(3, $count);
     }
-
+    
     public function testGetSemestreAtual(){
         $semestreController = SemestreController::getInstance();
         
         $this->assertEquals("2051S2", $semestreController->getSemestreAtual()['dados']->getId());
     }
     
+    public function testeCadastraProximoSemestre(){
+        $semestreController = SemestreController::getInstance();
+        
+        $this->assertEquals(200, $semestreController->cadastraProximoSemestre()['status']);
+        $this->assertEquals("2052S1", $semestreController->getSemestreAtual()['dados']->getId());
+    }
+
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
 
-        $conexao = $databaseController->open_database();
-
-        for($i = 0 ; $i<3; $i++){
+        for($i = 0 ; $i<4; $i++){
             $query = "DELETE from semestre ORDER BY id DESC LIMIT 1";
-            $resultado = $conexao->query($query);
+            $resultado = $databaseController->delete($query);
         }
         
 
-    	if($resultado == false)
+    	if($resultado['status'] == 204)
     	{
             $erro = 'Falha ao realizar a Query: ' . $query;
             throw new Exception($erro);
     	}
-
-        $databaseController->close_database();
 
     }
 

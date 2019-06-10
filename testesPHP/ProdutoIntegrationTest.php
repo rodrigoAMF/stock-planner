@@ -1,5 +1,5 @@
 <?php
-
+/*
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
 require_once("controller/DatabaseController.php");
@@ -111,4 +111,4 @@ class ProductIntegrationTest extends TestCase{
 
     }
 
-}
+}*/

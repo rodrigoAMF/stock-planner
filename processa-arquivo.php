@@ -58,8 +58,8 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
     //     $categoriaController->cadastraCategoria($categoria);
     // }
 
-    $categoriaController = CategoriaController::getInstance();
     // Cadastra a categoria 
+    $categoriaController = CategoriaController::getInstance();
     $categoria = new Categoria();
     $categoria->setNome($camposProduto[6]);
     if(!($categoriaController->cadastraCategoria($categoria)['status'] == 200)){
