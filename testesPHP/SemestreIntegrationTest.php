@@ -49,7 +49,7 @@ class SemestreIntegrationTest extends TestCase{
     public function testGetSemestreAtual(){
         $semestreController = SemestreController::getInstance();
         
-        $this->assertEquals("2051S2", $semestreController->getSemestreAtual());
+        $this->assertEquals("2051S2", $semestreController->getSemestreAtual()['dados']->getId());
     }
     
     public static function tearDownAfterClass(): void{

@@ -22,11 +22,16 @@
         <label for="parametroSemestre">Semestre</label>
         <select class="form-control" id="parametroSemestre" name="semestre">
           <?php
-              $semestres = $semestreController->getSemestres();
-              $semestres = array_reverse($semestres);
-              foreach ($semestres as $semestre) {
-                  echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
-              }
+             if($semestreController->getSemestres()['status'] == 200){
+                $semestres = $semestreController->getSemestres()['dados'];
+                $semestres = array_reverse($semestres);
+                foreach ($semestres as $semestre) {
+                    echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
+                }
+            }else{
+                echo "Erro ao buscar os semestres";
+            }
+              
           ?>
         </select>
    </div>

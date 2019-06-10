@@ -20,6 +20,9 @@ class Categoria{
     public function setNome(string $nome) {
         if(!($nome[0] >= '0' && $nome[0] <= '9') && trim($nome) != null) {
             $this->nome = trim($nome);
+            return 1;
+        }else{
+            return -1;
         }
     }
 

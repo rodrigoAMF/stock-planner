@@ -90,10 +90,16 @@
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
                        <option value="<?= $produto->getCategoria()->getNome(); ?>"><?= $produto->getCategoria()->getNome(); ?></option>
                     <?php
+
                         $categorias = $categoriaController->getCategorias();
-                        foreach ($categorias as $categoria) {
-                            if($categoria->getNome() != $produto->getCategoria()->getNome())
-                                echo "<option value = '" . $categoria->getNome()."'>" . $categoria->getNome(). "</option>";
+                        if($categorias['status'] == 200){
+
+                            foreach ($categorias['dados'] as $categoria) {
+                                if($categoria->getNome() != $produto->getCategoria()->getNome())
+                                    echo "<option value = '" . $categoria->getNome()."'>" . $categoria->getNome(). "</option>";
+                            }
+                        }else{
+                            echo "Erro ao buscar as categorias";
                         }
                     ?>
                     </select>
