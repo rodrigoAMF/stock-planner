@@ -51,4 +51,10 @@ class Semestre{
         $this->ano = $ano;
         $this->numero = $numero;
     }
+
+	public function preencheDadosTeste(){
+		$this->setAno(2019);
+		$this->setNumero(2);
+		$this->setId("2019S2");
+	}
 }

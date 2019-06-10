@@ -92,7 +92,7 @@ class CategoriaController{
 
     function cadastraCategoria(Categoria $categoria){
         $resultado = $this->verificaSeNomeExiste($categoria->getNome());
-        
+
         if($resultado['dados'] == 0) {
             $query = "INSERT INTO categoria(nome) values('{$categoria->getNome()}')";
 
