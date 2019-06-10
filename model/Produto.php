@@ -6,13 +6,17 @@ class Produto
 {
 
     private $nome, $identificacao, $posicao, $descricao; // string
-    private $catmat, $quantidade, $estoqueIdeal; // int
+    private $catmat, $quantidade, $estoqueIdeal, $id; // int
+	private $porcentagem; // float
     private $categoria; // Categoria
 
     public function __construct() {
         $this->categoria = new Categoria();
     }
 
+    public function getId(): int{
+    	return $this->id;
+	}
 
     public function getCategoria(): Categoria{
         return $this->categoria;
@@ -45,6 +49,14 @@ class Produto
     public function getEstoqueIdeal(): int{
         return $this->estoqueIdeal;
     }
+
+    public function getPorcentagem(): float{
+    	return $this->porcentagem;
+	}
+
+	public function setId(int $id){
+		$this->id = $id;
+	}
 
     public function setNome(string $nome){
         if($nome != null){
@@ -191,7 +203,12 @@ class Produto
         $this->categoria = $categoria;
     }
 
+	public function setPorcentagem($porcentagem){
+    	$this->porcentagem = $porcentagem;
+	}
+
     public function preencheDadosTeste($categoria){
+		$this->setId(6);
 		$this->setNome("MINI JUMPER");
 		$this->setQuantidade(500);
 		$this->setPosicao("1A");
@@ -200,5 +217,6 @@ class Produto
 		$this->setDescricao("MINI JUMPER");
 		$this->setCatmat(55);
 		$this->setCategoria($categoria);
+		$this->setPorcentagem(0.5);
 	}
 }

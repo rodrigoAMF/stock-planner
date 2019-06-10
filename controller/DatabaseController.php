@@ -80,25 +80,37 @@ class DatabaseController{
     }
 
     public function insert($query){
-        return $this->createUpdateDelete($query);
+		$resultadoQuery = $this->query($query);
+
+		if(!$resultadoQuery) {
+			return $this->erroBD($query);
+		}else{
+			$resultado['status'] = 200;
+			return $resultado;
+		}
     }
 
     public function update($query){
-        return $this->createUpdateDelete($query);
+        return $this->updateDelete($query);
     }
 
     public function delete($query){
-        return $this->createUpdateDelete($query);
+        return $this->updateDelete($query);
     }
 
-    private function createUpdateDelete($query){
+    private function updateDelete($query){
         $resultadoQuery = $this->query($query);
 
         if(!$resultadoQuery) {
             return $this->erroBD($query);
         }else{
-            $resultado['status'] = 200;
-
+        	if(mysqli_affected_rows($this->getConexao()) > 0){
+				$resultado['status'] = 200;
+			}else{
+				$resultado['status'] = 500;
+				$resultado['error_msg'] = "Nenhuma coluna foi afetada pela Query";
+				$resultado['query'] = $query;
+			}
             return $resultado;
         }
     }
