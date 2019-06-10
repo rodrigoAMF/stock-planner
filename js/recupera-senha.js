@@ -1,5 +1,17 @@
 var frm = $('.recupera-senha');
 var email = $('#email');
+var codigoDigitado = $('#codigo');
+var codigoGerado;
+
+$('#btnConfere').on('click',function(){
+    if(codigoDigitado.val() == codigoGerado)
+    {
+        window.location.href = "nova-senha.php";
+    }
+    else{
+        alertify.error('Código errado!');
+    }   
+})
 
 frm.submit(function (e) {
     e.preventDefault();
@@ -8,9 +20,11 @@ frm.submit(function (e) {
 
     if(email.val() == ""){
         erros = true;
+        
     }
-
+    
     if(!erros){
+        localStorage.setItem("emailRecuperacao",email.val());
         var request = $.ajax({
             type: frm.attr('method'),
             url: frm.attr('action'),
@@ -21,6 +35,8 @@ frm.submit(function (e) {
         request.done(function(msg) {
 
             if (msg === "1") {
+                document.getElementById('div1').style.visibility = 'hidden';
+                document.getElementById('div2').style.visibility = 'visible';
                 // criar outro request para criar numero aleatorio e enviar o email
                 var request2 = $.ajax({
                     type: frm.attr('method'),
@@ -30,12 +46,8 @@ frm.submit(function (e) {
                 });
 
                 request2.done(function(msg2){
-                    alert(msg2);
-                    if(msg2 > 0){
-                        alert("E-mail enviado!");
-                    }else{
-                        alert("Erro ao gerar o código!");
-                    }
+                    codigoGerado = msg2;
+                    
                 });
 
                 request2.fail(function(jqXHR, textStatus){
@@ -57,3 +69,6 @@ frm.submit(function (e) {
         $('#feedback-email').text('Digite um email');    
     }
 });
+
+
+

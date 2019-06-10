@@ -28,7 +28,7 @@ require_once("verificaLogoff.php");
                 <h3>Nova senha</h3>
             </div>
         </div>
-        <form  method="post" action='processa-usuario.php' class="formulario-login">
+        <form  class="nova-senha" method="post" class="formulario-login">
             
             <div class="row ">
                 <div class="col-12">
@@ -63,8 +63,7 @@ require_once("verificaLogoff.php");
         </form>
     </div>
     <script src="js/jquery.min.js"></script>
-    <script src="js/alertify.min.js"></script>
-    
-    <script src="js/cadastro-usuario.js"></script>
+    <script src="js/alertify.min.js"></script>    
+    <script src="js/nova-senha.js"></script>
 </body>
 </html>
