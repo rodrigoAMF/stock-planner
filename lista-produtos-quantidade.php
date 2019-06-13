@@ -18,16 +18,21 @@
     </select>
     <button type="button" class="btn btn-secondary" id="confirma_porcentagem">Confirmar</button>-->
 
-
-   <div class="form-group">
-       <label for="parametroFiltro">Filtro</label>
-       <select class="form-control" id="parametroFiltro" name="filtro">
-             <option value="1">Nome</option>
-       </select>
+  <div class="form-group">
+      <label for="parametroSemestre">Semestre</label>
+      <select class="form-control" id="parametroSemestre" name="semestre">
+        <?php
+            $semestres = $semestreController->getSemestres();
+            $semestres = array_reverse($semestres);
+            foreach ($semestres as $semestre) {
+                echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
+            }
+        ?>
+      </select>
   </div>
 
     <div class="form-group"> 
-        <label for="busca">Busca</label>
+        <label for="busca">Busca por Nome</label>
         <input name="busca" type="text" class="form-control" id="busca" aria-describedby="emailHelp" placeholder="Busca">
     </div>
         <!--<div class="col-md-8 col-xl-12 col-sm-2 col-2 col-lg-12">-->
@@ -46,7 +51,7 @@
                       $semestres = array_reverse($semestres);
                       for($i = 3; $i >= 0; $i--)
                       {
-                        echo '<th class="ordenavel sticky semestres" id="borda">';
+                        echo '<th class="sticky semestres" id="borda">';
                         echo $semestres[$i]->getId();  
                         echo '</th>';
                       }
@@ -57,8 +62,10 @@
 
                 <?php
                     $produtoController = ProdutoController::getInstance();
+                    $semestres = $semestreController->getSemestres();
+                    $semestres = array_reverse($semestres);
 
-                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8);
+                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0]);
 
                     echo $produtos;
                 ?>

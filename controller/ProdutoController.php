@@ -728,7 +728,7 @@ class ProdutoController{
         return $temp;
     }  
 
-    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
+    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre){
         $conexao = $this->databaseController->open_database();
         $quantidades = Array();
 
