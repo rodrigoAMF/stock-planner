@@ -23,7 +23,6 @@
        <label for="parametroFiltro">Filtro</label>
        <select class="form-control" id="parametroFiltro" name="filtro">
              <option value="1">Nome</option>
-             <option value="7">Quantidade</option>
        </select>
   </div>
 
@@ -40,53 +39,32 @@
                     <th colspan="4">Quantidade</th>
                   </tr>
                   <tr>
+
                     <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>
-                    <th class="ordenavel sticky" id="borda">
-                       <?php
-                          $semestres = $semestreController->getSemestres();
-                          $semestres = array_reverse($semestres);
-                              echo $semestres[0]->getId();     
-                      ?>
-                      <img src="img/setaBaixo.png" id="setaQuantidade">
-                    </th>
-                    <th class="ordenavel sticky" id="borda">
-                      <?php
-                          $semestres = $semestreController->getSemestres();
-                          $semestres = array_reverse($semestres);
-                              echo $semestres[1]->getId();     
-                      ?>
-                      <img src="img/setaBaixo.png" id="setaQuantidade">
-                    </th>
-                    <th class="ordenavel sticky" id="borda">
-                      <?php
-                          $semestres = $semestreController->getSemestres();
-                          $semestres = array_reverse($semestres);
-                              echo $semestres[2]->getId();     
-                      ?>
-                      <img src="img/setaBaixo.png" id="setaQuantidade">
-                    </th>
-                    <th class="ordenavel sticky" id="borda">
-                      <?php
-                          $semestres = $semestreController->getSemestres();
-                          $semestres = array_reverse($semestres);
-                              echo $semestres[3]->getId();     
-                      ?>
-                      <img src="img/setaBaixo.png" id="setaQuantidade">
-                    </th>
+                    <?php
+                      $semestres = $semestreController->getSemestres();
+                      $semestres = array_reverse($semestres);
+                      for($i = 3; $i >= 0; $i--)
+                      {
+                        echo '<th class="ordenavel sticky semestres" id="borda">';
+                        echo $semestres[$i]->getId();  
+                        echo '</th>';
+                      }
+                    ?>
                   </tr>
               </thead>
               <tbody>
 
-              <?php
-                  $produtoController = ProdutoController::getInstance();
+                <?php
+                    $produtoController = ProdutoController::getInstance();
 
-                  $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8);
+                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8);
 
-                  echo $produtos;
-              ?>
+                    echo $produtos;
+                ?>
 
-                  </tbody>
-              </table>
+              </tbody>
+            </table>
         </div>
 </div>
 

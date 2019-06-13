@@ -6,7 +6,6 @@ body {
 $corCabecalhoTabela: #526ba0;
 
 table thead tr{
-    background: $corCabecalhoTabela;
     color:#fff;
 }
 
@@ -15,21 +14,8 @@ table tr{
     background-color: white;
 }
 
-.ordenavel:hover
-{
-    background: darken($corCabecalhoTabela, 5%);
-    cursor:pointer;
-}
-
 table tbody tr:hover{
     cursor:pointer;
-    background:#F2F2F2;
-}
-
-.sticky{
-    position: sticky !important;
-    top: 0 !important;
-    background:#526ba0 !important;
 }
 
 .celulaEmEdicao input[type=text]{

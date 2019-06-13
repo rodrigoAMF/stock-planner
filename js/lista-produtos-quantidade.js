@@ -32,7 +32,8 @@ $("#busca").on("keyup", function(event) {
 
 $(".ordenavel").on("click", function(event)
 {
-	let semestre = $("#parametroSemestre").text();
+	let semestre = $(".semestres").text();
+	let semestreIndividual = semestre.split(" ");
 	let nomeCampo = $(this).text();
 
 	if (nomeCampo != "")
@@ -68,7 +69,5 @@ $(".ordenavel").on("click", function(event)
 		request.fail(function(jqXHR, textStatus) {
 			alertify.error('Falha ao ordenar produtos');
 		});
-	}
-	
-	
+	}	
 });

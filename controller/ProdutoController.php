@@ -58,6 +58,7 @@ class ProdutoController{
     	6- estoque ideal
     	7- quantidade
     	8, default- crit
+        
     	*/
     	if(abs($parametro) == 1){
     		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
@@ -236,8 +237,6 @@ class ProdutoController{
         }
 
         $this->databaseController->close_database();
-
-        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
 
         if($resultado->num_rows > 0){
             return 1;
@@ -694,21 +693,51 @@ class ProdutoController{
         }
     }
 
-    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
+     function agruparProdutosIguais($dados)
+    {
         $semestreController = SemestreController::getInstance();
-        $semestreAtual = $semestreController->getSemestreAtual();
+        $semestres = $semestreController->getSemestres();
+        $semestres = array_reverse($semestres);
+        $resultado = Array();
+        $temp = Array();
+
+        for ($i = 0; $i < sizeof($dados); $i++) {
+            for ($j = 3; $j >= 0; $j--) 
+            { 
+                if($dados[$i]['id_semestre'] == $semestres[$j]->getId())
+                {                 
+                    $resultado[$dados[$i]['nome']][$j] = $dados[$i]['quantidade'];
+                }
+                else
+                {
+                    if(!isset($resultado[$dados[$i]['nome']][$j]))
+                    {
+                        $resultado[$dados[$i]['nome']][$j] = -1;
+                    }
+                }
+            }
+        }
+        $usados = Array();
+        for ($i = 0; $i < sizeof($dados); $i++) {
+            if(!isset($usados[$dados[$i]['nome']])){
+                $temp[$i] = $resultado[$dados[$i]['nome']];
+                $temp[$i]['nome'] = $dados[$i]['nome'];
+                $usados[$dados[$i]['nome']] = 1;
+            }
+        }
+        return $temp;
+    }  
+
+    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
         $conexao = $this->databaseController->open_database();
+        $quantidades = Array();
 
         if ($busca == null) {
             $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto";
         }
         else
         {
-            switch($filtro){
-                case 1:
-                    $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto AND produtos.nome LIKE '%" . $busca . "%'";
-                break;
-            }
+            $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto AND produtos.nome LIKE '%" . $busca . "%'";
         }
 
         $resultado = $conexao->query($query);
@@ -721,6 +750,7 @@ class ProdutoController{
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
+
         $this->databaseController->close_database();
 
         if($busca == null && $filtro == null){
@@ -729,14 +759,26 @@ class ProdutoController{
 
         $produtos = "";
         
-        foreach ($dados as $dado) {
+        $quantidades = $this->agruparProdutosIguais($dados);
+
+        foreach ($quantidades as $produto) {
             $produtos .= "\t\t<tr>\n";
-            $produtos .= "\t\t\t<td>{$dado['nome']}</td>\n";
+            $produtos .= "\t\t\t<td>{$produto['nome']}</td>\n";
+            for ($i = 3; $i >= 0; $i--) { 
+                if($produto[$i] != -1)
+                {
+                    $produtos .= "\t\t\t<td>{$produto[$i]}</td>\n";
+                }
+                else
+                {
+                    $produtos .= "\t\t\t<td>-</td>\n";
+                }
+            }
             $produtos .= "\t\t</tr>\n";
         }
-
         if($produtos != ""){
             return $produtos;
         }
     }
+
 }
