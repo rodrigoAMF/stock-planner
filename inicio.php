@@ -51,7 +51,7 @@
         </div>
 			</div>
 		</div>
-    <br>/
+    <br>
     <nav class="navbar navbar-expand-lg">
       <div class="fonte-barra">
         Configurações
@@ -77,7 +77,7 @@
             <div class="col-xl-3 col-md-3 col-sm-3 col-3 col-lg-3 posicao-elemento">
               <a href="cadastrar-usuario.php">
                 <button>
-                  <img src="img/cadastrar1.png">
+                  <img width="80px" height="80px" src="img/adicionar-usuário.png">
                   <br>
                   <div class="textosBotao">
                     Cadastrar Usuário

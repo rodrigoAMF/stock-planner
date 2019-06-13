@@ -1,6 +1,5 @@
-Estar na pasta raiz do stock-planner
-
 Instalar composer antes! https://getcomposer.org/
+Entrar na pasta raiz do projeto e dar o comando composer update
 
 .\vendor\phing\phing\bin\phing
 

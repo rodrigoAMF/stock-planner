@@ -18,8 +18,7 @@ class CategoriaIntegrationTest extends TestCase{
         $resultado = $conexao->query($query);
         $query = "INSERT INTO categoria(nome) values('meia')";
         $resultado = $conexao->query($query);
-
-
+        
         if($resultado == false)
         {
             $erro = 'Falha ao realizar a Query: ' . $query;
@@ -75,7 +74,7 @@ class CategoriaIntegrationTest extends TestCase{
             $query = "DELETE from categoria ORDER BY id DESC LIMIT 1";
             $resultado = $conexao->query($query);
         }
-        
+
 
     	if($resultado == false)
     	{

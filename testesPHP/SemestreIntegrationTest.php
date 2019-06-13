@@ -30,6 +30,11 @@ class SemestreIntegrationTest extends TestCase{
 
     }
 
+    public function testCadastraSemestre(){
+          $semestreController = SemestreController::getInstance();
+          $this->assertEquals(true, $semestreController->cadastraSemestre());
+    }
+
     public function testGetSemestres(){
         $semestreController = SemestreController::getInstance();
         $count = 0;
@@ -48,20 +53,22 @@ class SemestreIntegrationTest extends TestCase{
 
     public function testGetSemestreAtual(){
         $semestreController = SemestreController::getInstance();
-        
-        $this->assertEquals("2051S2", $semestreController->getSemestreAtual());
+
+        $this->assertEquals("2052S1", $semestreController->getSemestreAtual());
     }
-    
+
+
+
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
 
         $conexao = $databaseController->open_database();
 
-        for($i = 0 ; $i<3; $i++){
+        for($i = 0 ; $i<4; $i++){
             $query = "DELETE from semestre ORDER BY id DESC LIMIT 1";
             $resultado = $conexao->query($query);
         }
-        
+
 
     	if($resultado == false)
     	{

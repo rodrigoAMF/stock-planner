@@ -174,14 +174,14 @@ class ProdutoController{
     function getProdutoPorId($id){
         $conexao = $this->databaseController->open_database();
 
-        
+        $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
         $resultado = $conexao->query($query);
 
-    	if($resultado == false)
-    	{
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-    	}
+      	if($resultado == false)
+      	{
+              $erro = 'Falha ao realizar a Query: ' . $query;
+              throw new Exception($erro);
+      	}
 
         $dados = $resultado->fetch_all(MYSQLI_ASSOC);
 
@@ -268,7 +268,7 @@ class ProdutoController{
             return 0;
         }
     }
-    
+
     function verificaSeProdutoExisteEmSemestreAnterior($produto){
         $semestreController = SemestreController::getInstance();
         $conexao = $this->databaseController->open_database();
@@ -600,7 +600,7 @@ class ProdutoController{
 
     function sortListaProdutosCadastrados($produtos, $parametro){
 
-        if($parametro == null) 
+        if($parametro == null)
             $parametro = 8;
         /*
         1- nome
@@ -613,7 +613,7 @@ class ProdutoController{
         8, default- crit
         */
         if(abs($parametro) == 1){
-            for($i=1;$i < sizeof($produtos);$i++) 
+            for($i=1;$i < sizeof($produtos);$i++)
                 for($j=0;$j < sizeof($produtos) -$i;$j++){
                     if($parametro > 0){
                         if(strtoupper($produtos[$j]['nome']) > strtoupper($produtos[$j+1]['nome'])){
@@ -630,7 +630,7 @@ class ProdutoController{
                     }
             }
         }
-        
+
         if(abs($parametro) == 8){
             $parametro /= 8;
             // for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
@@ -678,7 +678,7 @@ class ProdutoController{
         }
 
         $produtos = "";
-        
+
         foreach ($dados as $dado) {
             $produtos .= "\t\t<tr>\n";
             $produtos .= "\t\t\t<td class='nomeNaoEditavel'>{$dado['nome']}</td>\n";

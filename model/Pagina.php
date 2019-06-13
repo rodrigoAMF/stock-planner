@@ -1,7 +1,7 @@
 <?php
 
 require_once("Config.php");
-require_once ("verificaLogin.php");
+require_once("verificaLogin.php");
 
 class Pagina{
 
