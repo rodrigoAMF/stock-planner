@@ -2,16 +2,12 @@
     require_once("controller/ProdutoController.php");
 
     $busca = $_GET['busca'];
-    $filtro = $_GET['filtro'];
-    $parametroOrdenacao = $_GET['parametroOrdenacao'];
 
     $busca = ($busca == "") ? null: $busca;
-    $filtro = ($filtro == "") ? null: $filtro;
-    $parametroOrdenacao = ($parametroOrdenacao == "") ? null: $parametroOrdenacao;
 
     $produtoController = ProdutoController::getInstance();
-
-    $produtos = $produtoController->getProdutosCadastrados($busca, $filtro, $parametroOrdenacao);
-
-    echo $produtos;
+    // Falta o parametro de ordenação pelo nome
+    $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual($busca);
+    
+    echo $produtoController->geraDadosParaTabelaProdutosNaoCadastradosNoSemestreAtual($produtos['dados']);
 ?>

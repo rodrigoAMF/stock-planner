@@ -10,24 +10,24 @@
 
     $feedbacks = Array();
 
-    $feedback = $produto->setNome($_POST['nome']);
+    $feedback = $produto->setNome($_GET['nome']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setIdentificacao($_POST['identificacao']);
+    $feedback = $produto->setIdentificacao($_GET['identificacao']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setCatmat($_POST['catmat']);
+    $feedback = $produto->setCatmat($_GET['catmat']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setQuantidade($_POST['quantidade']);
+    $feedback = $produto->setQuantidade($_GET['quantidade']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setEstoqueIdeal($_POST['estoqueIdeal']);
+    $feedback = $produto->setEstoqueIdeal($_GET['estoqueIdeal']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setPosicao($_POST['posicao']);
+    $feedback = $produto->setPosicao($_GET['posicao']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setDescricao($_POST['descricao']);
+    $feedback = $produto->setDescricao($_GET['descricao']);
     array_push($feedbacks, $feedback);
 
-    $semestre = $_POST['semestre'];
+    $semestre = $_GET['semestre'];
 
-    $produto->getCategoria()->setNome($_POST['categoria']);
+    $produto->getCategoria()->setNome($_GET['categoria']);
 
     $json['status'] = 1;
 
@@ -48,18 +48,30 @@
 
     //$resultadoCadastro = 1;
 
+    //print_r($json);
+    
     if($json['status'] !== -1 ){
-        $resultadoCadastro = $produtoController->cadastraProduto($produto, $semestre);
+        
+        //$resultadoCadastro = $produtoController->cadastraProduto($produto);
+        print_r($produtoController->cadastraProduto($produto));
+
+        //if($resultadoCadastro['status'] == 200){
+            // Produto com nome duplicado
+            // if($resultadoCadastro['dados'] == -2){
+            //     $json['status'] = -2;
+            // }else if($resultadoCadastro['dados'] == -3){
+            //     // Produto com identificação duplicada
+            //     $json['status'] = -3;
+            // }
+        // }else{
+        //     $json['status'] = -1;
+        // }
     }
 
-    // Produto com nome duplicado
-    if($resultadoCadastro == -2){
-        $json['status'] = -2;
-    }else if($resultadoCadastro == -3){
-        // Produto com identificação duplicada
-        $json['status'] = -3;
-    }
+    //print_r($resultadoCadastro);
 
-    echo json_encode($json, JSON_UNESCAPED_UNICODE);
+    
+
+    //echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
 ?>

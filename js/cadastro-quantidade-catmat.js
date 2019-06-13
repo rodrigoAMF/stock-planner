@@ -2,14 +2,13 @@ let clickNome = false;
 
 $("#busca").on("keyup", function(event) {
 	let val = $(this).val();
-	let filtro = $("#parametroFiltro").val().toUpperCase();
 	let semestre = $("#parametroSemestre").text();
 	//alert(val);
 	if(val != ""){
 		val = val.toUpperCase();
 	}
 
-	let url = "get-produto-cadastrado.php?busca=" + val + "&filtro=" + filtro + "&parametroOrdenacao=";
+	let url = "get-produto-cadastrado.php?busca=" + val;
 	//alert(url);
 	var request = $.ajax({
 		url: url,
@@ -41,7 +40,7 @@ $(".ordenavel").on("click", function(event)
 		nomeCampo = nomeCampo.toUpperCase();
 	}
 
-	let url = "get-produto-cadastrado.php?busca=&filtro=&parametroOrdenacao=";
+	let url = "get-produto-cadastrado.php?busca=";
 
 	if(nomeCampo == "NOME"){
 		if(clickNome == false){

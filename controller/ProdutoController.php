@@ -274,7 +274,7 @@ class ProdutoController{
 		return $resultado;
     }
 
-    function cadastroProduto($produto){
+    function cadastraProduto($produto){
         $semestreController = SemestreController::getInstance();
 
 		$resultado = $semestreController->getSemestreAtual();
@@ -284,13 +284,13 @@ class ProdutoController{
         $semestreAtual = $resultado['dados'];
 
         $resultado = $this->verificaSeProdutoExisteEmSemestreAnterior($produto);
-		if($resultado['status'] != 200){
+		if($resultado['status'] == 500){
 			return $resultado;
 		}
 		$produtoCadastradoEmSemestreAnterior = $resultado['dados'];
 
         $resultado = $this->verificaSeProdutoExisteNoSemestreAtual($produto);
-		if($resultado['status'] != 200){
+		if($resultado['status'] == 500){
 			return $resultado;
 		}
 		$produtoCadastradoNoSemestreAtual = $resultado['dados'];
@@ -359,9 +359,9 @@ class ProdutoController{
 			}
         }else{
     	    if($duplicadoNome == 1)
-				$resultado['dados'] = -2;
+				$resultado['dados'] = -2; // Nome duplicado
     	    else
-				$resultado['dados'] = -3;
+				$resultado['dados'] = -3; // Identificação duplicada
         }
 
 		return $resultado;
@@ -369,6 +369,11 @@ class ProdutoController{
 
     function getProdutos($busca, $filtro, $parametroOrdenacao, $semestre){
 		$query = "";
+		if($semestre == null){
+			$semestreController = SemestreController::getInstance();
+			$semestre = $semestreController->getSemestreAtual();
+		}
+
     	if ($busca == null) {
     		$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id";
     	}

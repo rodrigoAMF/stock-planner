@@ -32,12 +32,12 @@
     </div>
   </div>
 
-   <div class="form-group">
+   <!-- <div class="form-group">
        <label for="parametroFiltro">Filtro</label>
        <select class="form-control" id="parametroFiltro" name="filtro">
              <option value="1">Nome</option>             
        </select>
-  </div>
+  </div> -->
 
     <div class="form-group">
         <label for="busca">Busca</label>
@@ -56,9 +56,13 @@
               <tbody>
               <?php
                   $produtoController = ProdutoController::getInstance();
-                  $produtos = $produtoController->getProdutosCadastrados(null,null,8);
+                  $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual(null);
+                  if($produtos['status'] == 200){
+                    echo $produtoController->geraDadosParaTabelaProdutosNaoCadastradosNoSemestreAtual($produtos['dados']);
+                  } else{
+                    echo "Erro ao carregar os produtos"; 
+                  }
 
-                  echo $produtos;
               ?>
               </tbody>
               </table>

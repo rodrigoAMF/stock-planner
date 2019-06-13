@@ -11,7 +11,7 @@
 
     $id = $_GET['id'];
 
-    $produto = $produtoController->getProdutoPorId($id);
+    $produto = $produtoController->getProdutoPorId($id)['dados'];
 ?>
 
 <div class="container">

@@ -79,7 +79,6 @@ frm.submit(function (e) {
         request.done(function(msg) {
             var obj = jQuery.parseJSON(msg);
 
-            console.log(obj.testando);
 
             if (obj.status === 1) {
                 quantidade.removeClass('is-valid is-invalid');
