@@ -39,7 +39,7 @@ class Usuario{
     }
 
     public function setId($id) {
-    	$this->setId($id);
+    	$this->id = $id;
 	}
 
     public function setNome($nome){
