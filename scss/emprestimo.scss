@@ -1,0 +1,35 @@
+#cor-botao input {
+	background-color: hsl(210, 33%, 25%) !important;
+    border: #2a3f54;
+    float: right;
+}
+.texto-titulo{
+    margin-bottom: 10px;
+}
+body {
+	background-color: #dcdcdc;
+}
+
+$corCabecalhoTabela: #526ba0;
+
+table thead tr{
+    color:#fff;
+}
+
+table tr{
+    text-align: center;
+    background-color: white;
+}
+
+table tbody tr:hover{
+    cursor:pointer;
+}
+
+.celulaEmEdicao input[type=text]{
+    background: darken(#F2F2F2, 5%);
+
+}
+
+.check_circle_outline{
+    color: green;
+}
