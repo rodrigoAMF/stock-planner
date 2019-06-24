@@ -23,7 +23,9 @@
         </div>
     
         <div class="col-6 col-md-6 col-xl-6 col-sm-6  col-lg-6" id="cor-botao">
-            <input class="btn btn-primary" type="button" value="Emprestar">
+            <a href="formulario-emprestimo.php">
+                <input class="btn btn-primary" type="button" value="Emprestar">
+            </a>
         </div>
     </div>
    <div class="form-group">
