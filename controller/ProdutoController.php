@@ -693,18 +693,20 @@ class ProdutoController{
         }
     }
 
-     function agruparProdutosIguais($dados)
+     function agruparProdutosIguais($dados, $quantidadeSemestre, $filtroSemestre)
     {
-        $semestreController = SemestreController::getInstance();
-        $semestres = $semestreController->getSemestres();
-        $semestres = array_reverse($semestres);
+        //$semestreController = SemestreController::getInstance();
+        //$semestres = $semestreController->getSemestres();
+        
+        $semestres = array_reverse($filtroSemestre);
+        print_r($semestres);
         $resultado = Array();
         $temp = Array();
 
         for ($i = 0; $i < sizeof($dados); $i++) {
-            for ($j = 3; $j >= 0; $j--) 
+            for ($j = $quantidadeSemestre; $j >= 0; $j--) 
             { 
-                if($dados[$i]['id_semestre'] == $semestres[$j]->getId())
+                if($dados[$i]['id_semestre'] == $semestres[$j])
                 {                 
                     $resultado[$dados[$i]['nome']][$j] = $dados[$i]['quantidade'];
                 }
@@ -728,10 +730,10 @@ class ProdutoController{
         return $temp;
     }  
 
-    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao){
+    function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre, $filtroSemestre){
         $conexao = $this->databaseController->open_database();
         $quantidades = Array();
-
+        $aux = Array();
         if ($busca == null) {
             $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto";
         }
@@ -759,12 +761,13 @@ class ProdutoController{
 
         $produtos = "";
         
-        $quantidades = $this->agruparProdutosIguais($dados);
-
+        $quantidades = $this->agruparProdutosIguais($dados, $quantidadeSemestre, $filtroSemestre);
+        $posicao = 0;
         foreach ($quantidades as $produto) {
+            
             $produtos .= "\t\t<tr>\n";
             $produtos .= "\t\t\t<td>{$produto['nome']}</td>\n";
-            for ($i = 3; $i >= 0; $i--) { 
+            for ($i = $quantidadeSemestre; $i >= 0; $i--) { 
                 if($produto[$i] != -1)
                 {
                     $produtos .= "\t\t\t<td>{$produto[$i]}</td>\n";
@@ -775,9 +778,12 @@ class ProdutoController{
                 }
             }
             $produtos .= "\t\t</tr>\n";
+            $aux[$posicao] = $produtos;
+            $produtos ="";
+            $posicao++;
         }
-        if($produtos != ""){
-            return $produtos;
+        if(sizeof($aux) >0){
+            return $aux;
         }
     }
 
