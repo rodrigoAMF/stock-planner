@@ -6,11 +6,11 @@ require_once("controller/UsuarioController.php");
 $usuario = new Usuario();
 
 $email = $_POST['email'];
-$senha = MD5($_POST['senha']);
+$senha = $_POST['senha'];
 
 $usuarioController = UsuarioController::getInstance();
 
-$loginSucesso = $usuarioController->verificarLogin($email, $senha);
+$loginSucesso = $usuarioController->verificarLogin($email, $senha)['status'];
 
-echo $loginSucesso;
+print_r($loginSucesso) ;
 

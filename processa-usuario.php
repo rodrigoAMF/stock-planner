@@ -11,6 +11,7 @@
     $senhaSemCrip = $_POST['senha'];
     $confirmaSenha = $_POST['senhaConfirma'];
 
+    
 
     $feedback = $usuario->setNome($nome);
     array_push($feedbacks, $feedback);
@@ -18,12 +19,13 @@
     array_push($feedbacks, $feedback);
     $feedback = $usuario->setEmail($email);
     array_push($feedbacks, $feedback);
-    $feedback = $usuario->setSenha($senhaSemCrip,$confirmaSenha);
+    $feedback = $usuario->setSenha($senhaSemCrip);
     array_push($feedbacks, $feedback);
 
     $json['status'] = 1;
 
-    for ($i=0, $cont = 0; $i < sizeof($feedbacks); $i++) {
+    $cont = 0;
+    for ($i=0; $i < sizeof($feedbacks); $i++) {
         if($i == 0){
             $json['status'] = $feedbacks[$i]['status'];
         }else if($feedbacks[$i]['status'] == -1){
@@ -40,7 +42,7 @@
     $usuarioController = UsuarioController::getInstance();
 
     if($json['status'] !== -1 ){
-        $resultadoCadastro = $usuarioController->cadastraUsuario($usuario);
+        $resultadoCadastro = $usuarioController->cadastraUsuario($usuario)['dados'];
     }
 
     if($resultadoCadastro == -2){

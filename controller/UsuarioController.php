@@ -145,13 +145,16 @@ class UsuarioController{
 		if (strpos($login, '@') !== false) {
 			$tipoLogin = 'email';
 		}
+
     	if($tipoLogin == "email"){
 			$query = "SELECT * FROM usuarios WHERE email = '{$login}' AND senha = '{$senha}'";
 		}else{
 			$query = "SELECT * FROM usuarios WHERE username = '{$login}' AND senha = '{$senha}'";
 		}
 
+
 		$resultado = $this->databaseController->select($query);
+
 
 		if ($resultado['status'] == 200) {
 			$resultado['dados'] = $this->mapearUsuariosEmArray($resultado['dados'])[0];

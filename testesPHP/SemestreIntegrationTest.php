@@ -9,6 +9,7 @@ class SemestreIntegrationTest extends TestCase{
 
     public static function setUpBeforeClass(): void{
         $databaseController = new DatabaseController();
+        
         $query = "INSERT INTO semestre(id,ano,numero) values('2050S2',2050,2)";
         $resultado = $databaseController->insert($query);
 
