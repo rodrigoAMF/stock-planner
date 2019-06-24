@@ -65,7 +65,7 @@
                     $semestres = $semestreController->getSemestres();
                     $semestres = array_reverse($semestres);
 
-                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0]);
+                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0],null,null);
 
                     echo $produtos;
                 ?>

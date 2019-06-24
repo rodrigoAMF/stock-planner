@@ -4,7 +4,7 @@ let clickQuantidade = false;
 $("#parametroSemestre").on("change", function(){
 	
 	let semestre = $(this).val();
-	alert(semestre);
+	//alert(semestre);
 	let filtro = 'NOME';
 	let val = $("#busca").val();
 
@@ -20,7 +20,9 @@ $("#parametroSemestre").on("change", function(){
 	});
 
 	request.done(function(msg) {
-		alert(msg)
+		//console.log(msg);
+		var obj = jQuery.parseJSON(msg);
+		console.log(obj);
 		$('table tbody').remove();
 		$('table').append("<tbody>");
 		$('table tbody').append(msg);

@@ -12,16 +12,11 @@
     $parametroOrdenacao = $_GET['parametroOrdenacao'];
     $semestre = $_GET['semestre'];
     $cont = 0;
-    // $semestreNovo = explode('"', $semestre);
-    // $semestre = $semestreNovo[2];
 
     for ($i=0; $i < sizeof($semestres); $i++)
     { 
         if($semestres[$i]->getId() != $semestre)
         {
-            echo $semestres[$i]->getId() . "<br>";
-            echo $semestre . "<br>";
-
             array_push($filtroSemestre, $semestres[$i]->getId());
         }
         else
@@ -30,8 +25,11 @@
             break;
         }
     }
-    echo $cont;
-    print_r($filtroSemestre);
+    $quantidadeSemestre = (sizeof($filtroSemestre) - 1);
+    if($quantidadeSemestre >= 4)
+    {
+        $quantidadeSemestre = 3;
+    }
 
     $busca = ($busca == "") ? null: $busca;
     $filtro = ($filtro == "") ? null: $filtro;
@@ -39,7 +37,9 @@
 
     $produtoController = ProdutoController::getInstance();
 
-    $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre);
+    $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre,$filtroSemestre);
 
-    echo $produtos;
+    $json['produtos'] = $produtos;
+    $json['semestre']  = $filtroSemestre;
+    echo json_encode($json);
 ?>
