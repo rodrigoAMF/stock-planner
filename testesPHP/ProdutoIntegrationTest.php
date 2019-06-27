@@ -1,5 +1,5 @@
 <?php
-/*
+
 require_once("model/Produto.php");
 require_once("controller/ProdutoController.php");
 require_once("controller/DatabaseController.php");
@@ -9,21 +9,17 @@ class ProductIntegrationTest extends TestCase{
 
     public static function setUpBeforeClass(): void{
         $databaseController = new DatabaseController();
-        $conexao = $databaseController->open_database();
 
         $query = "INSERT INTO categoria(nome) values('cartazquadro')";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->insert($query);
 
         $query = "INSERT INTO semestre(id,ano,numero) values('2050S2',2050,2)";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->insert($query);
 
-        if($resultado == false)
-        {
+        if($resultado['status'] == 204){
             $erro = 'Falha ao realizar a Query: ' . $query;
             throw new Exception($erro);
         }
-
-        $databaseController->close_database();
 
     }
 
@@ -32,7 +28,7 @@ class ProductIntegrationTest extends TestCase{
         $produtoController = ProdutoController::getInstance();
 
         $produto->setNome("mouse");
-        $produto->setIdentificacao("159");
+        $produto->setIdentificacao("1695859");
         $produto->setCatmat("125");
         $produto->setQuantidade("122");
         $produto->setEstoqueIdeal("122");
@@ -41,27 +37,25 @@ class ProductIntegrationTest extends TestCase{
         $produto->getCategoria()->setNome("cartazquadro");
 
         //Verifica se esta cadastrando corretamente um produto
-        $this->assertEquals(1, $produtoController->cadastraProduto($produto, "2050S2"));
+        $this->assertEquals(1, $produtoController->cadastraNovoProduto($produto)['dados']);
 
         //verifica se cadastra nome duplicado
-        $this->assertEquals(-2, $produtoController->cadastraProduto($produto, "2050S2"));
+        $this->assertEquals(-2, $produtoController->cadastraNovoProduto($produto)['dados']);
 
         //verifica se esta cadastrando produto com id duplicado 
         $produto->setNome("garrafinha");
-        $this->assertEquals(-3, $produtoController->cadastraProduto($produto, "2050S2"));
+        $this->assertEquals(-3, $produtoController->cadastraNovoProduto($produto)['dados']);
 
     }
 
     public function testEditarProduto(){
         $produtoController = ProdutoController::getInstance();
-        $databaseController = new DatabaseController();
 
-        $conexao = $databaseController->open_database();
-
-        $id = $produtoController->getIDUltimoProdutoCadastrado($conexao);
+        $id = $produtoController->getIDUltimoProdutoCadastrado()['dados'];
 
         $produto = new Produto();
 
+        $produto->setId($id);
         $produto->setNome("celular");
         $produto->setIdentificacao("321");
         $produto->setCatmat("125");
@@ -72,7 +66,7 @@ class ProductIntegrationTest extends TestCase{
         $produto->getCategoria()->setNome("cartazquadro");
 
         //Verifica se o produto esta sendo editado corretamente
-        $this->assertEquals(true, $produtoController->editarProduto($produto, $id));
+        $this->assertEquals(1, $produtoController->editarProduto($produto, "2050S2")['dados']);
 
         //Verifica se os campos do produto foram editados
         $this->assertEquals($produto, $produtoController->getProdutoPorId($id));
@@ -81,34 +75,27 @@ class ProductIntegrationTest extends TestCase{
 
     public function testExcluirProduto(){
         $produtoController = ProdutoController::getInstance();
-        $databaseController = new DatabaseController();
 
-        $conexao = $databaseController->open_database();
 
-        $id = $produtoController->getIDUltimoProdutoCadastrado($conexao);
-        $this->assertEquals(true, $produtoController->excluirProduto($id));
+        $id = $produtoController->getIDUltimoProdutoCadastrado();
+        $this->assertEquals(1, $produtoController->excluirProduto($id)['dados']);
 
     }
 
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
 
-        $conexao = $databaseController->open_database();
-
         $query = "DELETE from categoria ORDER BY id DESC LIMIT 1";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->delete($query);
 
         $query = "DELETE from semestre ORDER BY id DESC LIMIT 1";
-        $resultado = $conexao->query($query);
+        $resultado = $databaseController->delete($query);
 
-    	if($resultado == false)
-    	{
+    	if($resultado['status'] == 204){
             $erro = 'Falha ao realizar a Query: ' . $query;
             throw new Exception($erro);
     	}
 
-        $databaseController->close_database();
-
     }
 
-}*/
+}
