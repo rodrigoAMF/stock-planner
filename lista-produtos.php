@@ -28,8 +28,6 @@
                 foreach ($semestres as $semestre) {
                     echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
                 }
-            }else{
-                echo "Erro ao buscar os semestres";
             }
               
           ?>
@@ -75,9 +73,9 @@
               <?php
                   $produtoController = ProdutoController::getInstance();
 
-                  $produtos = $produtoController->getProdutos(null,null, 8, null);
-
-                  echo $produtos;
+                  $produtos = $produtoController->getProdutos(null,null, 8, null)['dados'];
+                  
+                  echo $produtoController->geraDadosParaTabelaProdutos($produtos,null);
               ?>
 
                   </tbody>

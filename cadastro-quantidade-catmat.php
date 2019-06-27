@@ -59,10 +59,7 @@
                   $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual(null);
                   if($produtos['status'] == 200){
                     echo $produtoController->geraDadosParaTabelaProdutosNaoCadastradosNoSemestreAtual($produtos['dados']);
-                  } else{
-                    echo "Erro ao carregar os produtos"; 
-                  }
-
+                  } 
               ?>
               </tbody>
               </table>
