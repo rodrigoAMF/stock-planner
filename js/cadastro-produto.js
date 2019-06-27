@@ -77,6 +77,8 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
+            console.log(msg);
+            
             var obj = jQuery.parseJSON(msg);
 
 
@@ -141,6 +143,7 @@ frm.submit(function (e) {
                 quantidade.removeClass("is-invalid").addClass("is-valid");
                 $('#feedback-quantidade').removeClass('feedback invalid-feedback').addClass('valid-feedback');
                 $('#feedback-quantidade').text('Okay!');
+                
                 for(let i = 0; i < obj.erros.length; i++){
                     if(obj.erros[i]['nome_do_campo'] == 'nome'){
                         nome.removeClass("is-valid").addClass("is-invalid");
