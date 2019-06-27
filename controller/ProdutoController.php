@@ -329,13 +329,14 @@ class ProdutoController{
         }
     }
 
-    function cadastraNovoProduto($produto){
+    function cadastraNovoProduto($produto) {
 		$semestreController = SemestreController::getInstance();
 		$semestreAtual = $semestreController->getSemestreAtual();
+		$semestreAtual = $semestreAtual['dados'];
     	$duplicadoNome = $this->verificaSeProdutoExistePorNome($produto->getNome());
         $duplicadoIdentificacao = $this->verificaSeProdutoExistePorIdentificacao($produto->getIdentificacao());
 
-    	if($duplicadoNome == 0 && $duplicadoIdentificacao == 0)
+    	if($duplicadoNome['status'] == 204 && $duplicadoIdentificacao['status'] == 204)
         {
             $query = "INSERT INTO produtos(nome, descricao, identificacao, categoria, posicao, estoque_ideal) values('"
                 . $produto->getNome() . "', '" . $produto->getDescricao() . "', '" . $produto->getIdentificacao() . "', " . $produto->getCategoria()->getId() . ", '" . $produto->getPosicao() . "', " . $produto->getEstoqueIdeal() . ")";
@@ -358,6 +359,7 @@ class ProdutoController{
 				$resultado['dados'] = 1;
 			}
         }else{
+    	    $resultado['status'] = 500;
     	    if($duplicadoNome == 1)
 				$resultado['dados'] = -2; // Nome duplicado
     	    else
