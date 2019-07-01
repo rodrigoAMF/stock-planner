@@ -16,15 +16,16 @@
     $produto->setEstoqueIdeal("122");
     $produto->setPosicao("1a2");
     $produto->setDescricao("teste");
-    $produto->getCategoria()->setNome("abelha");
+    $produto->getCategoria()->setNome("Consumo");
     $produto->getCategoria()->setId(2);
 
-    
+    echo ($produtoController->cadastraProduto($produto))['dados'] . "<br>";
+    $produto->setIdentificacao("524");
+    echo ($produtoController->cadastraProduto($produto))['dados']. "<br>";
+    $produto->setNome("mouse2");
+    $produto->setIdentificacao("159");
+    echo ($produtoController->cadastraProduto($produto))['dados']. "<br>";
 
-    //print_r($produtoController->cadastraNovoProduto($produto));
-
-    $id = $produtoController->getIDUltimoProdutoCadastrado()['dados'];
-
-    echo $id;
+    $produtoController->excluirProduto($produtoController->getIDUltimoProdutoCadastrado()['dados']);
 
 ?>

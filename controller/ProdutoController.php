@@ -200,8 +200,10 @@ class ProdutoController{
 		$resultado = $this->databaseController->select($query);
 
 		if($resultado['status'] == 200) {
-			$resultado['dados'] = $resultado['dados'][0];
-		}
+			$resultado['dados'] = 1;
+		}else{
+		    $resultado['dados'] = 0;
+        }
 
         return $resultado;
     }
@@ -361,7 +363,7 @@ class ProdutoController{
 			}
         }else{
     	    $resultado['status'] = 500;
-    	    if($duplicadoNome == 1)
+    	    if($duplicadoNome['dados'] == 1)
 				$resultado['dados'] = -2; // Nome duplicado
     	    else
 				$resultado['dados'] = -3; // Identificação duplicada
