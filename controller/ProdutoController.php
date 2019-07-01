@@ -443,10 +443,10 @@ class ProdutoController{
 			$semestre = $semestreController->getSemestreAtual()['dados']->getId();
 		}
 
-		
 
 		$resultado = $semestreController->getSemestreAtual();
 
+		
 		if($resultado['status'] != 200){
 			return $resultado;
 		}
@@ -455,7 +455,6 @@ class ProdutoController{
 		$stringProdutos = "";
 
 		foreach ($produtos as $produto) {
-			//Esta DANDO erro  AQUI QUANDO PASSA SEMESTRE DIFERENTE DE NULL 
 			$rgb = $this->pickColor($produto->getPorcentagem());
 			$stringProdutos .= "<tr>";
 			$stringProdutos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
