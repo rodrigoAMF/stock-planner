@@ -24,7 +24,7 @@ class UsuarioTest extends TestCase{
     public function testGetSenha(){
         $usuario = new Usuario();
 
-        $usuario->setSenha("123","123");
+        $usuario->setSenha("123");
 
         $this->assertEquals("202cb962ac59075b964b07152d234b70", $usuario->getSenha());
 
@@ -32,10 +32,9 @@ class UsuarioTest extends TestCase{
     public function testSetSenha(){
         $usuario = new Usuario();
 
-        $this->assertEquals(1,  $usuario->setSenha("123","123")['status']);
-        $this->assertEquals(-1,  $usuario->setSenha("123","321")['status']);
-        $this->assertEquals(-1,  $usuario->setSenha("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222","222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222")['status']);
-        $this->assertEquals(-1,  $usuario->setSenha("","")['status']);
+        $this->assertEquals(1,  $usuario->setSenha("123")['status']);
+        $this->assertEquals(-1,  $usuario->setSenha("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222")['status']);
+        $this->assertEquals(-1,  $usuario->setSenha("")['status']);
 
     }
 

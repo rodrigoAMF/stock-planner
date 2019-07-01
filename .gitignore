@@ -195,3 +195,5 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/git,sass,linux,windows,sublimetext,visualstudiocode
+
+teste\.php

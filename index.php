@@ -1,5 +1,9 @@
 <?php
 require_once("verificaLogoff.php");
+
+echo $_SESSION['UsuarioID'];
+echo $_SESSION['UsuarioNome'];
+echo $_SESSION['UsuarioEmail'];
 ?>
 <!DOCTYPE html>
 <html>

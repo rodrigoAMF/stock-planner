@@ -12,7 +12,12 @@
 
  	$produto = $produtoController->getProdutoPorId($id);
 
-    $resultadoQuery = $produtoController->cadastroProdutoCondicional($produto);
+    if($produto['status'] == 200){
+      $resultadoQuery = $produtoController->cadastraProduto($produto['dados']);
+    } else{
+      $resultadoQuery = -1;
+    }
+    
 
    echo $resultadoQuery;
 ?>

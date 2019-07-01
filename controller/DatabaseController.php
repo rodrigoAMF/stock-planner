@@ -7,7 +7,7 @@ class DatabaseController{
     private static $conexao;
     private static $instance;
 
-    public function __construct(){
+    public function __construct() {
         $this->databaseModel = new Database();
 	}
 
@@ -18,7 +18,7 @@ class DatabaseController{
         return self::$instance;
     }
 
-    function getConexao() {
+    private function getConexao() {
         if(!isset(self::$conexao)){
             self::$conexao = new mysqli($this->databaseModel::DB_HOST, $this->databaseModel::DB_USER, $this->databaseModel::DB_PASSWORD, $this->databaseModel::DB_NAME);
             mysqli_set_charset(self::$conexao,"utf8");
@@ -45,7 +45,7 @@ class DatabaseController{
     	}
     }
 
-    public function query($query) {
+    private function query($query) {
         $conexao = $this->getConexao();
 
         $resultadoQuery = $conexao->query($query);
@@ -53,8 +53,10 @@ class DatabaseController{
         return $resultadoQuery;
     }
 
-    public function erroBD($query){
+    private function erroBD($query){
+        // Status 500 ocorreu um erro
         $resultado['status'] = 500;
+        // Salva mensagem de erro do mysqli
         $resultado['error_msg'] = self::$conexao->error;
         $resultado['query'] = $query;
 
@@ -67,33 +69,48 @@ class DatabaseController{
         if(!$resultadoQuery) {
             return $this->erroBD($query);
         }else{
-            $resultado['status'] = 200;
+			$resultado['status'] = 200;
             $resultado['dados'] = $resultadoQuery->fetch_all(MYSQLI_ASSOC);
+            if(empty($resultado['dados'])) {
+				$resultado['status'] = 204;
+			}
 
             return $resultado;
         }
     }
 
-    function insert($query){
-        return $this->createUpdateDelete($query);
+    public function insert($query){
+		$resultadoQuery = $this->query($query);
+
+		if(!$resultadoQuery) {
+			return $this->erroBD($query);
+		}else{
+			$resultado['status'] = 200;
+			return $resultado;
+		}
     }
 
-    function update($query){
-        return $this->createUpdateDelete($query);
+    public function update($query){
+        return $this->updateDelete($query);
     }
 
-    function delete($query){
-        return $this->createUpdateDelete($query);
+    public function delete($query){
+        return $this->updateDelete($query);
     }
 
-    function createUpdateDelete($query){
+    private function updateDelete($query){
         $resultadoQuery = $this->query($query);
 
         if(!$resultadoQuery) {
             return $this->erroBD($query);
         }else{
-            $resultado['status'] = 200;
-
+        	if(mysqli_affected_rows($this->getConexao()) > 0){
+				$resultado['status'] = 200;
+			}else{
+				$resultado['status'] = 500;
+				$resultado['error_msg'] = "Nenhuma coluna foi afetada pela Query";
+				$resultado['query'] = $query;
+			}
             return $resultado;
         }
     }

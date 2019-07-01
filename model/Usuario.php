@@ -2,6 +2,7 @@
 require_once("controller/UsuarioController.php");
 
 class Usuario{
+    private $id;
     private $username;
     private $senha;
     private $nome;
@@ -32,6 +33,14 @@ class Usuario{
     public function getDataCadastro():string{
         return $this->dataCadastro;
     }
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function setId($id) {
+    	$this->id = $id;
+	}
 
     public function setNome($nome){
         if($nome != null){
@@ -88,19 +97,11 @@ class Usuario{
         return $feedback;
     }
 
-    public function setSenha($senha, $confirmaSenha){
-        if($senha != null){
-            if(strlen ($senha) <= 60){
-                if(strcmp($senha,$confirmaSenha) == 0){
-                    $feedback['status'] = 1;
-                    $this->senha = MD5($senha);
-
-                }else if(strcmp($senha,$confirmaSenha) != 0){
-
-                    $feedback['nome_do_campo'] = "confirmaSenha";
-                    $feedback['mensagem'] = "As senhas não conferem";
-                    $feedback['status'] = -1;
-                }
+    public function setSenha($senha){
+        if($senha != null ){
+            if(strlen ($senha) <= 60) {
+            	$feedback['status'] = 1;
+            	$this->senha = MD5($senha);
             }else{
                 $feedback['nome_do_campo'] = "senha";
                 $feedback['mensagem'] = "O senha excedeu o tamanho máximo";
@@ -114,4 +115,31 @@ class Usuario{
         return $feedback;
     }
 
+    public function setAtributos(string $login, string  $senha, string $nome, string $email) {
+        // $this->id = $id;
+        $this->username = $login;
+        $this->senha = $senha;
+        $this->nome = $nome;
+        $this->email = $email;
+        // $this->dataCadastro = $dataCadastro;
+        // $this->dataUltimoAcesso = $dataUltimoAcesso;
+    }
+
+    public function setDataUltimoAcesso($dataUltimoAcesso){
+    	$this->dataUltimoAcesso = $dataUltimoAcesso;
+	}
+
+	public function setDataCadastro($dataCadastro){
+    	$this->dataCadastro = $dataCadastro;
+	}
+
+	public function preencheDadosTeste(){
+		$this->setId(1);
+		$this->setUsername("rodrigo");
+		$this->setSenha("123");
+		$this->setNome("Rodrigo Franco");
+		$this->setEmail("rodrigoamf@gmail.com");
+		$this->setDataUltimoAcesso("2019-05-30 13:15:39");
+		$this->setDataCadastro("2019-04-29 19:15:39");
+	}
 }

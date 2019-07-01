@@ -5,50 +5,29 @@ class Categoria{
     private $id;
     private $nome;
 
-    public function getId():int{
-        if($this->id == null){
-            $categoriaController = CategoriaController::getInstance();
-            $this->id = $categoriaController->getIDPeloNome($nome);
-            if($this->id >= 0)
-            {
-                $this->nome = $nome;
-            }else{
-                throw new Exception('Essa categoria não existe!');
-            }
-        }else{
-            return $this->id;
-        }
-
+    public function getId(){
+        return $this->id;
     }
 
-    public function getNome():string{
+    public function getNome(){
         return $this->nome;
     }
 
-    // public function setAtributos(int $id, string $nome) {
-    //     $this->id = $id;
-    //     $this->nome = $nome;
-    // }
+    public function setId(int $id){
+        $this->id = $id;
+    }
 
-    public function setNomeNovo(string $nome){
-        if(trim($nome) != null){
+    public function setNome(string $nome) {
+        if(trim($nome) != null && !($nome[0] >= '0' && $nome[0] <= '9')) {
             $this->nome = trim($nome);
             return 1;
-        }
-        else{
+        }else{
             return -1;
         }
-        
     }
 
-    public function setNome(string $nome){
-         $categoriaController = CategoriaController::getInstance();
-         $this->id = $categoriaController->getIDPeloNome($nome);
-         if($this->id >= 0)
-         {
-             $this->nome = $nome;
-         }else{
-             throw new Exception('Essa categoria não existe!');
-         }
-    }
+    public function preencheDadosTeste(){
+    	$this->setId(1);
+    	$this->setNome("Consumo");
+	}
 }

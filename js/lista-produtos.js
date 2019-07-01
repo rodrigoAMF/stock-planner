@@ -19,6 +19,8 @@ $("#parametroSemestre").on("change", function(){
 	});
 
 	request.done(function(msg) {
+		console.log(msg);
+		
 		$('table tbody').remove();
 		$('table').append("<tbody>");
 		$('table tbody').append(msg);

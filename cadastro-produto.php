@@ -22,7 +22,11 @@
                 <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
                     <label for="semestre">O produto será cadastrado no</label>
                     <?php
-                        echo $semestreController->getSemestreAtual();
+                        if($semestreController->getSemestreAtual()['status'] == 200){
+                            echo $semestreController->getSemestreAtual()['dados']->getId();
+                        }else{
+                            echo "Erro ao buscar o semestre atual";
+                        }
                      ?>
                 </div>
             </div>
@@ -85,10 +89,17 @@
                    <label for="categoria">Categoria:</label>
                    <select name="categoria" class="custom-select custom-select-sm" id="categoria">
                     <?php
+
                         $categorias = $categoriaController->getCategorias();
-                        foreach ($categorias as $categoria) {
-                            echo "<option value = '" . $categoria->getNome()."'>" . $categoria->getNome(). "</option>";
+                        if($categorias['status'] == 200){
+
+                            foreach ($categorias['dados'] as $categoria) {
+                                echo "<option value = '" . $categoria->getNome()."'>" . $categoria->getNome(). "</option>";
+                            }
+                        }else{
+                            echo "Erro ao buscar as categorias";
                         }
+  
                     ?>
                     </select>
                     <div class="feedback">

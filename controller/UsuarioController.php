@@ -17,144 +17,173 @@ class UsuarioController{
         }
         return self::$usuarioController;
     }
+	public function mapearUsuariosEmArray($usuariosNaoMapeados){
+		$usuariosMapeados = array_map(function($dado){
+			$usuario = new Usuario();
 
-    //essa nao está sendo usada no momento, porém pode ser usada um dia por isso deixamos ela
+			if(isset($dado['ID']))
+				$usuario->setId($dado['ID']);
+			if(isset($dado['username']))
+				$usuario->setUsername($dado['username']);
+			if(isset($dado['senha']))
+				$usuario->setSenha($dado['senha']);
+			if(isset($dado['nome']))
+				$usuario->setNome($dado['nome']);
+			if(isset($dado['email']))
+				$usuario->setEmail($dado['email']);
+			if(isset($dado['dataUltimoAcesso']))
+				$usuario->setDataUltimoAcesso($dado['dataUltimoAcesso']);
+			if(isset($dado['dataCadastro']))
+				$usuario->setDataCadastro($dado['dataCadastro']);
+
+			return $usuario;
+		}, $usuariosNaoMapeados);
+
+		return $usuariosMapeados;
+	}
+
     function getUsuarios(){
-        $conexao = $this->databaseController->open_database();
+       $query = "SELECT * FROM usuarios";
 
-        $query = "SELECT * FROM usuarios";
+		$resultado = $this->databaseController->select($query);
 
-        $resultado = $conexao->query($query);
+		if($resultado['status'] == 200) {
+			$resultado['dados'] = $this->mapearUsuariosEmArray($resultado['dados']);
+		}
 
-        if($resultado == false)
-        {
-              $erro = 'Falha ao realizar a Query: ' . $query;
-              throw new Exception($erro);
-        }
-
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $this->databaseController->close_database();
-
-        for($i=0; $i< sizeof($dados); $i++){
-            $usuario = new Usuario;
-            $usuario->setNome($dados[$i]['nome']);
-            $usuario->setUsername($dados[$i]['username']);
-            $usuario->setEmail($dados[$i]['email']);
-            $usuario->setSenha($dados[$i]['senha'],$dados[$i]['senha']);
-
-            $arrayUsuarios[$i] = $usuario;
-        }
-        return $arrayUsuarios;
+		return $resultado;
     }
 
-    public function verificaSeUsuarioExistePorEmail($email, $conexao){
+    public function verificaSeUsuarioExistePorEmail($email) {
+        $query = "SELECT * FROM usuarios WHERE email = '{$email}'";
 
-        $query = "SELECT * FROM usuarios WHERE email = '" . $email . "'";
+		$resultado = $this->databaseController->select($query);
 
-        $resultado = $conexao->query($query);
+        if ($resultado['status'] == 200){
+        	$resultado['dados'] = 1;
+		}else{
+			$resultado['dados'] = 0;
+		}
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        if($resultado->num_rows > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+		return $resultado;
     }
 
-    public function verificaSeUsuarioExistePorUsername($username,$conexao){
-        $query = "SELECT * FROM usuarios WHERE username = '" . $username . "'";
+    public function verificaSeUsuarioExistePorUsername($username){
+        $query = "SELECT * FROM usuarios WHERE username = '{$username}'";
 
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
+		if ($resultado['status'] == 200){
+			$resultado['dados'] = 1;
+		}else{
+			$resultado['dados'] = 0;
+		}
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        if($resultado->num_rows > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+		return $resultado;
     }
 
     function cadastraUsuario(Usuario $usuario){
-        $conexao = $this->databaseController->open_database();
+        $resultado = $this->verificaSeUsuarioExistePorUsername($usuario->getUsername());
+		$duplicadoUsername = $resultado['dados'];
 
-        $duplicadoUsername = $this->verificaSeUsuarioExistePorUsername($usuario->getUsername(), $conexao);
-        $duplicadoEmail = $this->verificaSeUsuarioExistePorEmail($usuario->getEmail(), $conexao);
+		$resultado = $this->verificaSeUsuarioExistePorEmail($usuario->getEmail());
+		$duplicadoEmail = $resultado['dados'];
 
         if($duplicadoUsername == 0 && $duplicadoEmail == 0)
         {
-
             $query = "INSERT INTO usuarios(username,senha,nome,email,dataUltimoAcesso,dataCadastro) VALUES ('{$usuario->getUsername()}','{$usuario->getSenha()}','{$usuario->getNome()}','{$usuario->getEmail()}',now(),now())";
 
-            $resultado = $conexao->query($query);
-
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
-
-            $this->databaseController->close_database();
-
-            return 1;
+			$resultado = $this->databaseController->insert($query);
+			if ($resultado['status'] == 200){
+				$resultado['dados'] = 1;
+			}
         }else{
-            $this->databaseController->close_database();
-    	    if($duplicadoUsername == 1)
-    	        return -2;
-    	    else if($duplicadoEmail == 1){
-                return -3;
+        	$resultado['status'] = 500;
+    	    if($duplicadoUsername == 1) {
+				$resultado['dados'] = -2;
+				$resultado['error_msg'] = "Nome de Usuário Duplicado";
+			}else {
+				$resultado['dados'] = -3;
+				$resultado['error_msg'] = "Email Duplicado";
             }
         }
-
+		return $resultado;
     }
 
-    public function verificarLogin($email, $senha){
-        $conexao = $this->databaseController->open_database();
+    function getUsuarioPorId($id) {
+        $query = "SELECT u.id, u.username, u.senha, u.nome, u.email, u.dataUltimoAcesso, u.dataCadastro FROM usuarios u WHERE u.id = " . $id;
 
-        $query = "SELECT * FROM usuarios WHERE email = '{$email}' AND senha = '{$senha}'";
+		$resultado = $this->databaseController->select($query);
 
-        $resultado = $conexao->query($query);
+		if ($resultado['status'] == 200){
+			$resultado['dados'] = $this->mapearUsuariosEmArray($resultado['dados'])[0];
+		}else{
+			$resultado['dados'] = -1;
+			$resultado['error_msg'] = "Não existe um usuário com esse id!";
+		}
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
+		return $resultado;
+    }
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+    function getUsuarioPorUsername($username){
+        $query = "SELECT * FROM usuarios WHERE username = '{$username}'";
 
-        if(isset($dados[0]['ID'])){
-            // Atualiza a data de último acesso
-            $query = "UPDATE usuarios SET dataUltimoAcesso = NOW() WHERE ID = {$dados[0]['ID']}";
+		$resultado = $this->databaseController->select($query);
 
-            $conexao->query($query);
+		if ($resultado['status'] == 200){
+			$resultado['dados'] = $this->mapearUsuariosEmArray($resultado['dados'])[0];
+		}else{
+			$resultado['dados'] = -1;
+			$resultado['error_msg'] = "Não existe um usuário com esse username!";
+		}
+		return $resultado;
+    }
 
-            $this->databaseController->close_database();
+    public function verificarLogin($login, $senha){
+    	$regexEmail = "";
+    	$senha = MD5($senha);
+    	$tipoLogin = 'username'; // username
+		if (strpos($login, '@') !== false) {
+			$tipoLogin = 'email';
+		}
 
-            // Se a sessão não existir, inicia uma
-             if (!isset($_SESSION)) session_start();
+    	if($tipoLogin == "email"){
+			$query = "SELECT * FROM usuarios WHERE email = '{$login}' AND senha = '{$senha}'";
+		}else{
+			$query = "SELECT * FROM usuarios WHERE username = '{$login}' AND senha = '{$senha}'";
+		}
 
-            // Salva os dados encontrados na sessão
-            $_SESSION['usuario']['id'] = $dados[0]['ID'];
-            $_SESSION['usuario']['nome'] = $dados[0]['nome'];
-            $_SESSION['usuario']['email'] = $dados[0]['email'];
-            $_SESSION['usuario']['tipo'] = $dados[0]['tipoUsuario'];
 
-            return 1;
-        }else{
-            $this->databaseController->close_database();
-            return 0;
-        }
+		$resultado = $this->databaseController->select($query);
+
+
+		if ($resultado['status'] == 200) {
+			$resultado['dados'] = $this->mapearUsuariosEmArray($resultado['dados'])[0];
+		}else{
+			$resultado['dados'] = 0;
+			if($resultado['status'] == 204)
+				$resultado['error_msg'] = "Usuário não existe!";
+
+			return $resultado;
+		}
+
+		$usuario = $resultado['dados'];
+
+		// Atualiza a data de último acesso
+		$query = "UPDATE usuarios SET dataUltimoAcesso = NOW() WHERE ID = {$usuario->getId()}";
+		echo $query;
+
+		$resultado = $this->databaseController->update($query);
+
+		if($resultado['status'] == 200){
+			// Se a sessão não existir, inicia uma
+			if (!isset($_SESSION)) session_start();
+
+			// Salva os dados encontrados na sessão
+			$_SESSION['UsuarioID'] = $usuario->getId();
+			$_SESSION['UsuarioNome'] = $usuario->getNome();
+			$_SESSION['UsuarioEmail'] = $usuario->getEmail();
+		}
+		return $resultado;
     }
 }
 ?>

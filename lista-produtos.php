@@ -22,11 +22,14 @@
         <label for="parametroSemestre">Semestre</label>
         <select class="form-control" id="parametroSemestre" name="semestre">
           <?php
-              $semestres = $semestreController->getSemestres();
-              $semestres = array_reverse($semestres);
-              foreach ($semestres as $semestre) {
-                  echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
-              }
+             if($semestreController->getSemestres()['status'] == 200){
+                $semestres = $semestreController->getSemestres()['dados'];
+                $semestres = array_reverse($semestres);
+                foreach ($semestres as $semestre) {
+                    echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
+                }
+            }
+              
           ?>
         </select>
    </div>
@@ -70,9 +73,9 @@
               <?php
                   $produtoController = ProdutoController::getInstance();
 
-                  $produtos = $produtoController->getProdutos(null,null, 8, null);
-
-                  echo $produtos;
+                  $produtos = $produtoController->getProdutos(null,null, 8, null)['dados'];
+                  
+                  echo $produtoController->geraDadosParaTabelaProdutos($produtos,null);
               ?>
 
                   </tbody>

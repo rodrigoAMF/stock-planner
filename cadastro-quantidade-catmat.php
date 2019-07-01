@@ -20,16 +20,24 @@
   <div class="form-row">
     <div class="form-group col-md-5 col-xl-5 col-sm-10 col-10 col-lg-5">
         <label >O produto será cadastrado no</label>
-        <span id="parametroSemestre"><?= $semestreController->getSemestreAtual(); ?></span>
+        <span id="parametroSemestre">
+            <?php
+                if($semestreController->getSemestreAtual()['status'] == 200){
+                    echo $semestreController->getSemestreAtual()['dados']->getId();
+                }else{
+                    echo "Erro ao buscar o semestre atual";
+                }
+            ?>
+        </span>
     </div>
   </div>
 
-   <div class="form-group">
+   <!-- <div class="form-group">
        <label for="parametroFiltro">Filtro</label>
        <select class="form-control" id="parametroFiltro" name="filtro">
              <option value="1">Nome</option>             
        </select>
-  </div>
+  </div> -->
 
     <div class="form-group">
         <label for="busca">Busca</label>
@@ -48,9 +56,10 @@
               <tbody>
               <?php
                   $produtoController = ProdutoController::getInstance();
-                  $produtos = $produtoController->getProdutosCadastrados(null,null,8);
-
-                  echo $produtos;
+                  $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual(null);
+                  if($produtos['status'] == 200){
+                    echo $produtoController->geraDadosParaTabelaProdutosNaoCadastradosNoSemestreAtual($produtos['dados']);
+                  } 
               ?>
               </tbody>
               </table>

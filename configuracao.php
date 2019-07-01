@@ -15,8 +15,11 @@
             <label for="semestre">Semestre atual:</label>
             <span id="id-semestre">
             <?php 
-                $semestre = $semestreController->getSemestreAtual();
-                echo $semestre;
+                if($semestreController->getSemestreAtual()['status'] == 200){
+                    echo $semestreController->getSemestreAtual()['dados']->getId();
+                }else{
+                    echo "Erro ao buscar o semestre atual";
+                }
              ?>
             </span>
         </div>

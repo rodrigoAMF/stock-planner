@@ -1,6 +1,7 @@
 <?php
 //mysqli_report(MYSQLI_REPORT_STRICT);
 require_once("DatabaseController.php");
+require_once("model/Categoria.php");
 
 // Singleton
 class CategoriaController{
@@ -18,134 +19,104 @@ class CategoriaController{
         return self::$categoriaController;
     }
 
-    function verificaSeCategoriaExistePorNome($nome){
-        $conexao = $this->databaseController->open_database();
+    public function mapearCategoriaEmArray($categoriasNaoMapeadas){
+        $categoriasMapeadas = array_map(function($dado){
+            $categoria = new Categoria();
 
-        $query = "SELECT * FROM categoria WHERE nome = '" . $nome . "'";
+            if(isset($dado['nome']))
+                $categoria->setNome($dado['nome']);
+            if(isset($dado['id']))
+                $categoria->setId($dado['id']);
 
-        $resultado = $conexao->query($query);
+            return $categoria;
+        }, $categoriasNaoMapeadas);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        $this->databaseController->close_database();
-
-        //echo "Numero de produtos com " .  $nome . " no banco " . $resultado->num_rows . "<br>";
-
-        if($resultado->num_rows > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return $categoriasMapeadas;
     }
 
-    public function getIDPeloNome(string $nomecategoria): int {
+    function verificaSeNomeExiste(string $nome){
+        $query = "SELECT * FROM categoria WHERE nome = '{$nome}'";
 
-        $conexao = $this->databaseController->open_database();
+        $resultado = $this->databaseController->select($query);
 
-        $query = "SELECT id FROM categoria WHERE nome = '" . $nomecategoria . "'";
-
-        $resultado = $conexao->query($query);
-
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = 1;
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = 0;
         }
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-        $this->databaseController->close_database();
-
-        if(isset($dados[0]['id'])){
-            return $dados[0]['id'];
-        }else{
-            return -1;
-        }
-
+        return $resultado;
     }
-    public function getNomePeloId(Categoria $categoria){
-        $conexao = $this->databaseController->open_database();
 
-        $query = "SELECT id FROM categoria WHERE id = '" . $categoria->getId() . "'";
+    function verificaSeIdExiste(int $id){
+        $query = "SELECT * FROM categoria WHERE id = '{$id}'";
 
-        $resultado = $conexao->query($query);
+        $resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = 1;
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = 0;
         }
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+        return $resultado;
+    }
 
-        $this->databaseController->close_database();
+    public function getIDPeloNome(string $nomeCategoria) {
+        $query = "SELECT id FROM categoria WHERE nome = '{$nomeCategoria}'";
 
-        if(isset($dados[0]['nome'])){
-            return $dados[0]['nome'];
-        }else{
-            return "Não existe registro com esse nome!";
+        $resultado = $this->databaseController->select($query);
+
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = $resultado['dados'][0]['id'];
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = -1;
         }
+
+        return $resultado;
+    }
+
+    public function getNomePeloId(int $id) {
+        $query = "SELECT nome FROM categoria WHERE id = '{$id}'";
+
+        $resultado = $this->databaseController->select($query);
+
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = $resultado['dados'][0]['nome'];
+        }else if($resultado['status'] == 204){
+            $resultado['dados'] = -1;
+        }
+
+        return $resultado;
     }
 
     function cadastraCategoria(Categoria $categoria){
-        $verificaDuplicado = $this->verificaSeCategoriaExistePorNome($categoria->getNome());
+        $resultado = $this->verificaSeNomeExiste($categoria->getNome());
 
-        if($verificaDuplicado == 0){
-            $conexao = $this->databaseController->open_database();
+        if($resultado['dados'] == 0) {
+            $query = "INSERT INTO categoria(nome) values('{$categoria->getNome()}')";
 
-            $query = "INSERT INTO categoria(nome) values('". $categoria->getNome() . "')";
-    
-            $resultado = $conexao->query($query);
-    
-            if($resultado == false)
-            {
-                $erro = 'Falha ao realizar a Query: ' . $query;
-                throw new Exception($erro);
-            }
-    
-            $this->databaseController->close_database();
-    
-            return 1;
-        }
-        else{
-            return -1;
+            $resultado = $this->databaseController->insert($query);
+
+            $resultado['dados'] = 1;
+        }else{
+            $resultado['dados'] = -1;
         }
 
-
+        return $resultado;
     }
 
     function getCategorias(){
-    	$conexao = $this->databaseController->open_database();
-
         $query = "SELECT * FROM categoria ORDER BY nome";
 
-        $resultado = $conexao->query($query);
+        $resultado = $this->databaseController->select($query);
 
-        if($resultado == false)
-        {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
+        if($resultado['status'] == 200) {
+            $resultado['dados'] = $this->mapearCategoriaEmArray($resultado['dados']);
         }
 
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+        return $resultado;
 
-        $this->databaseController->close_database();
-
-        if(isset($dados[0]['nome'])){
-            for($i=0; $i< sizeof($dados); $i++){
-                $categoria = new Categoria;
-                $categoria->setNome($dados[$i]['nome']);
-
-                $arrayCategorias[$i] = $categoria;
-            }
-            return $arrayCategorias;
-        }else{
-            return "Não existem registros!";
-        }
     }
 
 
