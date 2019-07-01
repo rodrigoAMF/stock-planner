@@ -39,32 +39,33 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         }
     }
 
-
-    
-    //$categorias = $categoriaController->getCategorias();
-
-    // // Verifica se já existe uma categoria com o nome atual
-    // $existeCategoria = false;
-    // for ($j=0; $j < sizeof($categorias); $j++) {
-    //     if ($categorias[$j]->getNome() == $camposProduto[6]) {
-    //         $existeCategoria = true;
-    //         break;
-    //     }
-    // }
-    // // Se não existir categoria, cria uma
-    // if (!$existeCategoria) {
-    //     $categoria = new Categoria();
-    //     $categoria->setNomeNovo($camposProduto[6]);
-    //     $categoriaController->cadastraCategoria($categoria);
-    // }
+    $idCategoria = -1;
 
     // Cadastra a categoria 
     $categoriaController = CategoriaController::getInstance();
-    $categoria = new Categoria();
-    $categoria->setNome($camposProduto[6]);
-    if(!($categoriaController->cadastraCategoria($categoria)['status'] == 200)){
-        $mensagemErro = "Erro na linha " . strval($i) . ". Não foi possivel cadastrar a categoria";
-        $erro = true;
+
+    $categorias = $categoriaController->getCategorias();
+    $categorias = $categorias['dados'];
+
+    // Verifica se já existe uma categoria com o nome atual
+    $existeCategoria = false;
+    for ($j=0; $j < sizeof($categorias); $j++) {
+        if ($categorias[$j]->getNome() == $camposProduto[6]) {
+            $idCategoria = $categorias[$j]->getId();
+            $existeCategoria = true;
+            break;
+        }
+    }
+    // Se não existir categoria, cria uma
+    if(!$existeCategoria) {
+        $categoria = new Categoria();
+        $categoria->setNome($camposProduto[6]);
+        if(!($categoriaController->cadastraCategoria($categoria)['status'] == 200)){
+            $mensagemErro = "Erro na linha " . strval($i) . ". Não foi possivel cadastrar a categoria";
+            $erro = true;
+        }else{
+            $idCategoria = $categoriaController->getIDPeloNome($camposProduto[6])['dados'];
+        }
     }
 
     // Verificações de erro nos campos
@@ -106,7 +107,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
 
     // Se não existe nenhum erro NA LINHA ATUAL, cria uma instância de produto
     // e adiciona elementos à ele
-    if(!$erro){
+    if(!$erro) {
         $produtos[$i]->setNome($camposProduto[0]);
         $produtos[$i]->setIdentificacao($camposProduto[1]);
         $produtos[$i]->setCatmat($camposProduto[2]);
@@ -114,6 +115,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
         $produtos[$i]->setEstoqueIdeal($camposProduto[4]);
         $produtos[$i]->setPosicao($camposProduto[5]);
         $produtos[$i]->getCategoria()->setNome($camposProduto[6]);
+        $produtos[$i]->getCategoria()->setId($idCategoria);
         $produtos[$i]->setDescricao($camposProduto[7]);
     }
 }
@@ -128,7 +130,6 @@ if (!$erro) {
     foreach ($produtos as $produto) {
         $produtoController = ProdutoController::getInstance();
         $semestreController = new SemestreController();
-
         $resultadoCadastro = $produtoController->cadastraProduto($produto);
         if($resultadoCadastro['status'] == 200){
             if($resultadoCadastro['dados'] == -2){

@@ -35,6 +35,8 @@ class UsuarioController{
 				$usuario->setDataUltimoAcesso($dado['dataUltimoAcesso']);
 			if(isset($dado['dataCadastro']))
 				$usuario->setDataCadastro($dado['dataCadastro']);
+			if(isset($dado['tipoUsuario']))
+				$usuario->setTipo($dado['tipoUsuario']);
 
 			return $usuario;
 		}, $usuariosNaoMapeados);
@@ -181,6 +183,7 @@ class UsuarioController{
 			$_SESSION['usuario']['id'] = $usuario->getId();
 			$_SESSION['usuario']['nome'] = $usuario->getNome();
 			$_SESSION['usuario']['email'] = $usuario->getEmail();
+			$_SESSION['usuario']['tipo'] = $usuario->getTipo();
 		}
 		return $resultado;
     }

@@ -179,15 +179,16 @@ class ProdutoController{
     }
 
     function getProdutoPorId($id){
-        $conexao = $this->databaseController->open_database();
-
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
-        $resultado = $conexao->query($query);
+
+        $resultado = $this->databaseController->select($query);
 
     	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 			$resultado['dados'] = $resultado['dados'][0];
     	}
+
+    	return $resultado;
     }
 
     function getIDUltimoProdutoCadastrado() {
@@ -335,7 +336,7 @@ class ProdutoController{
         }else if(!$produtoCadastradoEmSemestreAnterior){
             // Produto não foi cadastrado em um semestre anteiror
             // Cadastra então o produto no semestre atual
-			$resultado = $this->cadastraNovoProduto($produto, $semestreAtual);
+			$resultado = $this->cadastraNovoProduto($produto);
 			return $resultado;
         }
     }
@@ -397,25 +398,25 @@ class ProdutoController{
     	{
     		switch($filtro){
     			case 1:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.nome LIKE '%" . $busca . "%'";
     			break;
     			case 2:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.identificacao LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.identificacao LIKE '%" . $busca . "%'";
     			break;
     			case 3:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.catmat LIKE '%" . $busca . "%'";
     			break;
     			case 4:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND c.nome LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND c.nome LIKE '%" . $busca . "%'";
     			break;
     			case 5:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.posicao LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.posicao LIKE '%" . $busca . "%'";
     			break;
     			case 6:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.estoque_ideal LIKE '%" . $busca . "%'";
     			break;
     			case 7:
-    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
+    				$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id AND ps.quantidade LIKE '%" . $busca . "%'";
     			break;
     		}
     	}
@@ -450,10 +451,10 @@ class ProdutoController{
 			$semestre = $semestreController->getSemestreAtual()['dados']->getId();
 		}
 
-		
 
 		$resultado = $semestreController->getSemestreAtual();
 
+		
 		if($resultado['status'] != 200){
 			return $resultado;
 		}
@@ -462,7 +463,6 @@ class ProdutoController{
 		$stringProdutos = "";
 
 		foreach ($produtos as $produto) {
-			//Esta DANDO erro  AQUI QUANDO PASSA SEMESTRE DIFERENTE DE NULL 
 			$rgb = $this->pickColor($produto->getPorcentagem());
 			$stringProdutos .= "<tr>";
 			$stringProdutos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
