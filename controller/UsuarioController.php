@@ -170,6 +170,7 @@ class UsuarioController{
 
 		// Atualiza a data de último acesso
 		$query = "UPDATE usuarios SET dataUltimoAcesso = NOW() WHERE ID = {$usuario->getId()}";
+		echo $query;
 
 		$resultado = $this->databaseController->update($query);
 

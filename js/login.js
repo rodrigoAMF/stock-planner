@@ -12,7 +12,6 @@ frm.submit(function (e) {
 
     request.done(function(msg) {
         console.log(msg);
-        
         if(msg === "200"){
             window.location.href = "inicio.php";
         }else{
