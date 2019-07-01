@@ -60,7 +60,8 @@
 			</div>
 		</div>
     <br>
-    <nav class="navbar navbar-expand-lg">
+    <?php if(isset($_SESSION['usuario']['tipo'])) if($_SESSION['usuario']['tipo'] == 1){
+          echo'<nav class="navbar navbar-expand-lg">
       <div class="fonte-barra">
         Configurações
       </div>
@@ -79,8 +80,7 @@
 
 
         </div>
-        <?php if(isset($_SESSION['usuario']['tipo'])) if($_SESSION['usuario']['tipo'] == 1){
-          echo'
+        
             <div class="col-xl-3 col-md-3 col-sm-6 col-6 col-lg-3 posicao-elemento">
               <a href="cadastrar-usuario.php">
                 <button>
@@ -91,10 +91,10 @@
                   </div>
                 </button>
               </a>
-            </div>';
-        }?>
+            </div>
       </div>
-    </div>
+    </div>';
+  }?>
 </div>
 </div>
 
