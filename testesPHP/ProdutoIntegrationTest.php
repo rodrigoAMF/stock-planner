@@ -16,19 +16,15 @@ class ProductIntegrationTest extends TestCase{
         $query = "INSERT INTO semestre(id,ano,numero) values('2050S2',2050,2)";
         $resultado = $databaseController->insert($query);
 
-        if($resultado['status'] == 204){
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
 
     }
 
-    /*public function testCadastraProduto(){
+    public function testCadastraProduto(){
         $produto = new Produto();
         $produtoController = ProdutoController::getInstance();
 
-        $produto->setNome("mouse");
-        $produto->setIdentificacao("523");
+        $produto->setNome("paçoca1");
+        $produto->setIdentificacao("596");
         $produto->setCatmat("125");
         $produto->setQuantidade("122");
         $produto->setEstoqueIdeal("122");
@@ -49,32 +45,6 @@ class ProductIntegrationTest extends TestCase{
         $produto->setIdentificacao("523");
         $this->assertEquals(-3, ($produtoController->cadastraProduto($produto))['dados']);
 
-        $produtoController->excluirProduto($produtoController->getIDUltimoProdutoCadastrado()['dados']);
-    }
-
-    public function testCadastraProdutoCondicional(){
-        $produto = new Produto();
-        $produtoController = ProdutoController::getInstance();
-
-        $produto->setNome("paredebranca");
-        $produto->setIdentificacao("985");
-        $produto->setCatmat("630");
-        $produto->setQuantidade("13");
-        $produto->setEstoqueIdeal("27");
-        $produto->setPosicao("1a2");
-        $produto->setDescricao("teste do produto condicional");
-        $produto->getCategoria()->setNome("cartazquadro");
-
-        //Verifica se esta cadastrando corretamente um produto
-        $this->assertEquals(1, $produtoController->cadastroProdutoCondicional($produto));
-
-        //verifica se cadastra nome duplicado
-        $this->assertEquals(-2, $produtoController->cadastroProdutoCondicional($produto));
-
-        //verifica se esta cadastrando produto com id duplicado
-        $produto->setNome("garrafinha136");
-        $this->assertEquals(-3, $produtoController->cadastroProdutoCondicional($produto));
-
     }
 
     public function testEditarProduto(){
@@ -94,12 +64,13 @@ class ProductIntegrationTest extends TestCase{
         $produto->getCategoria()->setId(2);
 
         $produtoController->cadastraProduto($produto);
+        
         $id = $produtoController->getIDUltimoProdutoCadastrado()['dados'];
         $produto->setId($id);
         $idSemestre = $semestreController->getSemestreAtual()['dados'];
 
         //Verifica se o produto esta sendo editado corretamente
-        $this->assertEquals(1, ($produtoController->editarProduto($produto, $idSemestre))['dados']);
+        $this->assertEquals(1, $produtoController->editarProduto($produto)['dados']);
 
         //Verifica se os campos do produto foram editados
         $this->assertEquals($produto, $produtoController->getProdutoPorId($id)['dados']);
@@ -111,10 +82,10 @@ class ProductIntegrationTest extends TestCase{
         $produtoController = ProdutoController::getInstance();
 
 
-        $id = $produtoController->getIDUltimoProdutoCadastrado();
+        $id = $produtoController->getIDUltimoProdutoCadastrado()['dados'];
         $this->assertEquals(1, $produtoController->excluirProduto($id)['dados']);
 
-    }*/
+    }
 
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
@@ -124,11 +95,6 @@ class ProductIntegrationTest extends TestCase{
 
         $query = "DELETE from semestre ORDER BY id DESC LIMIT 1";
         $resultado = $databaseController->delete($query);
-
-    	if($resultado['status'] == 204){
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-    	}
 
     }
 
