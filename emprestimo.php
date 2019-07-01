@@ -21,11 +21,10 @@
         <div class="col-6 col-md-6 col-xl-6 col-sm-6  col-lg-6 texto-titulo">
             <h5>Selecione os produtos emprestados</h5>
         </div>
-    
         <div class="col-6 col-md-6 col-xl-6 col-sm-6  col-lg-6" id="cor-botao">
-            <a href="formulario-emprestimo.php">
-                <input class="btn btn-primary" type="button" value="Emprestar">
-            </a>
+            <!-- <a href="formulario-emprestimo.php">-->
+                <input class="btn btn-primary" type="button" id ="emprestar" value="Emprestar">
+            <!-- </a> -->
         </div>
     </div>
    <div class="form-group">
@@ -76,7 +75,10 @@
               </table>
         </div>
 </div>
-
 <?php
     require_once(Config::FOOTER_TEMPLATE);
+
 ?>
+
+
+

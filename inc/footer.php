@@ -29,6 +29,9 @@
         else if($pagina == 'lista-produtos-quantidade'){
             echo "<script src='js/lista-produtos-quantidade.js'></script>";
         }
+        else if($pagina == 'emprestimo'){
+            echo "<script src='js/emprestimo.js'></script>";
+        }
     ?>
 
 

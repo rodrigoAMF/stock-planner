@@ -23,7 +23,7 @@ require_once("model/Pagina.php");
 </head>
 <body>
     <div class="modal-login" id="div1" style="visibility:visible">
-        <form class="recupera-senha" method="post" action="processa-emailRecuperacao.php">
+        <form class="formulario-emprestimo" method="post" action="">
             <!--<form class="form-signin">-->
                 <div class="row">
                     <div class="col-12">
@@ -35,7 +35,10 @@ require_once("model/Pagina.php");
                     <div class="col-12">
                         <div class="form-label-group">
                             <label for="inputNome" class="">Nome: </label>
-                            <input name="email" id="email" class="form-control " placeholder="" autofocus>
+                            <input name="nome" id="nome" class="form-control " placeholder="" autofocus>
+                            <div class="feedback" id="feedback-nome">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,6 +48,9 @@ require_once("model/Pagina.php");
                         <div class="form-label-group">
                             <label for="inputDataEmprestimo" class="">Data do empréstimo: </label>
                             <input type="date" name="dataEmprestimo" id="dataEmprestimo" class="form-control " placeholder="Data do empréstimo" autofocus>
+                            <div class="feedback" id="feedback-dataEmprestimo">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,6 +59,9 @@ require_once("model/Pagina.php");
                         <div class="form-label-group">
                             <label for="inputEmail" class="">Email: </label>
                             <input type="email" name="email" id="email" class="form-control " placeholder="" autofocus>
+                            <div class="feedback" id="feedback-email">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,6 +71,9 @@ require_once("model/Pagina.php");
                         <div class="form-label-group">
                             <label for="inputDocumento" class="">CPF/RG: </label>
                             <input name="documento" id="documento" class="form-control" placeholder="" autofocus>
+                            <div class="feedback" id="feedback-documento">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,35 +87,12 @@ require_once("model/Pagina.php");
         </form>
         <!--</form>-->
     </div>
-    <div class="modal-login" id = "div2" style="margin-top:-270px;  visibility:hidden">
-        <!--<form class="form-signin">-->
-            <div class="row">
-                <div class="col-12">
-                    <h3>Insira o código de recuperação</h3>
-                </div>
-            </div>
-           
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="form-label-group">
-                        <label for="input" class="label-invisivel">Códido</label>
-                        <input type="text" id="codigo" class="form-control" placeholder="Código" autofocus>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row botoes-login">
-                <div class="col-6"></div>
-                <div class="col-6">
-                    <button id="btnConfere" class="btn botoes-login btn-primary btn-block mb-2" type="submit">Enviar</button>
-                </div>
-            </div>
-
-        <!--</form>-->
-    </div>
+    
     <script src="js/jquery.min.js"></script>
-    <script src="js/recupera-senha.js"></script>
     <!-- Bootstrap -->
     <script src="js/alertify.min.js"></script>
+    <script src="js/formulario-emprestimo.js"></script>
+
+    
 </body>
 </html>
