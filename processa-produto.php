@@ -34,6 +34,7 @@
 
     $json['status'] = 1;
 
+
     for ($i=0, $cont = 0; $i < sizeof($feedbacks); $i++) {
         if($i == 0){
             $json['status'] = $feedbacks[$i]['status'];
@@ -55,16 +56,12 @@
         
         $resultadoCadastro = $produtoController->cadastraProduto($produto);
 
-        if($resultadoCadastro['status'] == 200){
-            //Produto com nome duplicado
-            if($resultadoCadastro['dados'] == -2){
-                $json['status'] = -2;
-            }else if($resultadoCadastro['dados'] == -3){
-                // Produto com identificação duplicada
-                $json['status'] = -3;
-            }
-        }else{
-            $json['status'] = -1;
+        //Produto com nome duplicado
+        if($resultadoCadastro['dados'] == -2){
+            $json['status'] = -2;
+        }else if($resultadoCadastro['dados'] == -3){
+            // Produto com identificação duplicada
+            $json['status'] = -3;
         }
     }
     
