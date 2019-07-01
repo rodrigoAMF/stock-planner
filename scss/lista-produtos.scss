@@ -6,7 +6,8 @@ body {
 $corCabecalhoTabela: #526ba0;
 
 table thead tr{
-    color:#fff;
+    background:$corCabecalhoTabela;
+    color: #fff;
 }
 
 table tr{
