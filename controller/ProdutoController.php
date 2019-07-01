@@ -328,7 +328,7 @@ class ProdutoController{
         }else if(!$produtoCadastradoEmSemestreAnterior){
             // Produto não foi cadastrado em um semestre anteiror
             // Cadastra então o produto no semestre atual
-			$resultado = $this->cadastraNovoProduto($produto, $semestreAtual);
+			$resultado = $this->cadastraNovoProduto($produto);
 			return $resultado;
         }
     }
