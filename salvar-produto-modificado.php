@@ -12,8 +12,12 @@
 
  	$produto = $produtoController->getProdutoPorId($id);
 
+ 	$produto['dados']->setCatmat($catmat);
+ 	$produto['dados']->setQuantidade($quantidade);
+
     if($produto['status'] == 200){
       $resultadoQuery = $produtoController->cadastraProduto($produto['dados']);
+      $resultadoQuery = $resultadoQuery["dados"];
     } else{
       $resultadoQuery = -1;
     }

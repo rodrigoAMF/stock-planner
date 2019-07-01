@@ -74,7 +74,8 @@ $(".ordenavel").on("click", function(event)
 	
 	
 });
-function bindDoubleClickTable(){
+
+function bindDoubleClickTable() {
 	$("#tabelaEditavel td").dblclick(function () {
 		if($(this).attr('class') === "nomeNaoEditavel"){
 			return;

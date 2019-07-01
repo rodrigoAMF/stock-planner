@@ -172,15 +172,16 @@ class ProdutoController{
     }
 
     function getProdutoPorId($id){
-        $conexao = $this->databaseController->open_database();
-
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
-        $resultado = $conexao->query($query);
+
+        $resultado = $this->databaseController->select($query);
 
     	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 			$resultado['dados'] = $resultado['dados'][0];
     	}
+
+    	return $resultado;
     }
 
     function getIDUltimoProdutoCadastrado() {
