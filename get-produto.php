@@ -18,8 +18,8 @@
 
     $produtos = $produtoController->getProdutos($busca, $filtro, $parametroOrdenacao, $semestre);
 
-    //echo $produtos;
-    //print_r($produtos) ; 
-    echo $produtoController->geraDadosParaTabelaProdutos($produtos,null);
+    if($produtos['status'] == 200){
+      echo $produtoController->geraDadosParaTabelaProdutos($produtos['dados'],$semestre);
+    }
 
 ?>
