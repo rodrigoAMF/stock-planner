@@ -172,15 +172,14 @@ class ProdutoController{
     }
 
     function getProdutoPorId($id){
-        $conexao = $this->databaseController->open_database();
-
         $query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = s.id AND ps.id_produto = p.id AND p.id = {$id} LIMIT 1";
-        $resultado = $conexao->query($query);
+		$resultado = $this->databaseController->select($query);
 
     	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 			$resultado['dados'] = $resultado['dados'][0];
-    	}
+		}
+		return $resultado;
     }
 
     function getIDUltimoProdutoCadastrado() {
@@ -467,8 +466,7 @@ class ProdutoController{
 			$stringProdutos .= "<td>" . $produto->getQuantidade() . "</td>";
 			if($semestre == $semestreAtual){
 				$stringProdutos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $produto->getId() . "'><i class='material-icons' id='delete-" . $produto->getId() . "'>delete_outline</i></a></td>";
-				$stringProdutos .= "<td><a href='editar-produto.php?id=" . $produto->getId() . "'>
-    		    <i class='material-icons'>edit</i></a></td>";
+				$stringProdutos .= "<td><a href='editar-produto.php?id=" . $produto->getId() . "'><i class='material-icons'>edit</i></a></td>";
 			} else{
 				$stringProdutos .= "<td> </td>";
 				$stringProdutos .= "<td> </td>";
@@ -494,7 +492,7 @@ class ProdutoController{
 		return $stringProdutos;
 	}
 
-    function editarProduto($produto, $semestre){
+    function editarProduto($produto){
     	// Atualiza tabela de produtos
     	$query = "UPDATE produtos SET nome = '{$produto->getNome()}', identificacao  = '{$produto->getIdentificacao()}', estoque_ideal= '{$produto->getEstoqueIdeal()}', posicao= '{$produto->getPosicao()}', categoria= '{$produto->getCategoria()->getId()}', descricao= '{$produto->getDescricao()}' WHERE id= {$produto->getId()}";
 
@@ -503,16 +501,21 @@ class ProdutoController{
 		if($resultado['status'] != 200){
 			return $resultado;
 		}
+
+		$semestreController = SemestreController::getInstance();
+		$semestre = $semestreController->getSemestreAtual()['dados'];
+
 		// Atualiza a tabela produtos_semestre
     	$query = "UPDATE produtos_semestre SET quantidade = {$produto->getQuantidade()},catmat= {$produto->getCatmat()} WHERE id_produto = {$produto->getId()} AND id_semestre = '{$semestre->getId()}'";
 		$resultado = $this->databaseController->update($query);
-
+		
+		
 		if($resultado['status'] != 200){
 			return $resultado;
 		}
 
 		$resultado['dados'] = 1;
-
+		
 		return $resultado;
     }
 

@@ -12,12 +12,13 @@
     $produto->setPosicao($_POST['posicao']);
     $produto->getCategoria()->setNome($_POST['categoria']);
     $produto->setDescricao($_POST['descricao']);
-
-    $id = $_GET['id'];
+    $produto->setId($_GET['id']);
 
     $produtoController = ProdutoController::getInstance();
 
-    $resultadoQuery = $produtoController->editarProduto($produto, $id);
+    $resultadoQuery = $produtoController->editarProduto($produto);
 
-    echo $resultadoQuery;
+    
+
+    //echo $resultadoQuery;
 ?>
