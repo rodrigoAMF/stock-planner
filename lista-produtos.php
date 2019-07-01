@@ -75,7 +75,7 @@
 
                   $produtos = $produtoController->getProdutos(null,null, 8, null)['dados'];
                   
-                  //echo $produtoController->geraDadosParaTabelaProdutos($produtos,null);
+                  echo $produtoController->geraDadosParaTabelaProdutos($produtos,null);
               ?>
 
                   </tbody>
