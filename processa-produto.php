@@ -2,32 +2,35 @@
     require_once("model/Produto.php");
     require_once("model/Semestre.php");
     require_once("controller/ProdutoController.php");
+    require_once("controller/CategoriaController.php");
 
     $produto = new Produto();
     $semestre = new Semestre();
+    $categoriaController = CategoriaController::getInstance();
 
     $existemErros = false;
 
     $feedbacks = Array();
 
-    $feedback = $produto->setNome($_GET['nome']);
+    $feedback = $produto->setNome($_POST['nome']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setIdentificacao($_GET['identificacao']);
+    $feedback = $produto->setIdentificacao($_POST['identificacao']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setCatmat($_GET['catmat']);
+    $feedback = $produto->setCatmat($_POST['catmat']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setQuantidade($_GET['quantidade']);
+    $feedback = $produto->setQuantidade($_POST['quantidade']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setEstoqueIdeal($_GET['estoqueIdeal']);
+    $feedback = $produto->setEstoqueIdeal($_POST['estoqueIdeal']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setPosicao($_GET['posicao']);
+    $feedback = $produto->setPosicao($_POST['posicao']);
     array_push($feedbacks, $feedback);
-    $feedback = $produto->setDescricao($_GET['descricao']);
+    $feedback = $produto->setDescricao($_POST['descricao']);
     array_push($feedbacks, $feedback);
 
-    $semestre = $_GET['semestre'];
+    $semestre = $_POST['semestre'];
 
-    $produto->getCategoria()->setNome($_GET['categoria']);
+    $produto->getCategoria()->setNome($_POST['categoria']);
+    $produto->getCategoria()->setId($categoriaController->getIDPeloNome($_POST['categoria'])['dados']);
 
     $json['status'] = 1;
 
@@ -37,6 +40,7 @@
         }else if($feedbacks[$i]['status'] == -1){
             $json['status'] = $feedbacks[$i]['status'];
         }
+
         if($feedbacks[$i]['status'] == -1){
             $json['erros'][$cont]['nome_do_campo'] = $feedbacks[$i]['nome_do_campo'];
             $json['erros'][$cont]['mensagem'] = $feedbacks[$i]['mensagem'];
@@ -46,32 +50,24 @@
 
     $produtoController = ProdutoController::getInstance();
 
-    //$resultadoCadastro = 1;
-
-    //print_r($json);
     
-    if($json['status'] !== -1 ){
+    if($json['status'] != -1 ){
         
-        //$resultadoCadastro = $produtoController->cadastraProduto($produto);
-        print_r($produtoController->cadastraProduto($produto));
+        $resultadoCadastro = $produtoController->cadastraProduto($produto);
 
-        //if($resultadoCadastro['status'] == 200){
-            // Produto com nome duplicado
-            // if($resultadoCadastro['dados'] == -2){
-            //     $json['status'] = -2;
-            // }else if($resultadoCadastro['dados'] == -3){
-            //     // Produto com identificação duplicada
-            //     $json['status'] = -3;
-            // }
-        // }else{
-        //     $json['status'] = -1;
-        // }
+        if($resultadoCadastro['status'] == 200){
+            //Produto com nome duplicado
+            if($resultadoCadastro['dados'] == -2){
+                $json['status'] = -2;
+            }else if($resultadoCadastro['dados'] == -3){
+                // Produto com identificação duplicada
+                $json['status'] = -3;
+            }
+        }else{
+            $json['status'] = -1;
+        }
     }
-
-    //print_r($resultadoCadastro);
-
     
-
-    //echo json_encode($json, JSON_UNESCAPED_UNICODE);
+    echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
 ?>

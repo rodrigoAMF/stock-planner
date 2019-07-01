@@ -374,13 +374,16 @@ class ProdutoController{
 
     function getProdutos($busca, $filtro, $parametroOrdenacao, $semestre){
 		$query = "";
+
 		if($semestre == null){
 			$semestreController = SemestreController::getInstance();
-			$semestre = $semestreController->getSemestreAtual();
+			$semestre = $semestreController->getSemestreAtual()['dados']->getId();
 		}
 
     	if ($busca == null) {
-    		$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre->getId()}' AND ps.id_semestre = s.id AND ps.id_produto = p.id";
+			
+			$query = "SELECT p.nome, p.id, p.descricao,p.identificacao, p.posicao, p.estoque_ideal, c.nome as categoria, ps.quantidade, ps.catmat, ps.id_semestre, ps.id_produto, s.id as id_semestre, s.ano, s.numero FROM semestre s, produtos p, categoria c, produtos_semestre ps WHERE p.categoria = c.id AND ps.id_semestre = '{$semestre}' AND ps.id_semestre = s.id AND ps.id_produto = p.id";
+			
     	}
     	else
     	{
@@ -433,16 +436,25 @@ class ProdutoController{
     function geraDadosParaTabelaProdutos($produtos, $semestre){
 		$semestreController = SemestreController::getInstance();
 
+		
+		if($semestre == null){
+			$semestreController = SemestreController::getInstance();
+			$semestre = $semestreController->getSemestreAtual()['dados']->getId();
+		}
+
+		
+
 		$resultado = $semestreController->getSemestreAtual();
 
 		if($resultado['status'] != 200){
 			return $resultado;
 		}
 
-		$semestreAtual = $resultado['dados'];
+		$semestreAtual = $resultado['dados']->getId();
 		$stringProdutos = "";
 
 		foreach ($produtos as $produto) {
+			//Esta DANDO erro  AQUI QUANDO PASSA SEMESTRE DIFERENTE DE NULL 
 			$rgb = $this->pickColor($produto->getPorcentagem());
 			$stringProdutos .= "<tr>";
 			$stringProdutos .= "<td style = 'background:rgb(" . $rgb[0] . ", " . $rgb[1] . ", ".$rgb[2].");'></td>";
@@ -453,7 +465,7 @@ class ProdutoController{
 			$stringProdutos .= "<td>" . $produto->getPosicao() . "</td>";
 			$stringProdutos .= "<td>" . $produto->getEstoqueIdeal() . "</td>";
 			$stringProdutos .= "<td>" . $produto->getQuantidade() . "</td>";
-			if($semestre->getId() == $semestreAtual->getId()){
+			if($semestre == $semestreAtual){
 				$stringProdutos .= "<td><a class='delete-icon' href='excluir-produto.php?id=" . $produto->getId() . "'><i class='material-icons' id='delete-" . $produto->getId() . "'>delete_outline</i></a></td>";
 				$stringProdutos .= "<td><a href='editar-produto.php?id=" . $produto->getId() . "'>
     		    <i class='material-icons'>edit</i></a></td>";
