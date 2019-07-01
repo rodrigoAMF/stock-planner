@@ -20,5 +20,5 @@
 
     
 
-    //echo $resultadoQuery;
+    echo $resultadoQuery;
 ?>

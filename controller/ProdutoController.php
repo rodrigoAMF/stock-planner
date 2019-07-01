@@ -6,7 +6,7 @@ require_once("model/Produto.php");
 class ProdutoController{
     private $databaseController;
     private static $produtoController;
-
+	
     public function __construct(){
         $this->databaseController = DatabaseController::getInstance();
     }
@@ -436,7 +436,7 @@ class ProdutoController{
 		}
 
 		if($busca == null && $filtro == null){
-			$resultado['dados'] = $this->sortLista($resultado['dados'], $parametroOrdenacao);
+			$resultado['dados'] = $this->sortLista($resultado['dados'], $parametroOrdenacao,0);
 		}
 
 		return $resultado;
@@ -520,7 +520,9 @@ class ProdutoController{
 		
 		
 		if($resultado['status'] != 200){
+			$resultado['dados'] = -1;
 			return $resultado;
+
 		}
 
 		$resultado['dados'] = 1;

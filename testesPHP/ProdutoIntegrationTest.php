@@ -62,12 +62,9 @@ class ProductIntegrationTest extends TestCase{
         $produto->setDescricao("teste");
         $produto->getCategoria()->setNome("Consumo");
         $produto->getCategoria()->setId(2);
-
-        $produtoController->cadastraProduto($produto);
         
         $id = $produtoController->getIDUltimoProdutoCadastrado()['dados'];
         $produto->setId($id);
-        $idSemestre = $semestreController->getSemestreAtual()['dados'];
 
         //Verifica se o produto esta sendo editado corretamente
         $this->assertEquals(1, $produtoController->editarProduto($produto)['dados']);
@@ -75,7 +72,6 @@ class ProductIntegrationTest extends TestCase{
         //Verifica se os campos do produto foram editados
         $this->assertEquals($produto, $produtoController->getProdutoPorId($id)['dados']);
 
-        $produtoController->excluirProduto($produtoController->getIDUltimoProdutoCadastrado()['dados']);
     }
 
     public function testExcluirProduto(){

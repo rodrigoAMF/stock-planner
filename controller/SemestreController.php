@@ -55,7 +55,6 @@ class SemestreController{
 			$resultado['dados'] = $resultado['dados'][0];
 		}
 
-		print_r($resultado);
 		return $resultado;
 	}
 
