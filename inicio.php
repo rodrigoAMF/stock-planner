@@ -47,7 +47,7 @@
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-3 col-sm-6 col-6 col-lg-3 posicao-elemento">
+        <!-- <div class="col-xl-3 col-md-3 col-sm-6 col-6 col-lg-3 posicao-elemento">
               <a href="emprestimo.php">
                 <button>
                   <img width="80px" height="80px" src="img/emprestimo.png">
@@ -56,7 +56,7 @@
                   </div>
                 </button>
               </a>
-            </div>
+         </div> -->
 			</div>
 		</div>
     <br>

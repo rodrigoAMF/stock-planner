@@ -9,6 +9,7 @@ class Usuario{
     private $email;
     private $dataUltimoAcesso;
     private $dataCadastro;
+    private $tipo;
 
     public function getUsername():string{
         return $this->username;
@@ -36,6 +37,10 @@ class Usuario{
 
     public function getId(){
         return $this->id;
+    }
+
+    public function getTipo(){
+        return $this->tipo;
     }
 
     public function setId($id) {
@@ -131,7 +136,11 @@ class Usuario{
 
 	public function setDataCadastro($dataCadastro){
     	$this->dataCadastro = $dataCadastro;
-	}
+    }
+    
+    public function setTipo($tipo){
+    	$this->tipo = $tipo;
+    }
 
 	public function preencheDadosTeste(){
 		$this->setId(1);
