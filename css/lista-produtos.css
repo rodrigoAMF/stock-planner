@@ -1,1 +1,21 @@
-body{background-color:#dcdcdc}table thead tr{color:#fff}table tr{text-align:center;background-color:#fff}table tbody tr:hover{cursor:pointer}.celulaEmEdicao input[type=text]{background:#e5e5e5}.check_circle_outline{color:green}/*# sourceMappingURL=lista-produtos.css.map */
+body {
+  background-color: #dcdcdc; }
+
+table thead tr {
+  background: #526ba0;
+  color: #fff; }
+
+table tr {
+  text-align: center;
+  background-color: white; }
+
+table tbody tr:hover {
+  cursor: pointer; }
+
+.celulaEmEdicao input[type=text] {
+  background: #e5e5e5; }
+
+.check_circle_outline {
+  color: green; }
+
+/*# sourceMappingURL=lista-produtos.css.map */

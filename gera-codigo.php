@@ -3,9 +3,8 @@
     require_once("phpmailer/SMTP.php");
     require_once("phpmailer/Exception.php");
     $codigo = rand(100000, 999999);
-    //$email = $_POST['email'];
-    $email = "gabii6431@gmail.com";
-
+    $email = $_POST['email'];
+    
     // Import PHPMailer classes into the global namespace
     // These must be at the top of your script, not inside a function
     ini_set('max_execution_time', 0);
@@ -23,7 +22,7 @@
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->SMTPAutoTLS = false;
         $mail->Username = 'stockplanner@rodrigoamf.com';                 // SMTP username
-        $mail->Password = 'oIhVG1r8cr4I';                           // SMTP password
+        $mail->Password = '1q8WyBkEt9nh';                           // SMTP password
         $mail->Port = 587;                                    // TCP port to connect to
 
         # Define o remetente (você)
