@@ -4,6 +4,7 @@
 
     $semestreController = SemestreController::getInstance();
     $semestres = $semestreController->getSemestres();
+    $semestres= $semestres['dados'];
     //$semestres = array_reverse($semestres);
     $filtroSemestre = array();
 
@@ -35,9 +36,10 @@
     if($tamanhoSemestre > 4)
     {
         $tamanhoSemestre = $tamanhoSemestre - 4;
-    
-        for ($i=0; $i < $tamanhoSemestre; $i++) { 
-            unset($filtroSemestre[$i]);
+
+        for ($i=0; $i < $tamanhoSemestre; $i++) 
+        { 
+            array_shift($filtroSemestre);        
         }
     }
 
@@ -49,6 +51,7 @@
     //print_r($filtroSemestre);
     
     $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre, $filtroSemestre);
+    //print_r($produtos);
     $json['produtos'] = $produtos;
     $json['semestre']  = $filtroSemestre;
     echo json_encode($json);
