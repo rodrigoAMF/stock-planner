@@ -47,7 +47,7 @@ class ProdutoController{
         return $produtosMapeados;
     }
 
-    function sortLista($produtos, $parametro){
+    function sortLista($produtos, $parametro, $ordenaNome){
     	if($parametro == null) $parametro = 8;
     	/*
     	1- nome
@@ -60,114 +60,121 @@ class ProdutoController{
     	8, default- crit
         
     	*/
-    	if(abs($parametro) == 1){
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($parametro > 0){
-    				if(strtoupper($produtos[$j]->getNome()) > strtoupper($produtos[$j+1]->getNome())){
-    					$aux = $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}else{
-    				if(strtoupper($produtos[$j]->getNome()) < strtoupper($produtos[$j+1]->getNome())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 2){
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($parametro > 0){
-    				if(strtoupper($produtos[$j]->getIdentificacao()) > strtoupper($produtos[$j+1]->getIdentificacao())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}else{
-    				if(strtoupper($produtos[$j]->getIdentificacao()) < strtoupper($produtos[$j+1]->getIdentificacao())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 3){
-    		$parametro /= 3;
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($produtos[$j]->getCatmat()*$parametro > $produtos[$j+1]->getCatmat()*$parametro){
-    				$aux =  $produtos[$j];
-                    $produtos[$j] = $produtos[$j+1];
-                    $produtos[$j+1] = $aux;
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 4){
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($parametro > 0){
-    				if(strtoupper($produtos[$j]->getCategoria()->getNome()) > strtoupper($produtos[$j+1]->getCategoria()->getNome())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}else{
-    				if(strtoupper($produtos[$j]->getCategoria()->getNome()) < strtoupper($produtos[$j+1]->getCategoria()->getNome())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 5){
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($parametro > 0){
-    				if(strtoupper($produtos[$j]->getPosicao()) > strtoupper($produtos[$j+1]->getPosicao())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}else{
-    				if(strtoupper($produtos[$j]->getPosicao()) < strtoupper($produtos[$j+1]->getPosicao())){
-    					$aux =  $produtos[$j];
-    	                $produtos[$j] = $produtos[$j+1];
-    	                $produtos[$j+1] = $aux;
-    				}
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 6){
-    		$parametro /= 6;
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($produtos[$j]->getEstoqueIdeal()*$parametro > $produtos[$j+1]->getEstoqueIdeal()*$parametro){
-    				$aux =  $produtos[$j];
-                    $produtos[$j] = $produtos[$j+1];
-                    $produtos[$j+1] = $aux;
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 7){
-    		$parametro /= 7;
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($produtos[$j]->getQuantidade()*$parametro > $produtos[$j+1]->getQuantidade()*$parametro){
-    				$aux =  $produtos[$j];
-                    $produtos[$j] = $produtos[$j+1];
-                    $produtos[$j+1] = $aux;
-    			}
-    		}
-    	}
-    	if(abs($parametro) == 8){
-    		$parametro /= 8;
-    		for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
-    			if($produtos[$j]->getPorcentagem()*$parametro < $produtos[$j+1]->getPorcentagem()*$parametro){
-    				$aux =  $produtos[$j];
-    	            $produtos[$j] = $produtos[$j+1];
-    	            $produtos[$j+1] = $aux;
-    			}
-    		}
-    	}
+        if($ordenaNome == 1 || $ordenaNome == 0)
+        {
+            if(abs($parametro) == 1){
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($parametro > 0){
+                        if(strtoupper($produtos[$j]->getNome()) > strtoupper($produtos[$j+1]->getNome())){
+                            $aux = $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }else{
+                        if(strtoupper($produtos[$j]->getNome()) < strtoupper($produtos[$j+1]->getNome())){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }
+                }
+            }
+        }
+    	if($ordenaNome == 0)
+        {
+           if(abs($parametro) == 2){
+            for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                if($parametro > 0){
+                    if(strtoupper($produtos[$j]->getIdentificacao()) > strtoupper($produtos[$j+1]->getIdentificacao())){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }else{
+                    if(strtoupper($produtos[$j]->getIdentificacao()) < strtoupper($produtos[$j+1]->getIdentificacao())){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            }
+            }
+            if(abs($parametro) == 3){
+                $parametro /= 3;
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($produtos[$j]->getCatmat()*$parametro > $produtos[$j+1]->getCatmat()*$parametro){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            }
+            if(abs($parametro) == 4){
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($parametro > 0){
+                        if(strtoupper($produtos[$j]->getCategoria()->getNome()) > strtoupper($produtos[$j+1]->getCategoria()->getNome())){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }else{
+                        if(strtoupper($produtos[$j]->getCategoria()->getNome()) < strtoupper($produtos[$j+1]->getCategoria()->getNome())){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }
+                }
+            }
+            if(abs($parametro) == 5){
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($parametro > 0){
+                        if(strtoupper($produtos[$j]->getPosicao()) > strtoupper($produtos[$j+1]->getPosicao())){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }else{
+                        if(strtoupper($produtos[$j]->getPosicao()) < strtoupper($produtos[$j+1]->getPosicao())){
+                            $aux =  $produtos[$j];
+                            $produtos[$j] = $produtos[$j+1];
+                            $produtos[$j+1] = $aux;
+                        }
+                    }
+                }
+            }
+            if(abs($parametro) == 6){
+                $parametro /= 6;
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($produtos[$j]->getEstoqueIdeal()*$parametro > $produtos[$j+1]->getEstoqueIdeal()*$parametro){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            }
+            if(abs($parametro) == 7){
+                $parametro /= 7;
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($produtos[$j]->getQuantidade()*$parametro > $produtos[$j+1]->getQuantidade()*$parametro){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            }
+            if(abs($parametro) == 8){
+                $parametro /= 8;
+                for($i=1;$i < sizeof($produtos);$i++) for($j=0;$j < sizeof($produtos) -$i;$j++){
+                    if($produtos[$j]->getPorcentagem()*$parametro < $produtos[$j+1]->getPorcentagem()*$parametro){
+                        $aux =  $produtos[$j];
+                        $produtos[$j] = $produtos[$j+1];
+                        $produtos[$j+1] = $aux;
+                    }
+                }
+            } 
+        }
+    	
     	return $produtos;
     }
 
@@ -634,7 +641,7 @@ class ProdutoController{
     {
         //$semestreController = SemestreController::getInstance();
         //$semestres = $semestreController->getSemestres();
-        $semestres = $filtroSemestre;
+        $semestres= $filtroSemestre;
         $semestres = array_reverse($semestres);
 
         $resultado = Array();
@@ -669,7 +676,6 @@ class ProdutoController{
     }  
 
     function getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre, $filtroSemestre){
-        $conexao = $this->databaseController->open_database();
         $quantidades = Array();
         $aux = Array();
         if ($busca == null) {
@@ -680,24 +686,19 @@ class ProdutoController{
             $query = "SELECT * FROM produtos, produtos_semestre WHERE id = id_produto AND produtos.nome LIKE '%" . $busca . "%'";
         }
 
-        $resultado = $conexao->query($query);
-        if($resultado == false)
+        $resultado = $this->databaseController->select($query);
+
+        if($resultado['status'] == 200)
         {
-            $erro = 'Falha ao realizar a Query: ' . $query;
-            throw new Exception($erro);
-        }
-
-        $dados = $resultado->fetch_all(MYSQLI_ASSOC);
-
-
-        $this->databaseController->close_database();
+            $resultado['dados'] = $resultado['dados'];
+        }       
 
         if($busca == null && $filtro == null){
-            $dados = $this->sortListaProdutosCadastrados($dados, $parametroOrdenacao);
+            $dados = $this->sortLista($resultado['dados'], $parametroOrdenacao, 1);
         }
 
         $produtos = "";
-        $quantidades = $this->agruparProdutosIguais($dados, $quantidadeSemestre, $filtroSemestre);
+        $quantidades = $this->agruparProdutosIguais($resultado['dados'], $quantidadeSemestre, $filtroSemestre);
         $posicao = 0;
         foreach ($quantidades as $produto) {
             
