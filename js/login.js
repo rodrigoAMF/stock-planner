@@ -14,7 +14,7 @@ frm.submit(function (e) {
         if(msg === "200"){
             window.location.href = "inicio.php";
         }else{
-            alertify.alert("Email ou senha incorretos!");
+            alertify.alert("Mensagem de sistema", "Email ou senha incorretos!");
         }
 
     });
