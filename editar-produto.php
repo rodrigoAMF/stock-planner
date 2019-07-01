@@ -12,6 +12,7 @@
     $id = $_GET['id'];
 
     $produto = $produtoController->getProdutoPorId($id)['dados'];
+    print_r($produto);
 ?>
 
 <div class="container">
