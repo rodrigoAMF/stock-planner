@@ -493,9 +493,9 @@ class ProdutoController{
 		foreach ($produtos as $produto) {
 			$stringProdutos .= "\t\t<tr>\n";
 			$stringProdutos .= "\t\t\t<td class='nomeNaoEditavel'>{$produto->getNome()}</td>\n";
-			$stringProdutos .= "\t\t\t<td id='catmat'></td>\n";
-			$stringProdutos .= "\t\t\t<td id='quantidade'></td>\n";
-			$stringProdutos .= "\t\t\t<td><a class='check_circle_outline' href='salvar-produto-modificado.php?id={$produto->getId()}'><i class='material-icons' id='check-{$produto->getId()}'>check_circle_outline</i></a></td>\n";
+			$stringProdutos .= "\t\t\t<td id='catmat'> </td>\n";
+			$stringProdutos .= "\t\t\t<td id='quantidade'> </td>\n";
+			$stringProdutos .= "\t\t\t<td class='nomeNaoEditavel'><a class='check_circle_outline' href='salvar-produto-modificado.php?id={$produto->getId()}'><i class='material-icons' id='check-{$produto->getId()}'>check_circle_outline</i></a></td>\n";
 			$stringProdutos .= "\t\t</tr>\n";
 		}
 
