@@ -1,9 +1,9 @@
 <?php
 require_once("verificaLogoff.php");
 
-echo $_SESSION['UsuarioID'];
-echo $_SESSION['UsuarioNome'];
-echo $_SESSION['UsuarioEmail'];
+if (!isset($_SESSION)) session_start();
+
+// Salva os dados encontrados na sessão
 ?>
 <!DOCTYPE html>
 <html>

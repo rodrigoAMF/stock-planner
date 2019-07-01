@@ -170,7 +170,6 @@ class UsuarioController{
 
 		// Atualiza a data de último acesso
 		$query = "UPDATE usuarios SET dataUltimoAcesso = NOW() WHERE ID = {$usuario->getId()}";
-		echo $query;
 
 		$resultado = $this->databaseController->update($query);
 
@@ -179,9 +178,9 @@ class UsuarioController{
 			if (!isset($_SESSION)) session_start();
 
 			// Salva os dados encontrados na sessão
-			$_SESSION['UsuarioID'] = $usuario->getId();
-			$_SESSION['UsuarioNome'] = $usuario->getNome();
-			$_SESSION['UsuarioEmail'] = $usuario->getEmail();
+			$_SESSION['usuario']['id'] = $usuario->getId();
+			$_SESSION['usuario']['nome'] = $usuario->getNome();
+			$_SESSION['usuario']['email'] = $usuario->getEmail();
 		}
 		return $resultado;
     }
