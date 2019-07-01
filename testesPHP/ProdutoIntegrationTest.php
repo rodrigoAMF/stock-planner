@@ -52,6 +52,31 @@ class ProductIntegrationTest extends TestCase{
         $produtoController->excluirProduto($produtoController->getIDUltimoProdutoCadastrado()['dados']);
     }
 
+    public function testCadastraProdutoCondicional(){
+        $produto = new Produto();
+        $produtoController = ProdutoController::getInstance();
+
+        $produto->setNome("paredebranca");
+        $produto->setIdentificacao("985");
+        $produto->setCatmat("630");
+        $produto->setQuantidade("13");
+        $produto->setEstoqueIdeal("27");
+        $produto->setPosicao("1a2");
+        $produto->setDescricao("teste do produto condicional");
+        $produto->getCategoria()->setNome("cartazquadro");
+
+        //Verifica se esta cadastrando corretamente um produto
+        $this->assertEquals(1, $produtoController->cadastroProdutoCondicional($produto));
+
+        //verifica se cadastra nome duplicado
+        $this->assertEquals(-2, $produtoController->cadastroProdutoCondicional($produto));
+
+        //verifica se esta cadastrando produto com id duplicado
+        $produto->setNome("garrafinha136");
+        $this->assertEquals(-3, $produtoController->cadastroProdutoCondicional($produto));
+
+    }
+
     public function testEditarProduto(){
         $produtoController = ProdutoController::getInstance();
         $semestreController = SemestreController::getInstance();

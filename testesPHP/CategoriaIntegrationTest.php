@@ -62,7 +62,6 @@ class CategoriaIntegrationTest extends TestCase{
             $query = "DELETE from categoria ORDER BY id DESC LIMIT 1";
             $resultado = $databaseController->delete($query);
         }
-        
 
     	if($resultado['status'] == 204)
     	{

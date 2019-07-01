@@ -27,6 +27,11 @@ class SemestreIntegrationTest extends TestCase{
 
     }
 
+    public function testCadastraSemestre(){
+          $semestreController = SemestreController::getInstance();
+          $this->assertEquals(true, $semestreController->cadastraSemestre());
+    }
+
     public function testGetSemestres(){
         $semestreController = SemestreController::getInstance();
         $count = 0;
@@ -63,7 +68,6 @@ class SemestreIntegrationTest extends TestCase{
             $query = "DELETE from semestre ORDER BY id DESC LIMIT 1";
             $resultado = $databaseController->delete($query);
         }
-        
 
     	if($resultado['status'] == 204)
     	{

@@ -1,22 +1,24 @@
 <?php
 require_once("DatabaseController.php");
-require_once("model/Usuario.php");
+require_once("model/Emprestimo.php");
 
-class UsuarioController{
+class EmprestimoController{
 
     private $databaseController;
-    private static $usuarioController;
+    private static $emprestimoController;
 
     public function __construct(){
         $this->databaseController = new DatabaseController();
     }
 
     public static function getInstance(){
-        if(!isset(self::$usuarioController)){
-            self::$usuarioController = new UsuarioController();
+        if(!isset(self::$emprestimoController)){
+            self::$emprestimoController = new UsuarioController();
         }
-        return self::$usuarioController;
+        return self::$emprestimoController;
     }
+    
+    /*
 	public function mapearUsuariosEmArray($usuariosNaoMapeados){
 		$usuariosMapeados = array_map(function($dado){
 			$usuario = new Usuario();
@@ -183,6 +185,6 @@ class UsuarioController{
 			$_SESSION['UsuarioEmail'] = $usuario->getEmail();
 		}
 		return $resultado;
-    }
+    }*/
 }
 ?>

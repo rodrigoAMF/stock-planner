@@ -1,7 +1,14 @@
+#cor-botao input {
+	background-color: hsl(210, 33%, 25%) !important;
+    border: #2a3f54;
+    float: right;
+}
+.texto-titulo{
+    margin-bottom: 10px;
+}
 body {
 	background-color: #dcdcdc;
 }
-
 
 $corCabecalhoTabela: #526ba0;
 

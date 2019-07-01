@@ -10,10 +10,6 @@ class Usuario{
     private $dataUltimoAcesso;
     private $dataCadastro;
 
-    public function getId():int{
-        return $this->id;
-    }
-
     public function getUsername():string{
         return $this->username;
     }
@@ -48,12 +44,12 @@ class Usuario{
                 $feedback['status'] = 1;
                 $this->nome = $nome;
             }else{
-                $feedback['nome_do_campo'] = "nome";       
+                $feedback['nome_do_campo'] = "nome";
                 $feedback['mensagem'] = "O nome excedeu o tamanho máximo";
                 $feedback['status'] = -1;
             }
         }else{
-            $feedback['nome_do_campo'] = "nome";       
+            $feedback['nome_do_campo'] = "nome";
             $feedback['mensagem'] = "O campo nome está vazio";
             $feedback['status'] = -1;
         }
@@ -66,17 +62,17 @@ class Usuario{
                 $feedback['status'] = 1;
                 $this->username = $username;
             }else{
-                $feedback['nome_do_campo'] = "username";       
+                $feedback['nome_do_campo'] = "username";
                 $feedback['mensagem'] = "O username excedeu o tamanho máximo";
                 $feedback['status'] = -1;
             }
         }else{
-            $feedback['nome_do_campo'] = "username";       
+            $feedback['nome_do_campo'] = "username";
             $feedback['mensagem'] = "O campo username está vazio";
             $feedback['status'] = -1;
         }
         return $feedback;
-        
+
     }
 
     public function setEmail($email){
@@ -85,12 +81,12 @@ class Usuario{
                 $feedback['status'] = 1;
                 $this->email = $email;
             }else{
-                $feedback['nome_do_campo'] = "email";       
+                $feedback['nome_do_campo'] = "email";
                 $feedback['mensagem'] = "O email excedeu o tamanho máximo";
                 $feedback['status'] = -1;
             }
         }else{
-            $feedback['nome_do_campo'] = "email";       
+            $feedback['nome_do_campo'] = "email";
             $feedback['mensagem'] = "O campo email está vazio";
             $feedback['status'] = -1;
         }
@@ -103,12 +99,12 @@ class Usuario{
             	$feedback['status'] = 1;
             	$this->senha = MD5($senha);
             }else{
-                $feedback['nome_do_campo'] = "senha";       
+                $feedback['nome_do_campo'] = "senha";
                 $feedback['mensagem'] = "O senha excedeu o tamanho máximo";
                 $feedback['status'] = -1;
             }
         }else{
-            $feedback['nome_do_campo'] = "senha";       
+            $feedback['nome_do_campo'] = "senha";
             $feedback['mensagem'] = "O campo senha está vazio";
             $feedback['status'] = -1;
         }
