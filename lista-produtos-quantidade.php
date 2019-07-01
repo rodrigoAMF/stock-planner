@@ -61,13 +61,31 @@
               <tbody>
 
                 <?php
+                    $filtroSemestre = Array();
                     $produtoController = ProdutoController::getInstance();
                     $semestres = $semestreController->getSemestres();
+                    for ($i=0; $i < sizeof($semestres); $i++)
+                    { 
+                        if($semestres[$i]->getId() != $semestres[sizeof($semestres)-1]->getId())
+                        {
+                            array_push($filtroSemestre, $semestres[$i]->getId());
+                        }
+                        else
+                        {
+                            array_push($filtroSemestre, $semestres[$i]->getId());
+                            break;
+                        }
+                    }
+                    $quantidadeSemestre = (sizeof($filtroSemestre) - 1);
+                    if($quantidadeSemestre >= 4)
+                    {
+                        $quantidadeSemestre = 3;
+                    }
                     $semestres = array_reverse($semestres);
-
-                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0],null,null);
-
-                    echo $produtos;
+                    
+                    $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0]->getId(),$quantidadeSemestre,$filtroSemestre);
+                    //print_r($produtos);
+                     echo $produtos;
                 ?>
 
               </tbody>

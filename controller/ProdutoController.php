@@ -634,13 +634,14 @@ class ProdutoController{
     {
         //$semestreController = SemestreController::getInstance();
         //$semestres = $semestreController->getSemestres();
-        
-        $semestres = array_reverse($filtroSemestre);
-        print_r($semestres);
+        $semestres = $filtroSemestre;
+        $semestres = array_reverse($semestres);
+
         $resultado = Array();
         $temp = Array();
 
         for ($i = 0; $i < sizeof($dados); $i++) {
+            
             for ($j = $quantidadeSemestre; $j >= 0; $j--) 
             { 
                 if($dados[$i]['id_semestre'] == $semestres[$j])
@@ -680,7 +681,6 @@ class ProdutoController{
         }
 
         $resultado = $conexao->query($query);
-
         if($resultado == false)
         {
             $erro = 'Falha ao realizar a Query: ' . $query;
@@ -697,7 +697,6 @@ class ProdutoController{
         }
 
         $produtos = "";
-        
         $quantidades = $this->agruparProdutosIguais($dados, $quantidadeSemestre, $filtroSemestre);
         $posicao = 0;
         foreach ($quantidades as $produto) {
@@ -715,12 +714,12 @@ class ProdutoController{
                 }
             }
             $produtos .= "\t\t</tr>\n";
-            $aux[$posicao] = $produtos;
-            $produtos ="";
-            $posicao++;
+            //$aux[$posicao] = $produtos;
+            //$produtos ="";
+            //$posicao++;
         }
-        if(sizeof($aux) >0){
-            return $aux;
+        if($produtos !=""){
+            return $produtos;
         }
     }
 
