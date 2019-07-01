@@ -4,7 +4,6 @@ let clickQuantidade = false;
 $("#parametroSemestre").on("change", function(){
 	
 	let semestre = $(this).val();
-	//alert(semestre);
 	let filtro = 'NOME';
 	let val = $("#busca").val();
 
@@ -20,12 +19,21 @@ $("#parametroSemestre").on("change", function(){
 	});
 
 	request.done(function(msg) {
-		//console.log(msg);
 		var obj = jQuery.parseJSON(msg);
-		console.log(obj);
+		console.log(obj['semestre']);
+		var valorTabela = "";
 		$('table tbody').remove();
+		$('table thead').remove();
+		valorTabela += "<thead>";
+		valorTabela += '<tr><th></th><th colspan="4">Quantidade</th></tr><tr><th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>';
+		
+		for (let index = 0; index < obj['semestre'].length; index++) {
+			valorTabela += "<th>"+ obj['semestre'][index] + "</th>";
+		}
+		valorTabela += "</tr></thead>";
+		$('table').append(valorTabela);
 		$('table').append("<tbody>");
-		$('table tbody').append(msg);
+		$('table tbody').append(obj['produtos']);
 		$('table').append("</tbody>");
 	});
 

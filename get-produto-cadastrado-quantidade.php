@@ -31,14 +31,24 @@
         $quantidadeSemestre = 3;
     }
 
+    $tamanhoSemestre = sizeof($filtroSemestre);
+    if($tamanhoSemestre > 4)
+    {
+        $tamanhoSemestre = $tamanhoSemestre - 4;
+    
+        for ($i=0; $i < $tamanhoSemestre; $i++) { 
+            unset($filtroSemestre[$i]);
+        }
+    }
+
     $busca = ($busca == "") ? null: $busca;
     $filtro = ($filtro == "") ? null: $filtro;
     $parametroOrdenacao = ($parametroOrdenacao == "") ? null: $parametroOrdenacao;
 
     $produtoController = ProdutoController::getInstance();
-
-    $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre,$filtroSemestre);
-
+    //print_r($filtroSemestre);
+    
+    $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre, $filtroSemestre);
     $json['produtos'] = $produtos;
     $json['semestre']  = $filtroSemestre;
     echo json_encode($json);
