@@ -184,9 +184,9 @@ frm.submit(function (e) {
                 }
             }
             else if(obj.status === -2) {
-                alertify.alert("Produto com nome duplicado");
+                alertify.alert("Mensagem do sistema", "Produto com nome duplicado");
             }else if(obj.status === -3) {
-                alertify.alert("Produto com identificação duplicada");
+                alertify.alert("Mensagem do sistema", "Produto com identificação duplicada");
             }
 
         });
