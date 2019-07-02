@@ -23,7 +23,9 @@
       <select class="form-control" id="parametroSemestre" name="semestre">
         <?php
             $semestres = $semestreController->getSemestres();
+            $semestres= $semestres['dados'];
             $semestres = array_reverse($semestres);
+
             foreach ($semestres as $semestre) {
                 echo "<option value = '" . $semestre->getId()."'>" . $semestre->getId(). "</option>";
             }
@@ -48,6 +50,7 @@
                     <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>
                     <?php
                       $semestres = $semestreController->getSemestres();
+                      $semestres= $semestres['dados'];
                       $semestres = array_reverse($semestres);
                       for($i = 3; $i >= 0; $i--)
                       {
@@ -64,6 +67,8 @@
                     $filtroSemestre = Array();
                     $produtoController = ProdutoController::getInstance();
                     $semestres = $semestreController->getSemestres();
+                    $semestres= $semestres['dados'];
+                    
                     for ($i=0; $i < sizeof($semestres); $i++)
                     { 
                         if($semestres[$i]->getId() != $semestres[sizeof($semestres)-1]->getId())

@@ -20,7 +20,6 @@ $("#parametroSemestre").on("change", function(){
 
 	request.done(function(msg) {
 		var obj = jQuery.parseJSON(msg);
-		console.log(obj['semestre']);
 		var valorTabela = "";
 		$('table tbody').remove();
 		$('table thead').remove();
@@ -28,7 +27,7 @@ $("#parametroSemestre").on("change", function(){
 		valorTabela += '<tr><th></th><th colspan="4">Quantidade</th></tr><tr><th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>';
 		
 		for (let index = 0; index < obj['semestre'].length; index++) {
-			valorTabela += "<th>"+ obj['semestre'][index] + "</th>";
+			valorTabela += '<th class="ordenavel sticky" id="borda">'+ obj['semestre'][index] + "</th>";
 		}
 		valorTabela += "</tr></thead>";
 		$('table').append(valorTabela);
@@ -59,10 +58,21 @@ $("#busca").on("keyup", function(event) {
 	});
 
 	request.done(function(msg) {
-		$("table tbody").remove();
-		$("table").append("<tbody>");
-		$("table tbody").append(msg);
-		$("table").append("</tbody>");
+		var obj = jQuery.parseJSON(msg);
+		var valorTabela = "";
+		$('table tbody').remove();
+		$('table thead').remove();
+		valorTabela += "<thead>";
+		valorTabela += '<tr><th></th><th colspan="4">Quantidade</th></tr><tr><th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>';
+		
+		for (let index = 0; index < obj['semestre'].length; index++) {
+			valorTabela += '<th class="ordenavel sticky" id="borda">'+ obj['semestre'][index] + "</th>";
+		}
+		valorTabela += "</tr></thead>";
+		$('table').append(valorTabela);
+		$('table').append("<tbody>");
+		$('table tbody').append(obj['produtos']);
+		$('table').append("</tbody>");
 	});
 
 	request.fail(function(jqXHR, textStatus) {

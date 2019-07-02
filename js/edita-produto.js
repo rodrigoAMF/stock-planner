@@ -24,8 +24,6 @@ frm.submit(function (e) {
 
     e.preventDefault();
 
-    //alert("Cheguei");
-
     let erros = false;
 
     if(identificacao.val() == "" || posicao.val() == "" || descricao.val() == "" || nome.val() == "" || catmat.val() == "" || !ehNumerico(catmat)|| estoque_ideal.val() == "" || !ehNumerico(estoque_ideal) || quantidade.val() == "" || !ehNumerico(quantidade) ){
@@ -41,6 +39,7 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
+
             quantidade.removeClass('is-valid is-invalid');
             $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
 
@@ -63,7 +62,8 @@ frm.submit(function (e) {
             $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
             alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!', function() {
-                document.location.href = "lista-produtos.php";
+                //document.location.href = "lista-produtos.php";
+                console.log(msg);
             }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
 
         });

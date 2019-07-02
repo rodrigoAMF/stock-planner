@@ -59,7 +59,7 @@ if (!isset($_SESSION)) session_start();
                 <div class="col-12">
                     <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                        <label class="custom-control-label" for="customControlAutosizing">Mantenha-me conectado</label>
+                        <!--<label class="custom-control-label" for="customControlAutosizing">Mantenha-me conectado</label>-->
                     </div>
                 </div>
             </div>

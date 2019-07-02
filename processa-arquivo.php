@@ -64,7 +64,7 @@ for($i = 0; $i < sizeof($dadosLidos) && !$erro; $i++)
             $mensagemErro = "Erro na linha " . strval($i) . ". Não foi possivel cadastrar a categoria";
             $erro = true;
         }else{
-            $idCategoria = $categoriaController->getIDPeloNome($camposProduto[6]);
+            $idCategoria = $categoriaController->getIDPeloNome($camposProduto[6])['dados'];
         }
     }
 

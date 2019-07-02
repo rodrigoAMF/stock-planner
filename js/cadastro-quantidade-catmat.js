@@ -74,32 +74,54 @@ $(".ordenavel").on("click", function(event)
 	
 	
 });
-function bindDoubleClickTable(){
-	$("#tabelaEditavel td").dblclick(function () {
+
+function bindDoubleClickTable() {
+	$("#tabelaEditavel td").click(function () {
 		if($(this).attr('class') === "nomeNaoEditavel"){
 			return;
 		}
 		var conteudoOriginal = $(this).text();
+		let who = $(this).attr('id');
 
 		$(this).addClass("celulaEmEdicao");
-		$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control' width='100%' />");
+		$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control input-table' width='100%' />");
+		//bindInputTable($(".input-table").val(), $(this));
 		$(this).children().first().focus();
-		
-		$(this).children().first().keypress(function (e) {
-			if (e.which == 13) {
+
+		$(this).children().first().keydown(function (e) {
+			let code = e.keyCode || e.which;
+			if (code === 9 || code === 13) {
 				var novoConteudo = $(this).val();
 				$(this).parent().text(novoConteudo);
 				$(this).parent().removeClass("celulaEmEdicao");
+				//$(this).parent().children("#quantidade").html("<input type='text' value='" + conteudoOriginal + "' class='form-control input-table' width='100%' />");
+				//$(this).parent().children("#quantidade").children().first().focus();
+				//$(this).parent().children("#quantidade").trigger("click");
 			}
 		});
 		
 		$(this).children().first().blur(function(){
-			$(this).parent().text(conteudoOriginal);
+
+			$(this).parent().text($(this).val());
 			$(this).parent().removeClass("celulaEmEdicao");
 		});
 		
 	});
 }
+
+function bindInputTable(valorInput, objeto){
+	$(".input-table").keydown(function(e) {
+		let code = e.keyCode || e.which;
+
+		if (code === 9){
+			e.preventDefault();
+			//objeto.html(valorInput);
+			alert("Funcionou!");
+		}
+	});
+}
+
+
 
 
 function bindCheckIcons(){
@@ -140,3 +162,5 @@ function bindCheckIcons(){
 
 bindCheckIcons();
 bindDoubleClickTable();
+
+//$( "#busca" ).focus();

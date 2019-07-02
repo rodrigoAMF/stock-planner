@@ -42,7 +42,6 @@ class SemestreController{
 		if($resultado['status'] == 200) {
 			$resultado['dados'] = $this->mapearSemestreEmArray($resultado['dados']);
 		}
-
 		return $resultado;
 	}
 
