@@ -506,23 +506,22 @@ class ProdutoController{
     	$query = "UPDATE produtos SET nome = '{$produto->getNome()}', identificacao = '{$produto->getIdentificacao()}', estoque_ideal = {$produto->getEstoqueIdeal()}, posicao = '{$produto->getPosicao()}', categoria = {$produto->getCategoria()->getId()}, descricao = '{$produto->getDescricao()}' WHERE id = {$produto->getId()}";
 		$resultado = $this->databaseController->update($query);
 
-		if($resultado['status'] != 200){
+		if(!($resultado['status'] == 200 || $resultado['status'] == 500)){
+            $resultado['dados'] = -1;
 			return $resultado;
 		}
 
 		$semestreController = SemestreController::getInstance();
 		$semestre = $semestreController->getSemestreAtual()['dados'];
-		//echo $semestre . "\n";
 
 		// Atualiza a tabela produtos_semestre
     	$query = "UPDATE produtos_semestre SET quantidade = {$produto->getQuantidade()},catmat= {$produto->getCatmat()} WHERE id_produto = {$produto->getId()} AND id_semestre = '{$semestre->getId()}'";
     	$resultado = $this->databaseController->update($query);
 		
 		
-		if($resultado['status'] != 200){
+		if(!($resultado['status'] == 200 || $resultado['status'] == 500)){
 			$resultado['dados'] = -1;
 			return $resultado;
-
 		}
 
 		$resultado['dados'] = 1;

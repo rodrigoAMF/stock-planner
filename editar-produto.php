@@ -84,9 +84,6 @@
                 </div>
             </div>
 
-
-
-
             <div class="form-row">
                 <div class="form-group col-md-4 col-xl-4 col-sm-9 col-9 col-lg-4">
                    <label for="categoria">Categoria:</label>
@@ -113,7 +110,7 @@
 
 
                 <div class="form-group col-md-1 col-xl-1 col-sm-1 col-1 col-lg-1">
-                    <button id="formato-botao-mais">
+                    <button id="formato-botao-mais" type="button">
                         <i class="material-icons">add</i>
                     </button>
                 </div>

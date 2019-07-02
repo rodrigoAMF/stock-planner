@@ -22,5 +22,5 @@
 
     $resultadoQuery = $produtoController->editarProduto($produto);
 
-    print_r($resultadoQuery);
+    echo $resultadoQuery['dados'];
 ?>

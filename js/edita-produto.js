@@ -8,17 +8,61 @@ var categoria = $('#categoria');
 var posicao = $('#posicao');
 var descricao = $('#descricao');
 
-function ehNumerico(campo){
+$('#formato-botao-mais').on('click',function(){
+    //e.preventDefault();
+
+    alertify.prompt().set('resizable',true).resizeTo(500,250);
+    alertify.prompt( 'Cadastrar nova categoria', 'Nome', '', function(evt, value) {
+
+          let url = "processa-categoria.php?nome=" + value;
+
+          //alertify.success('Cadastrado com sucesso');
+
+          var request = $.ajax({
+                    url: url,
+                    cache: false
+             });
+
+           request.done(function(msg) {
+               if(msg == -1){
+                alertify.error("Falha ao cadastrar categoria");
+               }
+               else{
+                   $('#categoria').add("<option> " +value+ "</option>").prependTo("#categoria");
+                   $("#categoria").val( $('option:contains('+value+')').val() );
+                   alertify.success('Cadastrado com sucesso');
+               }
+               
+           });
+
+           request.fail(function(jqXHR, textStatus) {
+               alert("Falha ao cadastrar categoria");
+           });
+
+
+    }, function() {
+          alertify.error('Cancelado')
+    }).setting({'labels':{ok:'Sim',cancel:'Não'},
+                    'transition':'zoom'
+        });
+
+});
+
+function ehNumerico(campo)
+{
     let string = campo.val();
     let size = string.length;
 
-    for(let i = 0; i < size; i++){
-            if(!(string[i] >= '0' && string[i] <= '9')){
-                return false;
-            }
+    for(let i = 0; i < size; i++)
+    {
+        if(!(string[i] >= '0' && string[i] <= '9'))
+        {
+            return false;
         }
-        return true;
     }
+    return true;
+}
+
 
 frm.submit(function (e) {
 
@@ -39,32 +83,41 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
+            if(msg == 1)
+            {
+                quantidade.removeClass('is-valid is-invalid');
+                $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
 
-            quantidade.removeClass('is-valid is-invalid');
-            $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
+                nome.removeClass('is-valid is-invalid');
+                $('#feedback-nome').remove('valid-feedback invalid-feedback').add('feedback');
 
-            nome.removeClass('is-valid is-invalid');
-            $('#feedback-nome').remove('valid-feedback invalid-feedback').add('feedback');
+                identificacao.removeClass('is-valid is-invalid');
+                $('#feedback-identificacao').remove('valid-feedback invalid-feedback').add('feedback');
 
-            identificacao.removeClass('is-valid is-invalid');
-            $('#feedback-identificacao').remove('valid-feedback invalid-feedback').add('feedback');
+                descricao.removeClass('is-valid is-invalid');
+                $('#feedback-descricao').remove('valid-feedback invalid-feedback').add('feedback');
 
-            descricao.removeClass('is-valid is-invalid');
-            $('#feedback-descricao').remove('valid-feedback invalid-feedback').add('feedback');
+                catmat.removeClass('is-valid is-invalid');
+                $('#feedback-catmat').remove('valid-feedback invalid-feedback').add('feedback');
 
-            catmat.removeClass('is-valid is-invalid');
-            $('#feedback-catmat').remove('valid-feedback invalid-feedback').add('feedback');
+                posicao.removeClass('is-valid is-invalid');
+                $('#feedback-posicao').remove('valid-feedback invalid-feedback').add('feedback');
 
-            posicao.removeClass('is-valid is-invalid');
-            $('#feedback-posicao').remove('valid-feedback invalid-feedback').add('feedback');
+                estoque_ideal.removeClass('is-valid is-invalid');
+                $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
 
-            estoque_ideal.removeClass('is-valid is-invalid');
-            $('#feedback-estoque_ideal').remove('valid-feedback invalid-feedback').add('feedback');
-
-            alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!', function() {
-                //document.location.href = "lista-produtos.php";
-                console.log(msg);
-            }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+                alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!', function() {
+                    document.location.href = "lista-produtos.php";
+                    //console.log(msg);
+                }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+            }
+            else
+            {
+                alertify.alert('Mensagem de sistema', 'Falha ao editar produto!', function() {
+                    //document.location.href = "lista-produtos.php";
+                    console.log(msg);
+                }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
+            }
 
         });
 

@@ -13,11 +13,11 @@ function ehNumerico(campo){
     let size = string.length;
 
     for(let i = 0; i < size; i++){
-            if(!(string[i] >= '0' && string[i] <= '9')){
-                return false;
-            }
+        if(!(string[i] >= '0' && string[i] <= '9')){
+            return false;
         }
-        return true;
+    }
+    return true;
 }
 
 $('#formato-botao-mais').on('click',function(){
@@ -80,8 +80,6 @@ frm.submit(function (e) {
             console.log(msg);
             
             var obj = jQuery.parseJSON(msg);
-
-            //console.log(obj);
 
             if (obj.status === 1) {
                 quantidade.removeClass('is-valid is-invalid');
