@@ -70,6 +70,12 @@ class SemestreController{
 
 		$resultado = $this->databaseController->insert($query);
 
+		if($resultado['status'] != 200){
+			$resultado['dados'] = -1;
+ 		} else {
+			$resultado['dados'] = 1;
+		 }
+
 		return $resultado;
 	}
 }

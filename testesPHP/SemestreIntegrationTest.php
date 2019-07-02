@@ -29,7 +29,7 @@ class SemestreIntegrationTest extends TestCase{
 
     public function testCadastraSemestre(){
           $semestreController = SemestreController::getInstance();
-          $this->assertEquals(true, $semestreController->cadastraSemestre());
+          $this->assertEquals(1, $semestreController->cadastraProximoSemestre()['dados']);
     }
 
     public function testGetSemestres(){
@@ -51,15 +51,9 @@ class SemestreIntegrationTest extends TestCase{
     public function testGetSemestreAtual(){
         $semestreController = SemestreController::getInstance();
         
-        $this->assertEquals("2051S2", $semestreController->getSemestreAtual()['dados']->getId());
-    }
-    
-    public function testeCadastraProximoSemestre(){
-        $semestreController = SemestreController::getInstance();
-        
-        $this->assertEquals(200, $semestreController->cadastraProximoSemestre()['status']);
         $this->assertEquals("2052S1", $semestreController->getSemestreAtual()['dados']->getId());
     }
+    
 
     public static function tearDownAfterClass(): void{
         $databaseController = new DatabaseController();
