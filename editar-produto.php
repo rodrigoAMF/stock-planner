@@ -3,15 +3,18 @@
     require_once("model/Pagina.php");
     require_once("controller/ProdutoController.php");
     require_once("controller/CategoriaController.php");
+	require_once("controller/SemestreController.php");
     $pagina = new Pagina();
     $produtoController = ProdutoController::getInstance();
     $categoriaController = CategoriaController::getInstance();
+    $semestreController = SemestreController::getInstance();
 
     $pagina->incluiCabecalho("Stock Planner - Editar Produtos", "cadastro-produto");
+    $semestreAtual = $semestreController->getSemestreAtual()['dados'];
 
     $id = $_GET['id'];
 
-    $produto = $produtoController->getProdutoPorId($id)['dados'];
+    $produto = $produtoController->getProdutoPorId($id, $semestreAtual->getId())['dados'];
     print_r($produto);
 ?>
 
