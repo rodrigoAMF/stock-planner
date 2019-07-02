@@ -183,8 +183,6 @@ class ProdutoController{
 
         $resultado = $this->databaseController->select($query);
 
-        print_r($query);
-
     	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 			$resultado['dados'] = $resultado['dados'][0];

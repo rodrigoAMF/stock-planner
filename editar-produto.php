@@ -15,7 +15,6 @@
     $id = $_GET['id'];
 
     $produto = $produtoController->getProdutoPorId($id, $semestreAtual->getId())['dados'];
-    print_r($produto);
 ?>
 
 <div class="container">
