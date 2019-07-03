@@ -24,7 +24,7 @@ $("#parametroSemestre").on("change", function(){
 		$('table tbody').remove();
 		$('table thead').remove();
 		valorTabela += "<thead>";
-		valorTabela += '<tr><th></th><th colspan="4">Quantidade</th></tr><tr><th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>';
+		valorTabela += '<tr><th></th><th colspan="4">Quantidade</th></tr><tr><th class="sticky">Nome</th>';
 		
 		for (let index = 0; index < obj['semestre'].length; index++) {
 			valorTabela += '<th class="ordenavel sticky" id="borda">'+ obj['semestre'][index] + "</th>";

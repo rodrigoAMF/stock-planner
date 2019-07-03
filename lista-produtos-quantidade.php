@@ -47,7 +47,7 @@
                   </tr>
                   <tr>
 
-                    <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome"></th>
+                    <th class="sticky">Nome</th>
                     <?php
                       $semestres = $semestreController->getSemestres();
                       $semestres= $semestres['dados'];
