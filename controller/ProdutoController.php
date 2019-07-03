@@ -183,6 +183,8 @@ class ProdutoController{
 
         $resultado = $this->databaseController->select($query);
 
+        $resultado = $this->databaseController->select($query);
+
     	if($resultado['status'] == 200) {
             $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 			$resultado['dados'] = $resultado['dados'][0];
@@ -636,7 +638,7 @@ class ProdutoController{
 		$resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 
 		if($busca == null){
-			$resultado['dados'] = $this->sortLista($resultado['dados'], 1);
+			$resultado['dados'] = $this->sortLista($resultado['dados'], 1, 1);
 		}
 
 		return $resultado;

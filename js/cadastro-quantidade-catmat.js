@@ -141,6 +141,7 @@ function bindCheckIcons(){
 						cache: false
 					});
 					request.done(function(msg) {
+						alert(msg);
 						btn.parent().parent().remove();
 						alertify.success('Produto salvo com sucesso!');
 					});
