@@ -84,7 +84,7 @@ function bindDoubleClickTable() {
 		let who = $(this).attr('id');
 
 		$(this).addClass("celulaEmEdicao");
-		$(this).html("<input type='text' value='" + conteudoOriginal + "' class='form-control input-table' width='100%' />");
+		$(this).html("<input type='number' min='0' value='" + conteudoOriginal + "' class='form-control input-table' width='100%' />");
 		//bindInputTable($(".input-table").val(), $(this));
 		$(this).children().first().focus();
 
@@ -94,9 +94,6 @@ function bindDoubleClickTable() {
 				var novoConteudo = $(this).val();
 				$(this).parent().text(novoConteudo);
 				$(this).parent().removeClass("celulaEmEdicao");
-				//$(this).parent().children("#quantidade").html("<input type='text' value='" + conteudoOriginal + "' class='form-control input-table' width='100%' />");
-				//$(this).parent().children("#quantidade").children().first().focus();
-				//$(this).parent().children("#quantidade").trigger("click");
 			}
 		});
 		
@@ -109,41 +106,34 @@ function bindDoubleClickTable() {
 	});
 }
 
-function bindInputTable(valorInput, objeto){
-	$(".input-table").keydown(function(e) {
-		let code = e.keyCode || e.which;
-
-		if (code === 9){
-			e.preventDefault();
-			//objeto.html(valorInput);
-			alert("Funcionou!");
-		}
-	});
-}
-
-
-
-
 function bindCheckIcons(){
 	$('.check_circle_outline').each(function(i, obj) {
 		$(obj).on("click", function(event){
 			event.preventDefault();
 			let catmat = $("#catmat").text();
 			let quantidade = $("#quantidade").text();
+			if(catmat === "" || quantidade === "") {
+				alertify.alert("Mensagem de Sistema", "É necessário preencher CATMAT e Quantidade antes de " +
+					"salvar as informações");
+				return;
+			}
 			let btn = $(this);
 			let url = $(this).attr('href') + "&catmat=" + catmat + "&quantidade=" + quantidade;
 			alertify.confirm().set('resizable',true).resizeTo(500,250);
 			alertify.confirm('Confirmar','Deseja realmente salvar este item?',
 				function(){
-
 					var request = $.ajax({
 						url: url,
 						cache: false
 					});
 					request.done(function(msg) {
-						alert(msg);
-						btn.parent().parent().remove();
-						alertify.success('Produto salvo com sucesso!');
+						if(msg === '1'){
+							btn.parent().parent().remove();
+							alertify.success('Produto salvo com sucesso!');
+						}else{
+							alertify.error('Falha ao salvar produto');
+						}
+
 					});
 
 					request.fail(function(jqXHR, textStatus) {
@@ -163,5 +153,3 @@ function bindCheckIcons(){
 
 bindCheckIcons();
 bindDoubleClickTable();
-
-//$( "#busca" ).focus();
