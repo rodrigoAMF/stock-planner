@@ -52,7 +52,7 @@
                       $semestres = $semestreController->getSemestres();
                       $semestres= $semestres['dados'];
                       $semestres = array_reverse($semestres);
-                      for($i = 3; $i >= 0; $i--)
+                      for($i = sizeof($semestres)-1; $i >= 0; $i--)
                       {
                         echo '<th class="sticky semestres" id="borda">';
                         echo $semestres[$i]->getId();  
