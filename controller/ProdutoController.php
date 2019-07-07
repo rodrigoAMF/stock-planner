@@ -620,7 +620,7 @@ class ProdutoController{
         return $produtos;
     }
 */
-    function getProdutosNaoCadastradosNoSemestreAtual($busca = null){
+    function getProdutosNaoCadastradosNoSemestreAtual($busca = null, $parametro = 1){
 		$semestreController = SemestreController::getInstance();
 		$resultado = $semestreController->getSemestreAtual();
 
@@ -646,7 +646,7 @@ class ProdutoController{
 		$resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
 
 		if($busca == null){
-			$resultado['dados'] = $this->sortLista($resultado['dados'], 1, 1);
+			$resultado['dados'] = $this->sortLista($resultado['dados'], $parametro, 1);
 		}
 
 		return $resultado;

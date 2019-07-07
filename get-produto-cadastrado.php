@@ -1,13 +1,11 @@
 <?php
     require_once("controller/ProdutoController.php");
 
-    $busca = $_GET['busca'];
-
-    $busca = ($busca == "") ? null: $busca;
+    $parametro = $_GET['parametro'];
 
     $produtoController = ProdutoController::getInstance();
     // Falta o parametro de ordenação pelo nome
-    $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual($busca);
+    $produtos = $produtoController->getProdutosNaoCadastradosNoSemestreAtual(null, $parametro);
     
     echo $produtoController->geraDadosParaTabelaProdutosNaoCadastradosNoSemestreAtual($produtos['dados']);
 ?>

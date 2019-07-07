@@ -1,4 +1,4 @@
-let clickNome = false;
+let clickNome = true;
 
 $("#busca").on("keyup", function(event) {
 	let val = $(this).val();
@@ -32,47 +32,35 @@ $("#busca").on("keyup", function(event) {
 
 $(".ordenavel").on("click", function(event)
 {
-	let semestre = $("#parametroSemestre").text();
-	let nomeCampo = $(this).text();
+	let url = "get-produto-cadastrado.php?parametro=";
 
-	if (nomeCampo != "")
-	{
-		nomeCampo = nomeCampo.toUpperCase();
+	if(clickNome === false){
+		url += 1;
+		$("#setaNome").attr("src","img/setaCima.png");
+	}else{
+		url += -1;
+		$("#setaNome").attr("src","img/setaBaixo.png");
 	}
 
-	let url = "get-produto-cadastrado.php?busca=";
+	clickNome = !clickNome;
 
-	if(nomeCampo == "NOME"){
-		if(clickNome == false){
-			url += 1;
-			$("#setaNome").attr("src","img/setaCima.png");
-		}else{
-			url += -1;
-			$("#setaNome").attr("src","img/setaBaixo.png");
-		}
+	var request = $.ajax({
+		url: url,
+		cache: false
+	});
 
-		clickNome = !clickNome;
+	request.done(function(msg) {
+		$('table tbody').remove();
+		$('table').append("<tbody>");
+		$('table tbody').append(msg);
+		$('table').append("</tbody>");
+		bindDoubleClickTable();
+		bindCheckIcons();
+	});
 
-		var request = $.ajax({
-			url: url,
-			cache: false
-		});
-
-		request.done(function(msg) {
-			$('table tbody').remove();
-			$('table').append("<tbody>");
-			$('table tbody').append(msg);
-			$('table').append("</tbody>");
-			bindDoubleClickTable();
-			bindCheckIcons();
-		});
-
-		request.fail(function(jqXHR, textStatus) {
-			alertify.error('Falha ao ordenar produtos');
-		});
-	}
-	
-	
+	request.fail(function(jqXHR, textStatus) {
+		alertify.error('Falha ao ordenar produtos');
+	});
 });
 
 function bindDoubleClickTable() {
