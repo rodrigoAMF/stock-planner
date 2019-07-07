@@ -709,20 +709,21 @@ class ProdutoController{
         }       
 
         if($busca == null && $filtro == null){
-            $dados = $this->sortLista($resultado['dados'], $parametroOrdenacao, 1);
+            $dados = $this->sortLista($this->mapearProdutosEmArray($resultado['dados']), $parametroOrdenacao, 1);
         }
-
+        
         $produtos = "";
         $quantidades = $this->agruparProdutosIguais($resultado['dados'], $quantidadeSemestre, $filtroSemestre);
         $posicao = 0;
+        $j = 0;
         foreach ($quantidades as $produto) {
             
             $produtos .= "\t\t<tr>\n";
-            $produtos .= "\t\t\t<td>{$produto['nome']}</td>\n";
+            $produtos .= "\t\t\t<td>{$dados[$j]->getNome()}</td>\n";
             for ($i = $quantidadeSemestre; $i >= 0; $i--) { 
                 if($produto[$i] != -1)
                 {
-                    $produtos .= "\t\t\t<td>{$produto[$i]}</td>\n";
+                    $produtos .= "\t\t\t<td>{$dados[$j]->getQuantidade()}</td>\n";
                 }
                 else
                 {
@@ -730,9 +731,8 @@ class ProdutoController{
                 }
             }
             $produtos .= "\t\t</tr>\n";
-            //$aux[$posicao] = $produtos;
-            //$produtos ="";
-            //$posicao++;
+
+            $j = $j + 1;
         }
         if($produtos !=""){
             return $produtos;

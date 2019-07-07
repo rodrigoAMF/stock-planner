@@ -105,7 +105,6 @@ $(".ordenavel").on("click", function(event)
 		});
 
 		request.done(function(msg) {
-			console.log(msg);
 			var obj = jQuery.parseJSON(msg);
 			$('table tbody').remove();
 			$('table').append("<tbody>");
