@@ -19,9 +19,9 @@ $('#formato-botao-mais').on('click',function(){
           //alertify.success('Cadastrado com sucesso');
 
           var request = $.ajax({
-                    url: url,
-                    cache: false
-             });
+                url: url,
+                cache: false
+         });
 
            request.done(function(msg) {
                if(msg == -1){
@@ -65,12 +65,13 @@ function ehNumerico(campo)
 
 
 frm.submit(function (e) {
-
     e.preventDefault();
 
     let erros = false;
 
-    if(identificacao.val() == "" || posicao.val() == "" || descricao.val() == "" || nome.val() == "" || catmat.val() == "" || !ehNumerico(catmat)|| estoque_ideal.val() == "" || !ehNumerico(estoque_ideal) || quantidade.val() == "" || !ehNumerico(quantidade) ){
+    if(identificacao.val() == "" || posicao.val() == "" || descricao.val() == "" || nome.val() == ""
+        || catmat.val() == "" || !ehNumerico(catmat)|| estoque_ideal.val() == ""
+        || !ehNumerico(estoque_ideal) || quantidade.val() == "" || !ehNumerico(quantidade) ){
         erros = true;
     }
 
@@ -83,7 +84,7 @@ frm.submit(function (e) {
         });
 
         request.done(function(msg) {
-            if(msg == 1)
+            if(msg === '1')
             {
                 quantidade.removeClass('is-valid is-invalid');
                 $('#feedback-quantidade').remove('valid-feedback invalid-feedback').add('feedback');
@@ -108,7 +109,7 @@ frm.submit(function (e) {
 
                 alertify.alert('Mensagem de sistema', 'Produto editado com Sucesso!', function() {
                     document.location.href = "lista-produtos.php";
-                    //console.log(msg);
+                    console.log(msg);
                 }).setting({'transition':'zoom','resizable':true}).resizeTo(500,250);
             }
             else
