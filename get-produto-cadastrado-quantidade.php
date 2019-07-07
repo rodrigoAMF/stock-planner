@@ -5,7 +5,6 @@
     $semestreController = SemestreController::getInstance();
     $semestres = $semestreController->getSemestres();
     $semestres= $semestres['dados'];
-    //$semestres = array_reverse($semestres);
     $filtroSemestre = array();
 
     $busca = $_GET['busca'];
@@ -48,10 +47,9 @@
     $parametroOrdenacao = ($parametroOrdenacao == "") ? null: $parametroOrdenacao;
 
     $produtoController = ProdutoController::getInstance();
-    //print_r($filtroSemestre);
     
     $produtos = $produtoController->getProdutosCadastradosQuantidade($busca, $filtro, $parametroOrdenacao, $semestre, $quantidadeSemestre, $filtroSemestre);
-    //print_r($produtos);
+    
     $json['produtos'] = $produtos;
     $json['semestre']  = $filtroSemestre;
     echo json_encode($json);

@@ -46,8 +46,7 @@
                     <th colspan="4">Quantidade</th>
                   </tr>
                   <tr>
-
-                    <th class="sticky">Nome</th>
+                    <th class="ordenavel sticky">Nome<img src="img/setaBaixo.png" id="setaNome" ></th>
                     <?php
                       $semestres = $semestreController->getSemestres();
                       $semestres= $semestres['dados'];

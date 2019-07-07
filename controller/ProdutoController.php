@@ -48,7 +48,7 @@ class ProdutoController{
     }
 
     function sortLista($produtos, $parametro, $ordenaNome){
-    	if($parametro == null) $parametro = 8;
+        if($parametro == null) $parametro = 8;
     	/*
     	1- nome
     	2- ident

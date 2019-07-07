@@ -85,12 +85,7 @@ $("#busca").on("keyup", function(event) {
 $(".ordenavel").on("click", function(event)
 {
 
-	let nomeCampo = $(this).text();
-
-	if (nomeCampo != "")
-	{
-		nomeCampo = nomeCampo.toUpperCase();
-	}
+	let nomeCampo = "NOME";
 
 	let url = "get-produto-cadastrado-quantidade.php?busca=&filtro=&semestre=&parametroOrdenacao=";
 
@@ -102,7 +97,6 @@ $(".ordenavel").on("click", function(event)
 			url += -1;
 			$("#setaNome").attr("src","img/setaBaixo.png");
 		}
-
 		clickNome = !clickNome;
 
 		var request = $.ajax({
@@ -111,9 +105,11 @@ $(".ordenavel").on("click", function(event)
 		});
 
 		request.done(function(msg) {
+			console.log(msg);
+			var obj = jQuery.parseJSON(msg);
 			$('table tbody').remove();
 			$('table').append("<tbody>");
-			$('table tbody').append(msg);
+			$('table tbody').append(obj['produtos']);
 			$('table').append("</tbody>");
 		});
 
