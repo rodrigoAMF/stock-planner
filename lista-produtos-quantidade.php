@@ -89,7 +89,7 @@
                     
                     $produtos = $produtoController->getProdutosCadastradosQuantidade(null,null,8, $semestres[0]->getId(),$quantidadeSemestre,$filtroSemestre);
                     //print_r($produtos);
-                     echo $produtos;
+					echo $produtos;
                 ?>
 
               </tbody>

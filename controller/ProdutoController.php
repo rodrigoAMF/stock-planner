@@ -40,6 +40,8 @@ class ProdutoController{
             	$produto->setDescricao($dado['descricao']);
 			if(isset($dado['categoria']))
             	$produto->getCategoria()->setNome($dado['categoria']);
+            if(isset($dado['id_semestre']))
+                $produto->setIdSemestre($dado['id_semestre']);
 
             return $produto;
         }, $produtosNaoMapeados);
@@ -666,25 +668,25 @@ class ProdutoController{
             
             for ($j = $quantidadeSemestre; $j >= 0; $j--) 
             { 
-                if($dados[$i]['id_semestre'] == $semestres[$j])
+                if($dados[$i]->getIdSemestre() == $semestres[$j])
                 {                 
-                    $resultado[$dados[$i]['nome']][$j] = $dados[$i]['quantidade'];
+                    $resultado[$dados[$i]->getNome()][$j] = $dados[$i]->getQuantidade();
                 }
                 else
                 {
-                    if(!isset($resultado[$dados[$i]['nome']][$j]))
+                    if(!isset($resultado[$dados[$i]->getNome()][$j]))
                     {
-                        $resultado[$dados[$i]['nome']][$j] = -1;
+                        $resultado[$dados[$i]->getNome()][$j] = -1;
                     }
                 }
             }
         }
         $usados = Array();
         for ($i = 0; $i < sizeof($dados); $i++) {
-            if(!isset($usados[$dados[$i]['nome']])){
-                $temp[$i] = $resultado[$dados[$i]['nome']];
-                $temp[$i]['nome'] = $dados[$i]['nome'];
-                $usados[$dados[$i]['nome']] = 1;
+            if(!isset($usados[$dados[$i]->getNome()])){
+                $temp[$i] = $resultado[$dados[$i]->getNome()];
+                $temp[$i]['nome'] = $dados[$i]->getNome();
+                $usados[$dados[$i]->getNome()] = 1;
             }
         }
         return $temp;
@@ -702,28 +704,34 @@ class ProdutoController{
         }
 
         $resultado = $this->databaseController->select($query);
-
-        if($resultado['status'] == 200)
+        if($resultado['status'] != 200)
         {
-            $resultado['dados'] = $resultado['dados'];
-        }       
+            $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
+        }
 
         if($busca == null && $filtro == null){
-            $dados = $this->sortLista($this->mapearProdutosEmArray($resultado['dados']), $parametroOrdenacao, 1);
+            $resultado['dados'] = $this->sortLista($resultado['dados'], $parametroOrdenacao, 1);
         }
+
+        $resultado['dados'] = $this->mapearProdutosEmArray($resultado['dados']);
+
+        /*foreach($resultado['dados'] as $produto){
+            print_r($produto);
+            echo "<br><br>";
+        }*/
         
         $produtos = "";
         $quantidades = $this->agruparProdutosIguais($resultado['dados'], $quantidadeSemestre, $filtroSemestre);
+        //print_r($quantidades);
         $posicao = 0;
         $j = 0;
         foreach ($quantidades as $produto) {
-            
             $produtos .= "\t\t<tr>\n";
-            $produtos .= "\t\t\t<td>{$dados[$j]->getNome()}</td>\n";
+            $produtos .= "\t\t\t<td>{$produto['nome']}</td>\n";
             for ($i = $quantidadeSemestre; $i >= 0; $i--) { 
                 if($produto[$i] != -1)
                 {
-                    $produtos .= "\t\t\t<td>{$dados[$j]->getQuantidade()}</td>\n";
+                    $produtos .= "\t\t\t<td>{$produto[$i]}</td>\n";
                 }
                 else
                 {
@@ -734,7 +742,7 @@ class ProdutoController{
 
             $j = $j + 1;
         }
-        if($produtos !=""){
+        if($produtos != ""){
             return $produtos;
         }
     }

@@ -5,7 +5,7 @@ require_once("Categoria.php");
 class Produto
 {
 
-    private $nome, $identificacao, $posicao, $descricao; // string
+    private $nome, $identificacao, $posicao, $descricao, $idSemestre; // string
     private $catmat, $quantidade, $estoqueIdeal, $id; // int
 	private $porcentagem; // float
     private $categoria; // Categoria
@@ -53,6 +53,10 @@ class Produto
     public function getPorcentagem(): float{
     	return $this->porcentagem;
 	}
+
+	public function getIdSemestre(): string{
+        return $this->idSemestre;
+    }
 
 	public function setId(int $id){
 		$this->id = $id;
@@ -206,6 +210,10 @@ class Produto
 	public function setPorcentagem($porcentagem){
     	$this->porcentagem = $porcentagem;
 	}
+
+	public function setIdSemestre($idSemestre){
+        $this->idSemestre = $idSemestre;
+    }
 
     public function preencheDadosTeste($categoria){
 		$this->setId(6);
