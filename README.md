@@ -4,7 +4,7 @@
   <img src="https://github.com/rodrigoAMF/stock-planner/blob/master/img/logo1.png" alt="Logo Stock Planner" width="200"/>
 </p> 
 
-Stock planner é um sistema de controle de estoque inteligente desenvolvido para o almoxarifado do IFSULDEMINAS - Poços de Caldas. O software está sendo desenvolvido utilizando PHP7, MariaDB, Jquery, Bootstrap, SASS e Metodologias ágeis.
+Stock planner é um sistema de controle de estoque inteligente desenvolvido para a central técnica do IFSULDEMINAS - Poços de Caldas. O software está sendo desenvolvido utilizando PHP7, MariaDB, Jquery, Bootstrap, SASS e Metodologias ágeis.
 
 # Pré-requisitos
 * PHP 7.
